@@ -178,8 +178,35 @@
 			<version>${javax.servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.0.0-M7</version>
+		</dependency>
 
-	</dependencies>
+
+
+	
+   <dependency>
+     <groupId>com.fasterxml.jackson.datatype</groupId>
+     <artifactId>jackson-datatype-jsr310</artifactId>
+     <version>2.10.0.pr1</version>
+   </dependency>
+ 
+   <dependency>
+     <groupId>com.fasterxml.jackson.datatype</groupId>
+     <artifactId>jackson-datatype-jsr310</artifactId>
+     <version>2.10.0.pr1</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
@@ -246,7 +273,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>3.0.0-M4</version>
+				<version>3.0.0-M7</version>
 				<configuration>
 				</configuration>
 			</plugin>
