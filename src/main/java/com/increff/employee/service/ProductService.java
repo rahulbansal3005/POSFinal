@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.ProductDao;
+import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.util.StringUtil;
 
@@ -75,6 +76,15 @@ public class ProductService {
 
     protected static void normalize(ProductPojo p) {
         p.setName(StringUtil.toLowerCase(p.getName()));
+    }
+
+    @Transactional
+    public int extractProd_Id(InventoryForm f) throws ApiException {
+        ProductPojo p = dao.select_barcode(f.getBarcode());
+        if (p == null) {
+            throw new ApiException("Product does not does not exist ");
+        }
+        return p.getId();
     }
 
     // public

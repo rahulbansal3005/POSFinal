@@ -147,10 +147,13 @@ function displayInventoryList(data) {
       e.id +
       "</td>" +
       "<td>" +
-      e.inventory +
+      e.barcode +
       "</td>" +
       "<td>" +
-      e.category +
+      e.quantity +
+      "</td>" +
+      "<td>" +
+      e.quantity +
       "</td>" +
       "<td>" +
       buttonHtml +

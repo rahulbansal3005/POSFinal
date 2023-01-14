@@ -17,15 +17,15 @@
 	 <div class="col-12">
 			<form class="form-inline" id="inventory-form">
 			  <div class="form-group">
-			    <label for="inputName" class="col-sm-2 col-form-label">BarCode</label>
+			    <label for="inputBarcode" class="col-sm-2 col-form-label">BarCode</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="name" id="inputName" placeholder="Enter BarCode">
+			      <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="Enter BarCode">
 			    </div>
 			  </div>
               <div class="form-group">
-			    <label for="inputName" class="col-sm-2 col-form-label">Quantity</label>
+			    <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="name" id="inputName" placeholder="Enter Quantity">
+			      <input type="text" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter Quantity">
 			    </div>
 			  </div>
 			  <!-- <div class="form-group">
@@ -51,18 +51,18 @@
 <div class="row">
 
  <!-- Table -->
- <!-- <div class="col-12">
+ <div class="col-12">
 	<table class="table table-striped" id="inventory-table">
 	  <thead>
 	    <tr>
 	      <th scope="col">ID</th>
-	      <th scope="col">Name</th>
-	      <th scope="col">Age</th>
-	      <th scope="col">Actions</th>
+	      <th scope="col">BarCode</th>
+	      <th scope="col">Quantity</th>
+	      <th scope="col">Total Cost</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
+	   <!--  <tr>
 	      <td>1</td>
 	      <td>Romil Jain</td>
 	      <td>30</td>
@@ -79,11 +79,11 @@
 	      <td>Anaisha Jain</td>
 	      <td>7</td>
 	      <td>Edit | Delete</td>
-	    </tr>
+	    </tr> -->
 	  </tbody>
 	</table>
 
-</div> -->
+</div> 
 
 
 </div>
@@ -93,7 +93,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Inventory</h5>
+        <h5 class="modal-title">Edit Inventory <Details></Details></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -101,15 +101,15 @@
       <div class="modal-body">
 			<form class="form-inline" id="inventory-edit-form">
 			  <div class="form-group">
-			    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+			    <label for="inputBarcode" class="col-sm-2 col-form-label">Bar Code</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="name" placeholder="enter name">
+			      <input type="text" class="form-control" name="barCode" placeholder="enter barcode">
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="inputAge" class="col-sm-2 col-form-label">Age</label>
+			    <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="age" placeholder="enter age">
+			      <input type="text" class="form-control" name="quantity" placeholder="enter Quantity">
 			    </div>
 			  </div>
  	        <input type="hidden" name="id" >

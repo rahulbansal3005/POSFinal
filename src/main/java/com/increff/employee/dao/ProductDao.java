@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+// import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.ProductPojo;
 
 @Repository
@@ -53,5 +54,9 @@ public class ProductDao extends AbstractDao {
 
     public void update(ProductPojo p) {
     }
+
+    // public ProductPojo getProduct_id(InventoryForm f) {
+    // return null;
+    // }
 
 }
