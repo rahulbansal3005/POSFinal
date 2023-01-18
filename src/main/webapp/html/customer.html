@@ -1,0 +1,157 @@
+<!doctype html>
+
+<html lang="en">
+
+<head th:replace="snippets.html :: name_head"></head>
+
+<body>
+
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+
+<div class="container">
+
+<h3>Customer Page</h3>
+
+ <!-- Top row with form-->
+ <div class="row">
+	 <div class="col-12">
+			<form class="form-inline" id="customer-form">
+			  <div class="form-group">
+			    <label for="inputBarcode" class="col-sm-2 col-form-label">BarCode</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="Enter BarCode">
+			    </div>
+			  </div>
+              <div class="form-group">
+			    <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter Quantity">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputAge" class="col-sm-2 col-form-label">MRP</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="enter MRP">
+			    </div>
+			  </div>
+			  <button type="button" class="btn btn-primary" id="add-customer">Add</button>
+			  &nbsp;
+			  <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+			  &nbsp;
+			  <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+			</form>
+	 </div>	
+</div> 
+
+
+<!-- Blank Row -->
+<div class="row">
+	&nbsp;
+</div>
+<div class="row">
+
+ <!-- Table -->
+ <div class="col-12">
+	<table class="table table-striped" id="customer-table">
+	  <thead>
+	    <tr>
+	      <th scope="col">ID</th>
+	      <th scope="col">BarCode</th>
+	      <th scope="col">Quantity</th>
+	      <th scope="col">MRP</th>
+	      <th scope="col">Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  </tbody>
+	</table>
+
+</div> 
+
+
+</div>
+
+<!-- Customer Edit Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="edit-customer-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Customer <Details></Details></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			<form class="form-inline" id="customer-edit-form">
+			  <div class="form-group">
+			    <label for="inputBarcode" class="col-sm-2 col-form-label">Bar Code</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="barcode" placeholder="enter barcode">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="quantity" placeholder="enter Quantity">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputMrp" class="col-sm-2 col-form-label">MRP</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="mrp" placeholder="enter MRP">
+			    </div>
+			  </div>
+ 	        <input type="hidden" name="id" >
+			</form>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="update-customer">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Customer Edit Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="upload-customer-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title">Upload Customer Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+      	<div class="customer-file">
+		  <input type="file" class="custom-file-input" id="customerFile">
+		  <label class="custom-file-label" for="customerFile" id="customerFileName">Choose file</label>
+		</div>
+		<a th:href="@{/sample/customer.tsv}" target="_blank">Download Sample</a> 
+		<br>
+		Rows: <span id="rowCount">0</span>, 
+		Processed: <span id="processCount">0</span>, 
+		Errors: <span id="errorCount">0</span>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="process-data">Upload</button>
+        <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div> <!-- Container end-->
+
+<footer th:replace="snippets.html :: name_footer"></footer>
+
+<script th:src="@{/static/customer.js}"/></script>
+
+</body>	
+
+</html>

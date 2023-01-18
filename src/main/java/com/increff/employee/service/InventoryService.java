@@ -1,5 +1,6 @@
 package com.increff.employee.service;
 
+// import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -57,6 +58,15 @@ public class InventoryService {
             throw new ApiException("Inventory with given ID does not exist, id: " + id);
         }
         return p;
+    }
+
+    @Transactional
+    public Boolean checker(int id, int quant) {
+        InventoryPojo p = dao.select(id);
+        if (p.getQuantity() < quant) {
+            return true;
+        }
+        return false;
     }
 
     // protected static void normalize(InventoryPojo p) {

@@ -79,7 +79,7 @@ public class InventoryApiController {
 
     private InventoryPojo convert(InventoryForm f) throws ApiException {
         InventoryPojo p = new InventoryPojo();
-        p.setProduct_id(ps.extractProd_Id(f));
+        p.setProduct_id(ps.extractProd_Id(f.getBarcode()));
         p.setQuantity(f.getQuantity());
         return p;
     }
