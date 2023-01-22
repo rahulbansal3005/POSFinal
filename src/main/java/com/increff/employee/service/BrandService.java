@@ -51,6 +51,13 @@ public class BrandService {
         dao.update(ex);
     }
 
+    public List<BrandPojo> getCategory(String b) throws ApiException {
+
+        if(StringUtil.isEmpty(b)){
+            throw new ApiException("brand name cannot be empty");
+        }
+        return dao.getCategory(b);
+    }
     @Transactional
     public BrandPojo getCheck(int id) throws ApiException {
         BrandPojo p = dao.select(id);
