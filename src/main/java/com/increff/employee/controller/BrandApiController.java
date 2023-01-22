@@ -1,6 +1,6 @@
 package com.increff.employee.controller;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 
 import com.increff.employee.dto.BrandDto;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.increff.employee.model.BrandData;
 import com.increff.employee.model.BrandForm;
-import com.increff.employee.pojo.BrandPojo;
+//import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.service.ApiException;
-import com.increff.employee.service.BrandService;
+//import com.increff.employee.service.BrandService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,9 +23,6 @@ import io.swagger.annotations.ApiOperation;
 @Api
 @RestController
 public class BrandApiController {
-
-    @Autowired
-    private BrandService service;
 
     @Autowired
     private BrandDto dto;
