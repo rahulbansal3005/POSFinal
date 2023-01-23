@@ -1,6 +1,10 @@
-function getCustomerUrl() {
+function getOrderUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/order";
+}
+function getOrderItemUrl(){
+  var baseUrl = $("meta[name=baseUrl]").attr("content")
+  return baseUrl + "/api/orderItem";
 }
 
 //BUTTON ACTIONS
@@ -8,7 +12,7 @@ function addCustomer(event) {
   //Set the values to update
   var $form = $("#customer-form");
   var json = toJson($form);
-  var url = getCustomerUrl();
+  var url = getOrderUrl();
 
   $.ajax({
     url: url,
@@ -26,11 +30,47 @@ function addCustomer(event) {
   return false;
 }
 
+function toggleModal(event)
+{
+  $("#add-customer-modal").modal("toggle");
+}
+
+function addOrderItem(){
+  var $form = $("#customer-form");
+  var json = toJson($form);
+  var url = getOrderItemUrl();
+  console.log(url);
+  console.log(json);
+
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: json,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    success: function (response) {
+      nextOrderItem();
+    },
+    error: handleAjaxError,
+  });
+}
+
+function submitOrder()
+{
+
+  var $form = $("#customer-form");
+  var json = toJson($form);
+  var url = getOrderUrl();
+  console.log(json);
+}
+
+
 function updateCustomer(event) {
   $("#edit-customer-modal").modal("toggle");
   //Get the ID
   var id = $("#customer-edit-form input[name=id]").val();
-  var url = getCustomerUrl() + "/" + id;
+  var url = getOrderUrl() + "/" + id;
 
   //Set the values to update
   var $form = $("#customer-edit-form");
@@ -53,7 +93,7 @@ function updateCustomer(event) {
 }
 
 function getCustomerList() {
-  var url = getCustomerUrl();
+  var url = getOrderUrl();
   $.ajax({
     url: url,
     type: "GET",
@@ -65,7 +105,7 @@ function getCustomerList() {
 }
 
 function deleteCustomer(id) {
-  var url = getCustomerUrl() + "/" + id;
+  var url = getOrderUrl() + "/" + id;
 
   $.ajax({
     url: url,
@@ -105,7 +145,7 @@ function uploadRows() {
   processCount++;
 
   var json = JSON.stringify(row);
-  var url = getCustomerUrl();
+  var url = getOrderUrl();
 
   //Make ajax call
   $.ajax({
@@ -164,7 +204,7 @@ function displayCustomerList(data) {
 }
 
 function displayEditCustomer(id) {
-  var url = getCustomerUrl() + "/" + id;
+  var url = getOrderUrl() + "/" + id;
   $.ajax({
     url: url,
     type: "GET",
@@ -215,9 +255,11 @@ function displayCustomer(data) {
 
 //INITIALIZATION CODE
 function init() {
-  $("#add-customer").click(addCustomer);
+  $("#add-Order").click(toggleModal);
+  $("#add-orderItem").click(addOrderItem);
+  $("#submit-order").click(submitOrder);
   $("#update-customer").click(updateCustomer);
-  $("#refresh-data").click(getCustomerList);
+  $("#refresh-Orderdata").click(getCustomerList);
   $("#upload-data").click(displayUploadData);
   $("#process-data").click(processData);
   $("#download-errors").click(downloadErrors);

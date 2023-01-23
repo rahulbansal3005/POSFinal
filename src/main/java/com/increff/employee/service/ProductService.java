@@ -13,7 +13,7 @@ import com.increff.employee.dao.ProductDao;
 // import com.increff.employee.pojo.InventoryPojo;
 // import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.ProductPojo;
-import com.increff.employee.util.StringUtil;
+import com.increff.employee.util.Validate;
 
 @Service
 public class ProductService {
@@ -27,7 +27,7 @@ public class ProductService {
     @Transactional(rollbackOn = ApiException.class)
     public void add(ProductPojo p) throws ApiException {
         normalize(p);
-        if (StringUtil.isEmpty(p.getName())) {
+        if (Validate.isEmpty(p.getName())) {
             throw new ApiException("name cannot be empty");
         }
         dao.insert(p);
@@ -78,7 +78,7 @@ public class ProductService {
     }
 
     protected static void normalize(ProductPojo p) {
-        p.setName(StringUtil.toLowerCase(p.getName()));
+        p.setName(Validate.toLowerCase(p.getName()));
     }
 
     @Transactional

@@ -12,6 +12,7 @@ public class AppUiController extends AbstractUiController {
 		return mav("home.html");
 	}
 
+//	TODO remove employee
 	@RequestMapping(value = "/ui/employee")
 	public ModelAndView employee() {
 		return mav("employee.html");
@@ -37,6 +38,8 @@ public class AppUiController extends AbstractUiController {
 		return mav("inventory.html");
 	}
 
+
+	// TODO cutomer->order
 	@RequestMapping(value = "/ui/customer")
 	public ModelAndView customer() {
 		return mav("customer.html");

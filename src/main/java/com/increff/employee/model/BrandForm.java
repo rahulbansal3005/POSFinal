@@ -1,5 +1,5 @@
 package com.increff.employee.model;
-
+//TODO use Lombok for getter setter
 public class BrandForm {
     private String brand;
 

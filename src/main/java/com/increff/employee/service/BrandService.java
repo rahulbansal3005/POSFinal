@@ -10,20 +10,15 @@ import org.springframework.stereotype.Service;
 import com.increff.employee.dao.BrandDao;
 import com.increff.employee.model.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
-import com.increff.employee.util.StringUtil;
-
 @Service
 public class BrandService {
 
     @Autowired
     private BrandDao dao;
 
+
     @Transactional(rollbackOn = ApiException.class)
     public void add(BrandPojo p) throws ApiException {
-        normalize(p);
-        if (StringUtil.isEmpty(p.getBrand())) {
-            throw new ApiException("brand name cannot be empty");
-        }
         dao.insert(p);
     }
 
@@ -43,20 +38,14 @@ public class BrandService {
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public void update(int id, BrandPojo p) throws ApiException {
-        normalize(p);
-        BrandPojo ex = getCheck(id);
-        ex.setCategory(p.getCategory());
-        ex.setBrand(p.getBrand());
-        dao.update(ex);
+    public void update(int id, BrandPojo brandPojo) throws ApiException {
+        BrandPojo newbrandPojo = getCheck(id);
+        newbrandPojo.setCategory(brandPojo.getCategory());
+        newbrandPojo.setBrand(brandPojo.getBrand());
     }
 
-    public List<BrandPojo> getCategory(String b) throws ApiException {
-
-        if(StringUtil.isEmpty(b)){
-            throw new ApiException("brand name cannot be empty");
-        }
-        return dao.getCategory(b);
+    public List<BrandPojo> getCategory(String brand) throws ApiException {
+        return dao.getCategory(brand);
     }
     @Transactional
     public BrandPojo getCheck(int id) throws ApiException {
@@ -67,9 +56,6 @@ public class BrandService {
         return p;
     }
 
-    protected static void normalize(BrandPojo p) {
-        p.setBrand(StringUtil.toLowerCase(p.getBrand()));
-    }
 
     @Transactional
     public int extractId(ProductForm f) throws ApiException {

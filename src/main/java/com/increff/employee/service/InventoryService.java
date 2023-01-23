@@ -69,6 +69,15 @@ public class InventoryService {
         return false;
     }
 
+
+    @Transactional
+    public boolean checkQuantity(int id, int quant) {
+        InventoryPojo p = dao.select(id);
+        if (p.getQuantity()> quant) {
+            return true;
+        }
+        return false;
+    }
     // protected static void normalize(InventoryPojo p) {
     // p.setName(StringUtil.toLowerCase(p.getName()));
     // }

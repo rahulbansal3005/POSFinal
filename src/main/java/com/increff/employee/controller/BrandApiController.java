@@ -1,6 +1,5 @@
 package com.increff.employee.controller;
 
-//import java.util.ArrayList;
 import java.util.List;
 
 import com.increff.employee.dto.BrandDto;
@@ -40,6 +39,8 @@ public class BrandApiController {
         dto.delete(id);
     }
 
+
+//    TODO check where get is using
     @ApiOperation(value = "Gets a Brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
     public BrandData get(@PathVariable int id) throws ApiException {

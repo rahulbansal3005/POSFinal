@@ -6,83 +6,90 @@ import com.increff.employee.model.BrandForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
+import com.increff.employee.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.increff.employee.util.Normalize.normalize;
+import static com.increff.employee.util.helper.convertBrandFormToBrandPojo;
+import static com.increff.employee.util.helper.convertBrandPojoToBrandData;
+
 @Service
 public class BrandDto {
     @Autowired
     private BrandService service;
 
-    public void add(BrandForm form) throws ApiException {
-        BrandPojo p = convert(form);
-        service.add(p);
-    }
-    public void delete(int id) {
-        service.delete(id);
+//    TODO in util helper convert functions.  DONE
+//    TODO in validate, in Normalize.  DONE
+
+//    TODO variable names make meaningful  DONE
+//    TODO normalize in DTO not in service, normalize forms not pojos.  DONE
+//    TODO validation in DTO not in service  DONE
+    public void add(BrandForm brandForm) throws ApiException {
+        normalize(brandForm); // Normalize Forms and not Pojos.
+        BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
+        if (Validate.isEmpty(brandPojo.getBrand())) {
+            throw new ApiException("brand name cannot be null or empty");
+        }
+
+        if (Validate.isEmpty(brandPojo.getCategory())) {
+            throw new ApiException("category name cannot be null or empty");
+        }
+        service.add(brandPojo);
     }
 
-    public BrandData get( int id) throws ApiException {
-        BrandPojo p = service.get(id);
-        return convert(p);
+//    TODO remove delete
+    public void delete(int brandId) {
+        service.delete(brandId);
+    }
+
+    public BrandData get(int brandId) throws ApiException {
+        BrandPojo brandPojo = service.get(brandId);
+        return convertBrandPojoToBrandData(brandPojo);
     }
 
     public List<BrandData> getAll() {
-        List<BrandPojo> list = service.getAll();
-        List<BrandData> list2 = new ArrayList<BrandData>();
-        for (BrandPojo p : list) {
-            list2.add(convert(p));
+        List<BrandPojo> brandPojoList = service.getAll();
+        List<BrandData> brandDataList = new ArrayList<BrandData>();
+        for (BrandPojo p : brandPojoList) {
+            brandDataList.add(convertBrandPojoToBrandData(p));
         }
-        return list2;
+        return brandDataList;
     }
 
-    public void update(int id,BrandForm f) throws ApiException {
-        BrandPojo p = convert(f);
-        service.update(id, p);
-    }
-
-
-
-    private static BrandData convert(BrandPojo p) {
-        BrandData d = new BrandData();
-        d.setCategory(p.getCategory());
-        d.setBrand(p.getBrand());
-        d.setId(p.getId());
-        return d;
-    }
-
-    private static BrandPojo convert(BrandForm f) {
-        BrandPojo p = new BrandPojo();
-        p.setCategory(f.getCategory());
-        p.setBrand(f.getBrand());
-        return p;
+//TODO id->brandID  DONE
+    public void update(int brandId,BrandForm brandForm) throws ApiException {
+        normalize(brandForm);
+        BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
+        service.update(brandId, brandPojo);
     }
 
     public List<String> getCategory(String categ) throws ApiException {
-        List<BrandPojo> list = service.getCategory(categ);
-        List<String> list2 = new ArrayList<String>();
-        for(BrandPojo b : list){
-            list2.add(b.getCategory());
+        if(Validate.isEmpty(categ)){
+            throw new ApiException("brand name cannot be empty");
         }
-        return list2;
+        List<BrandPojo> brandPojoList = service.getCategory(categ);
+        List<String> stringList = new ArrayList<String>();
+        for(BrandPojo brandPojo : brandPojoList){
+            stringList.add(brandPojo.getCategory());
+        }
+        return stringList;
     }
 
     public List<String> getAllUniqueBrands() throws ApiException {
-        List<BrandPojo> list = service.getAll();
-        Set s = new HashSet();
+        List<BrandPojo> brandPojoList = service.getAll();
+        Set set = new HashSet();
 
-        for (BrandPojo p : list) {
-            s.add(p.getBrand());
+        for (BrandPojo brandPojo : brandPojoList) {
+            set.add(brandPojo.getBrand());
         }
 
-        List<String> l = new ArrayList<>(s);
-        return l;
+        List<String> stringList = new ArrayList<>(set);
+        return stringList;
     }
 }
