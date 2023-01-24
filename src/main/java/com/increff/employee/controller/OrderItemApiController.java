@@ -2,7 +2,7 @@ package com.increff.employee.controller;
 
 
 import com.increff.employee.dto.OrderItemDto;
-import com.increff.employee.model.Customer;
+import com.increff.employee.model.OrderItem;
 import com.increff.employee.service.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +20,7 @@ public class OrderItemApiController {
 
     @ApiOperation(value = "Checks one OrderItem in the inventory")
     @RequestMapping(path = "/api/orderItem", method = RequestMethod.POST)
-    public boolean add(@RequestBody Customer c) throws ApiException {
+    public boolean add(@RequestBody OrderItem c) throws ApiException {
         return dto.check(c);
     }
     

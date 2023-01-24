@@ -1,6 +1,6 @@
 package com.increff.employee.model;
 
-public class Customer {
+public class OrderItem {
     private String BarCode;
     private int Quantity;
     private double mrp;

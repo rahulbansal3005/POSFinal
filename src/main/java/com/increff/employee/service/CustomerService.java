@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.increff.employee.model.OrderForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 // import com.increff.employee.dao.CustomerDao;
 import com.increff.employee.dao.OrderDao;
 import com.increff.employee.dao.OrderItemDao;
-import com.increff.employee.model.Customer;
-import com.increff.employee.model.CustomerForm;
+import com.increff.employee.model.OrderItem;
 // import com.increff.employee.model.InventoryForm;
 // import com.increff.employee.pojo.CustomerPojo;
 import com.increff.employee.pojo.OrderItemPojo;
@@ -98,11 +98,11 @@ public class CustomerService {
     }
 
     @Transactional
-    public List<Customer> getOrderItems(int orderId) throws ApiException {
-        List<Customer> c = new ArrayList<Customer>();
+    public List<OrderItem> getOrderItems(int orderId) throws ApiException {
+        List<OrderItem> c = new ArrayList<OrderItem>();
         List<OrderItemPojo> p = orderItemDao.getAllOrderItemsbyOrderId(orderId);
         for (OrderItemPojo i : p) {
-            Customer temp = new Customer();
+            OrderItem temp = new OrderItem();
             temp.setBarCode(ps.extractBarCode(i.getProductId()));
             temp.setMrp(i.getSellingPrice());
             temp.setQuantity(i.getQuantity());
@@ -163,8 +163,8 @@ public class CustomerService {
         return p;
     }
 
-    public void findingError(CustomerForm form, HashMap<String, Integer> errors) {
-        for (Customer f : form.getC()) {
+    public void findingError(OrderForm form, HashMap<String, Integer> errors) {
+        for (OrderItem f : form.getC()) {
             String bc = f.getBarCode();
             int quant = f.getQuantity();
             ps.checker(bc, quant, errors);

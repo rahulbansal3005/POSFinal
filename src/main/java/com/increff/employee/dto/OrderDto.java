@@ -1,8 +1,9 @@
 package com.increff.employee.dto;
 
-import com.increff.employee.model.Customer;
-import com.increff.employee.model.CustomerData;
-import com.increff.employee.model.CustomerForm;
+import com.increff.employee.model.OrderData;
+import com.increff.employee.model.OrderForm;
+import com.increff.employee.model.OrderItem;
+import com.increff.employee.model.OrderData;
 import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
 import com.increff.employee.service.ApiException;
@@ -26,7 +27,7 @@ public class OrderDto {
     @Autowired
     private CustomerService service;
 
-    public void add(CustomerForm form) throws ApiException {
+    public void add(OrderForm form) throws ApiException {
         HashMap<String, Integer> errors = new HashMap<String, Integer>();
         service.findingError(form, errors);
         for (Map.Entry<String, Integer> mapElement : errors.entrySet()) {
@@ -46,18 +47,18 @@ public class OrderDto {
     }
 
 
-    public CustomerData getOrder( int id) throws ApiException {
+    public OrderData getOrder( int id) throws ApiException {
         OrderPojo p = service.getOrder(id);
-        List<Customer> c = service.getOrderItems(p.getId());
+        List<OrderItem> c = service.getOrderItems(p.getId());
         return convert(p, c);
     }
 
 
-    public List<CustomerData> getAll() throws ApiException {
+    public List<OrderData> getAll() throws ApiException {
         List<OrderPojo> list = service.getAllOrder();
         // List<OrderItemPojo> list1 = service.getAllOrderItems();
 
-        List<CustomerData> list2 = new ArrayList<CustomerData>();
+        List<OrderData> list2 = new ArrayList<OrderData>();
         // for (OrderPojo p : list) {
         // list2.add(convert(p));
         // }
@@ -73,9 +74,9 @@ public class OrderDto {
 
 
 
-    private List<OrderItemPojo> convertFormToOrderItem(CustomerForm f, int orderId) throws ApiException {
+    private List<OrderItemPojo> convertFormToOrderItem(OrderForm f, int orderId) throws ApiException {
         List<OrderItemPojo> list = new ArrayList<OrderItemPojo>();
-        for (Customer orderItemForm : f.getC()) {
+        for (OrderItem orderItemForm : f.getC()) {
             OrderItemPojo p = new OrderItemPojo();
             p.setOrderId(orderId);
             p.setProductId(ps.extractProd_Id(orderItemForm.getBarCode()));
@@ -93,8 +94,8 @@ public class OrderDto {
         return p;
     }
 
-    private CustomerData convert(OrderPojo p, List<Customer> c) {
-        CustomerData d = new CustomerData();
+    private OrderData convert(OrderPojo p, List<OrderItem> c) {
+        OrderData d = new OrderData();
         d.setId(p.getId());
         d.setDateTime(p.getTime());
         d.setC(c);
