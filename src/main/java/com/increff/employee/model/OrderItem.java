@@ -2,8 +2,8 @@ package com.increff.employee.model;
 
 public class OrderItem {
     private String BarCode;
-    private int Quantity;
-    private double mrp;
+    private Integer Quantity;
+    private Double mrp;
 
     public String getBarCode() {
         return BarCode;
@@ -17,15 +17,15 @@ public class OrderItem {
         return Quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         Quantity = quantity;
     }
 
-    public double getMrp() {
+    public Double getMrp() {
         return mrp;
     }
 
-    public void setMrp(double mrp) {
+    public void setMrp(Double mrp) {
         this.mrp = mrp;
     }
 }

@@ -4,6 +4,7 @@ import com.increff.employee.model.ProductData;
 import com.increff.employee.model.ProductForm;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
+import com.increff.employee.service.BrandService;
 import com.increff.employee.service.ProductService;
 import com.increff.employee.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,13 @@ import static com.increff.employee.util.helper.convertProductPojoToProductData;
 public class ProductDto {
     @Autowired
     private ProductService service;
-
+    @Autowired
+    private BrandService brandService;
 
     public void add(ProductForm productForm) throws ApiException {
         normalize(productForm);
         ProductPojo productPojo = convertProductFormToProductPojo(productForm);
+        productPojo.setBrand_category(brandService.extractId(productForm));
         if (Validate.isEmpty(productPojo.getName())) {
             throw new ApiException("name cannot be empty");
         }

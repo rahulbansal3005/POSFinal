@@ -21,7 +21,7 @@ import com.increff.employee.pojo.OrderPojo;
 // import com.increff.employee.util.StringUtil;
 
 @Service
-public class CustomerService {
+public class OrderService {
 
     @Autowired
     private OrderDao orderDao;

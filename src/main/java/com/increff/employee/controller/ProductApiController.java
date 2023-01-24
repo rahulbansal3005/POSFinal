@@ -53,6 +53,9 @@ public class ProductApiController {
         return dto.getAll();
     }
 
+
+
+//    TODO restrict barcode, brand and category to update, can update only mrp and name.
     @ApiOperation(value = "Updates a product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer id, @RequestBody ProductForm productForm) throws ApiException {

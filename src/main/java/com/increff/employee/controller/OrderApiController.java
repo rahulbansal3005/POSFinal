@@ -3,6 +3,9 @@ package com.increff.employee.controller;
 import java.util.List;
 
 import com.increff.employee.dto.OrderDto;
+import com.increff.employee.dto.OrderItemDto;
+import com.increff.employee.model.OrderData;
+import com.increff.employee.model.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.increff.employee.model.CustomerData;
 import com.increff.employee.model.OrderForm;
 import com.increff.employee.service.ApiException;
 
@@ -23,22 +25,22 @@ import io.swagger.annotations.ApiOperation;
 public class OrderApiController {
 
     @Autowired
-    private OrderDto dto;
+    private OrderDto orderDto;
 
     @ApiOperation(value = "Create one Order")
     @RequestMapping(path = "/api/order", method = RequestMethod.POST)
     public void add(@RequestBody OrderForm form) throws ApiException {
-        dto.add(form);
+        orderDto.add(form);
     }
     @ApiOperation(value = "Gets an Order by ID")
     @RequestMapping(path = "/api/order/{id}", method = RequestMethod.GET)
-    public CustomerData getOrder(@PathVariable int id) throws ApiException {
-        return dto.getOrder(id);
+    public OrderData getOrder(@PathVariable int id) throws ApiException {
+        return orderDto.getOrder(id);
     }
     @ApiOperation(value = "Gets list of all the Orders")
     @RequestMapping(path = "/api/order", method = RequestMethod.GET)
-    public List<CustomerData> getAll() throws ApiException {
-        return dto.getAll();
+    public List<OrderData> getAll() throws ApiException {
+        return orderDto.getAll();
     }
 
 }
