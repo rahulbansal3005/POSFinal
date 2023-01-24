@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.increff.employee.util.helper.convertInventoryFormToInventoryPojo;
+import static com.increff.employee.util.helper.convertInventoryPojoToInventoryData;
+
 @Service
 public class InventoryDto {
 
@@ -23,48 +26,31 @@ public class InventoryDto {
     private InventoryService service;
 
 
-    public void add( InventoryForm form) throws ApiException {
-        InventoryPojo p = convert(form);
-        service.add(p);
+    public void add( InventoryForm inventoryForm) throws ApiException {
+        InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
+        service.add(inventoryPojo);
     }
-    public void delete(int id) {
+    public void delete(Integer id) {
         service.delete(id);
     }
 
-    public InventoryData get( int id) throws ApiException {
-        InventoryPojo p = service.get(id);
-        return convert(p);
+    public InventoryData get( Integer id) throws ApiException {
+        InventoryPojo inventoryPojo = service.get(id);
+        return convertInventoryPojoToInventoryData(inventoryPojo);
     }
 
 
     public List<InventoryData> getAll() {
-        List<InventoryPojo> list = service.getAll();
-        List<InventoryData> list2 = new ArrayList<InventoryData>();
-        for (InventoryPojo p : list) {
-            list2.add(convert(p));
+        List<InventoryPojo> inventoryPojoList = service.getAll();
+        List<InventoryData> inventoryDataList = new ArrayList<InventoryData>();
+        for (InventoryPojo inventoryPojo : inventoryPojoList) {
+            inventoryDataList.add(convertInventoryPojoToInventoryData(inventoryPojo));
         }
-        return list2;
+        return inventoryDataList;
     }
 
-    public void update( int id, InventoryForm f) throws ApiException {
-        InventoryPojo p = convert(f);
-        service.update(id, p);
+    public void update( Integer id, InventoryForm inventoryForm) throws ApiException {
+        InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
+        service.update(id, inventoryPojo);
     }
-
-
-    private static InventoryData convert(InventoryPojo p) {
-        InventoryData d = new InventoryData();
-        d.setid(p.getId());
-        d.setProduct_id(p.getProduct_id());
-        d.setQuantity(p.getQuantity());
-        return d;
-    }
-
-    private InventoryPojo convert(InventoryForm f) throws ApiException {
-        InventoryPojo p = new InventoryPojo();
-        p.setProduct_id(ps.extractProd_Id(f.getBarcode()));
-        p.setQuantity(f.getQuantity());
-        return p;
-    }
-
 }

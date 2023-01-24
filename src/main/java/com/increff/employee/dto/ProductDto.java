@@ -31,11 +31,11 @@ public class ProductDto {
         }
         service.add(productPojo);
     }
-    public void delete( int id) {
+    public void delete( Integer id) {
         service.delete(id);
     }
 
-    public ProductData get(int id) throws ApiException {
+    public ProductData get(Integer id) throws ApiException {
         ProductPojo productPojo = service.get(id);
         return convertProductPojoToProductData(productPojo);
     }
@@ -50,7 +50,7 @@ public class ProductDto {
     }
 
 
-    public void update(int id, ProductForm productForm) throws ApiException {
+    public void update(Integer id, ProductForm productForm) throws ApiException {
         normalize(productForm);
         ProductPojo productPojo = convertProductFormToProductPojo(productForm);
         service.update(id, productPojo);

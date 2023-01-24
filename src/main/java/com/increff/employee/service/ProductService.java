@@ -21,17 +21,17 @@ public class ProductService {
     private InventoryService is;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(ProductPojo p) throws ApiException {
-        dao.insert(p);
+    public void add(ProductPojo productPojo) throws ApiException {
+        dao.insert(productPojo);
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(Integer id) {
         dao.delete(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public ProductPojo get(int id) throws ApiException {
+    public ProductPojo get(Integer id) throws ApiException {
         return getCheck(id);
     }
 
@@ -41,7 +41,7 @@ public class ProductService {
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public void update(int id, ProductPojo productPojo) throws ApiException {
+    public void update(Integer id, ProductPojo productPojo) throws ApiException {
         ProductPojo newproductPojo = getCheck(id);
         newproductPojo.setBarcode(productPojo.getBarcode());
         newproductPojo.setBrand_category(productPojo.getBrand_category());
@@ -60,7 +60,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductPojo getCheck(int id) throws ApiException {
+    public ProductPojo getCheck(Integer id) throws ApiException {
         ProductPojo p = dao.select(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exist, id: " + id);
@@ -79,7 +79,7 @@ public class ProductService {
     }
 
     @Transactional
-    public String extractBarCode(int prodID) throws ApiException {
+    public String extractBarCode(Integer prodID) throws ApiException {
         ProductPojo p = dao.select(prodID);
         if (p == null) {
             throw new ApiException("Product does not does not exist with this Product ID ");
@@ -88,7 +88,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void checker(String barcode, int quant, HashMap<String, Integer> errors) {
+    public void checker(String barcode, Integer quant, HashMap<String, Integer> errors) {
         ProductPojo p = dao.select_barcode(barcode);
         if (p == null) {
             errors.put(barcode, -1);

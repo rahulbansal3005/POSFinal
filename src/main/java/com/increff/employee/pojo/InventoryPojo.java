@@ -10,23 +10,23 @@ public class InventoryPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int product_id;
-    private int quantity;
+    private Integer id;
+    private Integer productId;
+    private Integer quantity;
 
-    public int getProduct_id() {
-        return product_id;
+    public Integer getProduct_id() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProduct_id(Integer productId) {
+        this.productId = productId;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class InventoryPojo {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

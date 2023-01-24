@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.InventoryDao;
 import com.increff.employee.pojo.InventoryPojo;
-// import com.increff.employee.util.StringUtil;
+// import com.increff.employee.util.Validate;
 
 @Service
 public class InventoryService {
@@ -19,16 +19,16 @@ public class InventoryService {
     private InventoryDao dao;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(InventoryPojo p) throws ApiException {
+    public void add(InventoryPojo inventoryPojo) throws ApiException {
         // normalize(p);
         // if (StringUtil.isEmpty(p.getName())) {
         // throw new ApiException("name cannot be empty");
         // }
-        dao.insert(p);
+        dao.insert(inventoryPojo);
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(Integer id) {
         dao.delete(id);
     }
 
@@ -43,27 +43,27 @@ public class InventoryService {
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public void update(int id, InventoryPojo p) throws ApiException {
+    public void update(Integer id, InventoryPojo inventoryPojo) throws ApiException {
         // normalize(p);
-        InventoryPojo ex = getCheck(id);
-        ex.setProduct_id(p.getProduct_id());
-        ex.setQuantity(p.getQuantity());
-        dao.update(ex);
+        InventoryPojo newInventoryPojo = getCheck(id);
+        newInventoryPojo.setProduct_id(inventoryPojo.getProduct_id());
+        newInventoryPojo.setQuantity(inventoryPojo.getQuantity());
+        dao.update(newInventoryPojo);
     }
 
     @Transactional
-    public InventoryPojo getCheck(int id) throws ApiException {
-        InventoryPojo p = dao.select(id);
-        if (p == null) {
+    public InventoryPojo getCheck(Integer id) throws ApiException {
+        InventoryPojo inventoryPojo = dao.select(id);
+        if (inventoryPojo == null) {
             throw new ApiException("Inventory with given ID does not exist, id: " + id);
         }
-        return p;
+        return inventoryPojo;
     }
 
     @Transactional
-    public Boolean checker(int id, int quant) {
-        InventoryPojo p = dao.select(id);
-        if (p.getQuantity() < quant) {
+    public Boolean checker(Integer id, Integer quant) {
+        InventoryPojo inventoryPojo = dao.select(id);
+        if (inventoryPojo.getQuantity() < quant) {
             return true;
         }
         return false;
@@ -71,14 +71,11 @@ public class InventoryService {
 
 
     @Transactional
-    public boolean checkQuantity(int id, int quant) {
-        InventoryPojo p = dao.select(id);
-        if (p.getQuantity()> quant) {
+    public boolean checkQuantity(Integer id, Integer quant) {
+        InventoryPojo inventoryPojo = dao.select(id);
+        if (inventoryPojo.getQuantity()> quant) {
             return true;
         }
         return false;
     }
-    // protected static void normalize(InventoryPojo p) {
-    // p.setName(StringUtil.toLowerCase(p.getName()));
-    // }
 }

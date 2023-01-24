@@ -1,19 +1,20 @@
 package com.increff.employee.util;
 
-import com.increff.employee.model.BrandData;
-import com.increff.employee.model.BrandForm;
-import com.increff.employee.model.ProductData;
-import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.*;
 import com.increff.employee.pojo.BrandPojo;
+import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
+import com.increff.employee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class helper {
 
-    @Autowired
+//    @Autowired
     private static BrandService bs;
+    private static ProductService ps;
+
     public static BrandData convertBrandPojoToBrandData(BrandPojo p) {
         BrandData brandData = new BrandData();
         brandData.setCategory(p.getCategory());
@@ -46,5 +47,24 @@ public class helper {
         productPojo.setName(productForm.getName());
         productPojo.setMrp(productForm.getMrp());
         return productPojo;
+    }
+
+
+    public static InventoryData convertInventoryPojoToInventoryData(InventoryPojo inventoryPojo) {
+        InventoryData inventoryData = new InventoryData();
+        inventoryData.setid(inventoryPojo.getId());
+        inventoryData.setProduct_id(inventoryPojo.getProduct_id());
+        inventoryData.setQuantity(inventoryPojo.getQuantity());
+        return inventoryData;
+    }
+
+
+
+
+    public static InventoryPojo convertInventoryFormToInventoryPojo(InventoryForm inventoryForm) throws ApiException {
+        InventoryPojo inventoryPojo = new InventoryPojo();
+        inventoryPojo.setProduct_id(ps.extractProd_Id(inventoryForm.getBarcode()));
+        inventoryPojo.setQuantity(inventoryForm.getQuantity());
+        return inventoryPojo;
     }
 }

@@ -23,17 +23,17 @@ public class InventoryDao extends AbstractDao {
     private EntityManager em;
 
     @Transactional
-    public void insert(InventoryPojo p) {
-        em.persist(p);
+    public void insert(InventoryPojo inventoryPojo) {
+        em.persist(inventoryPojo);
     }
 
-    public int delete(int id) {
+    public int delete(Integer id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
 
-    public InventoryPojo select(int id) {
+    public InventoryPojo select(Integer id) {
         TypedQuery<InventoryPojo> query = getQuery(select_id, InventoryPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
@@ -44,7 +44,7 @@ public class InventoryDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public void update(InventoryPojo p) {
+    public void update(InventoryPojo inventoryPojo) {
     }
 
 }
