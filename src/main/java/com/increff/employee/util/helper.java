@@ -3,18 +3,10 @@ package com.increff.employee.util;
 import com.increff.employee.model.*;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
-import com.increff.employee.service.BrandService;
-import com.increff.employee.service.ProductService;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class helper {
-
-//    @Autowired
-    private static BrandService bs;
-    private static ProductService ps;
 
     public static BrandData convertBrandPojoToBrandData(BrandPojo p) {
         BrandData brandData = new BrandData();
@@ -63,9 +55,7 @@ public class helper {
 
     public static InventoryPojo convertInventoryFormToInventoryPojo(InventoryForm inventoryForm) throws ApiException {
 //        TODO helper cannot use services like productServices.
-
         InventoryPojo inventoryPojo = new InventoryPojo();
-        inventoryPojo.setProduct_id(ps.extractProd_Id(inventoryForm.getBarcode()));
         inventoryPojo.setQuantity(inventoryForm.getQuantity());
         return inventoryPojo;
     }
@@ -77,18 +67,18 @@ public class helper {
         orderItemPojo.setSellingPrice(orderItem.getMrp());
         return orderItemPojo;
     }
-    public static List<OrderItemPojo> convertOrderFormToOrderItemPojoList(OrderForm orderForm, int orderId) throws ApiException {
-        List<OrderItemPojo> orderItemPojoList = new ArrayList<OrderItemPojo>();
-        for (OrderItem orderItemForm : orderForm.getC()) {
-            OrderItemPojo orderItemPojo = new OrderItemPojo();
-            orderItemPojo.setOrderId(orderId);
-            orderItemPojo.setProductId(ps.extractProd_Id(orderItemForm.getBarCode()));
-            orderItemPojo.setQuantity(orderItemForm.getQuantity());
-            orderItemPojo.setSellingPrice(orderItemForm.getMrp());
-            orderItemPojoList.add(orderItemPojo);
-        }
-        return orderItemPojoList;
-    }
+//    public static List<OrderItemPojo> convertOrderFormToOrderItemPojoList(OrderForm orderForm, int orderId) throws ApiException {
+//        List<OrderItemPojo> orderItemPojoList = new ArrayList<OrderItemPojo>();
+//        for (OrderItem orderItemForm : orderForm.getC()) {
+//            OrderItemPojo orderItemPojo = new OrderItemPojo();
+//            orderItemPojo.setOrderId(orderId);
+//            orderItemPojo.setProductId(ps.extractProd_Id(orderItemForm.getBarCode()));
+//            orderItemPojo.setQuantity(orderItemForm.getQuantity());
+//            orderItemPojo.setSellingPrice(orderItemForm.getMrp());
+//            orderItemPojoList.add(orderItemPojo);
+//        }
+//        return orderItemPojoList;
+//    }
 
     public static OrderPojo convertOrderFormToOrder() throws ApiException {
         OrderPojo orderPojo = new OrderPojo();

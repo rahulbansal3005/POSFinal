@@ -28,6 +28,9 @@ public class InventoryDto {
 
     public void add( InventoryForm inventoryForm) throws ApiException {
         InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
+
+        inventoryPojo.setProduct_id(ps.extractProd_Id(inventoryForm.getBarcode()));
+
         service.add(inventoryPojo);
     }
     public void delete(Integer id) {
