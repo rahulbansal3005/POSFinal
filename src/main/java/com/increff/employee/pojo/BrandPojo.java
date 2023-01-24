@@ -10,7 +10,7 @@ public class BrandPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String brand;
     private String category;
 
@@ -18,7 +18,7 @@ public class BrandPojo {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

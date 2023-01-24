@@ -10,16 +10,16 @@ public class ProductPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String barcode;
 
 //    TODO snakeCase->camelCase
 //    TODO data types int ->Integer. primitive ->class
-    private int brand_category;
+    private Integer brandCategory;
     private String name;
-    private double mrp;
+    private Double mrp;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -35,12 +35,12 @@ public class ProductPojo {
         this.barcode = barcode;
     }
 
-    public int getBrand_category() {
-        return brand_category;
+    public Integer getBrand_category() {
+        return brandCategory;
     }
 
-    public void setBrand_category(int brand_category) {
-        this.brand_category = brand_category;
+    public void setBrand_category(int brandCategory) {
+        this.brandCategory = brandCategory;
     }
 
     public String getName() {
@@ -51,7 +51,7 @@ public class ProductPojo {
         this.name = name;
     }
 
-    public double getMrp() {
+    public Double getMrp() {
         return mrp;
     }
 
