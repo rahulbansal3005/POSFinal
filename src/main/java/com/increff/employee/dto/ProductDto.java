@@ -1,7 +1,7 @@
 package com.increff.employee.dto;
 
-import com.increff.employee.model.ProductData;
-import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.Data.ProductData;
+import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;

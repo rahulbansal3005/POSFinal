@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.increff.employee.model.OrderForm;
+import com.increff.employee.model.Form.OrderForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.OrderDao;
 import com.increff.employee.dao.OrderItemDao;
-import com.increff.employee.model.OrderItem;
+import com.increff.employee.model.Data.OrderItem;
 import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
 

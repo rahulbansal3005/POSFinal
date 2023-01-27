@@ -1,6 +1,6 @@
 package com.increff.employee.dto;
 
-import com.increff.employee.model.PdfData;
+import com.increff.employee.model.Data.PdfData;
 import com.increff.employee.service.ApiException;
 
 public class PdfDto {

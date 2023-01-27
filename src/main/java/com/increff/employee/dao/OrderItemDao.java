@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 // import com.increff.employee.model.Customer;
-// import com.increff.employee.model.InventoryForm;
+// import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.pojo.OrderItemPojo;
 
 @Repository

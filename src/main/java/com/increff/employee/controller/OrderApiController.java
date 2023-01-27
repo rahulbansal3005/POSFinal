@@ -3,9 +3,8 @@ package com.increff.employee.controller;
 import java.util.List;
 
 import com.increff.employee.dto.OrderDto;
-import com.increff.employee.dto.OrderItemDto;
-import com.increff.employee.model.OrderData;
-import com.increff.employee.model.OrderItem;
+import com.increff.employee.model.Data.OrderData;
+import com.increff.employee.model.Data.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.increff.employee.model.OrderForm;
 import com.increff.employee.service.ApiException;
 
 import io.swagger.annotations.Api;

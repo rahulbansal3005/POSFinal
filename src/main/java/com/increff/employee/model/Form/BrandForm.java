@@ -1,4 +1,4 @@
-package com.increff.employee.model;
+package com.increff.employee.model.Form;
 //TODO use Lombok for getter setter
 
 import lombok.Getter;

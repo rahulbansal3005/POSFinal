@@ -1,5 +1,6 @@
-package com.increff.employee.model;
+package com.increff.employee.model.Data;
 
+import com.increff.employee.model.Form.EmployeeForm;
 import lombok.Getter;
 import lombok.Setter;
 

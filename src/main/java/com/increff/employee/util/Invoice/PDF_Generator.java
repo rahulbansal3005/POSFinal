@@ -14,7 +14,7 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
 //import com.increff.pos.model.PdfData;
-import com.increff.employee.model.PdfData;
+import com.increff.employee.model.Data.PdfData;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;

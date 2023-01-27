@@ -2,8 +2,8 @@ package com.increff.employee.util.Invoice;
 
 
 //import lombok.Setter;
-import com.increff.employee.model.PdfData;
-import com.increff.employee.model.PdfListData;
+import com.increff.employee.model.Data.PdfData;
+import com.increff.employee.model.Data.PdfListData;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;

@@ -1,6 +1,9 @@
 package com.increff.employee.util;
 
-import com.increff.employee.model.*;
+import com.increff.employee.model.Data.*;
+import com.increff.employee.model.Form.BrandForm;
+import com.increff.employee.model.Form.InventoryForm;
+import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 

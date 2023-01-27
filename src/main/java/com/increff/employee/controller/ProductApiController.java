@@ -1,6 +1,5 @@
 package com.increff.employee.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.increff.employee.dto.ProductDto;
@@ -11,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.increff.employee.model.ProductData;
-import com.increff.employee.model.ProductForm;
-import com.increff.employee.pojo.ProductPojo;
+import com.increff.employee.model.Data.ProductData;
+import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.service.ApiException;
-import com.increff.employee.service.ProductService;
-import com.increff.employee.service.BrandService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

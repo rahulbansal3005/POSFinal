@@ -1,8 +1,8 @@
 package com.increff.employee.dto;
 
 
-import com.increff.employee.model.InventoryData;
-import com.increff.employee.model.InventoryForm;
+import com.increff.employee.model.Data.InventoryData;
+import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.InventoryService;

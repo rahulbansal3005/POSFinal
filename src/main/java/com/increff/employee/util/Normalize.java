@@ -1,8 +1,8 @@
 package com.increff.employee.util;
 
-import com.increff.employee.model.BrandForm;
-import com.increff.employee.model.InventoryForm;
-import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.Form.BrandForm;
+import com.increff.employee.model.Form.InventoryForm;
+import com.increff.employee.model.Form.ProductForm;
 
 public class Normalize {
     public static void normalize(BrandForm p) {

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.increff.employee.model.InventoryData;
-import com.increff.employee.model.InventoryForm;
+import com.increff.employee.model.Data.InventoryData;
+import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.service.ApiException;
 
 import io.swagger.annotations.Api;

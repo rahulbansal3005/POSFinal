@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
 
 @Repository

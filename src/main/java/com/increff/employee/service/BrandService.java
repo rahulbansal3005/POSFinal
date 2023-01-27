@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.BrandDao;
-import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
 @Service
 public class BrandService {
