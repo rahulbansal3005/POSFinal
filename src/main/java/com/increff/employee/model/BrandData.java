@@ -1,5 +1,10 @@
 package com.increff.employee.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 //TODO  where id is using??
 public class BrandData extends BrandForm {
@@ -7,13 +12,5 @@ public class BrandData extends BrandForm {
 
 //    TODO remove
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

@@ -42,7 +42,7 @@ public class OrderDto {
 
         for(OrderItem orderItem:orderForm)
         {
-            check(orderItem);
+            check(orderItem,errorMessages);
         }
 
         if(errorMessages.size()!=0)
@@ -67,7 +67,7 @@ public class OrderDto {
         // 4) Reduce Items from inventory
 
     }
-    public boolean check(OrderItem c) throws ApiException {
+    public boolean check(OrderItem c, List<String>errorMessages) throws ApiException {
         int prod_id= ps.extractProd_Id(c.getBarCode());
         return is.checkQuantity(prod_id,c.getQuantity());
     }
@@ -81,15 +81,7 @@ public class OrderDto {
 
     public List<OrderData> getAll() throws ApiException {
         List<OrderPojo> list = service.getAllOrder();
-        // List<OrderItemPojo> list1 = service.getAllOrderItems();
-
         List<OrderData> list2 = new ArrayList<OrderData>();
-        // for (OrderPojo p : list) {
-        // list2.add(convert(p));
-        // }
-        // for (OrderItemPojo p : list1) {
-        // list2.add(convert(p));
-        // }
         for (OrderPojo p : list) {
             list2.add(getOrder(p.getId()));
         }

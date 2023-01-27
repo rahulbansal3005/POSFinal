@@ -44,7 +44,7 @@ public class helper {
 
     public static InventoryData convertInventoryPojoToInventoryData(InventoryPojo inventoryPojo) {
         InventoryData inventoryData = new InventoryData();
-        inventoryData.setid(inventoryPojo.getId());
+        inventoryData.setId(inventoryPojo.getId());
         inventoryData.setProduct_id(inventoryPojo.getProduct_id());
         inventoryData.setQuantity(inventoryPojo.getQuantity());
         return inventoryData;

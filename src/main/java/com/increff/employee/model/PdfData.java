@@ -1,48 +1,14 @@
 package com.increff.employee.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+
+@Getter
+@Setter
 public class PdfData {
-	public Integer getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(String invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
-
-	public String getInvoiceTime() {
-		return invoiceTime;
-	}
-
-	public void setInvoiceTime(String invoiceTime) {
-		this.invoiceTime = invoiceTime;
-	}
-
-	public List<PdfListData> getItemList() {
-		return itemList;
-	}
-
-	public void setItemList(List<PdfListData> itemList) {
-		this.itemList = itemList;
-	}
-
-	public Double getTotal() {
-		return total;
-	}
-
-	public void setTotal(Double total) {
-		this.total = total;
-	}
-
 	private Integer orderId;
 	private String invoiceDate;
 	private String invoiceTime;

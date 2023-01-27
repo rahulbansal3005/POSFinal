@@ -1,10 +1,14 @@
 package com.increff.employee.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+@Getter
+@Setter
 @Entity
 public class ProductPojo {
 
@@ -18,45 +22,4 @@ public class ProductPojo {
     private Integer brandCategory;
     private String name;
     private Double mrp;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public Integer getBrand_category() {
-        return brandCategory;
-    }
-
-    public void setBrand_category(int brandCategory) {
-        this.brandCategory = brandCategory;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getMrp() {
-        return mrp;
-    }
-
-    public void setMrp(double mrp) {
-        this.mrp = mrp;
-    }
-
 }

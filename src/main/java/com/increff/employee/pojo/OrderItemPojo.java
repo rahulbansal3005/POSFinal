@@ -5,9 +5,12 @@ import javax.persistence.GeneratedValue;
 // import javax.persistence.GenerationType;
 import javax.persistence.Id;
 // import javax.persistence.Parameter;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
-
+@Getter
+@Setter
 @Entity
 public class OrderItemPojo {
     @Id
@@ -22,45 +25,4 @@ public class OrderItemPojo {
     private Integer productId;
     private Integer quantity;
     private Double sellingPrice;
-
-    public int getId() {
-        return id;
-    }
-
-    public double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
 }
