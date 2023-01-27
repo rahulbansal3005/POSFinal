@@ -292,15 +292,17 @@ function displayOrder(id) {
       'Content-Type': 'application/json'
     },
     success: function (response) {
+      console.log("RESPONSE",response);
       $("#view-order-id").text(id);
-      response.forEach(element => {
-        var row = '<tr>' +
-            '<td>' + element.barCode + '</td>' +
-            '<td>' + element.quantity + '</td>' +
-            '<td>' + element.sellingPrice + '</td>' +
-            '</tr>';
+      response['c'].forEach(element => {
+        console.log("element",element);
+          var row = '<tr>' +
+              '<td>' + element.barCode + '</td>' +
+              '<td>' + element.quantity + '</td>' +
+              '<td>' + element.sellingPrice + '</td>' +
+              '</tr>';
 
-        $tbody.append(row);
+          $tbody.append(row);
       });
     },
     error: function (error) {
@@ -350,11 +352,12 @@ function displayOrderList(data){
 
   for(var i in data){
     var e = data[i];
+    console.log("E",e);
     var buttonHtml = ' <button type="button" class="btn btn-secondary" onclick="displayOrder(' + e.id + ')">View Order</button>'
     var date = new Date(e.updated)
     var row = '<tr>'
         + '<td>' + e.id + '</td>'
-        + '<td>' + date.toLocaleDateString("en-US") +" "+date.toLocaleTimeString("en-US")+ '</td>'
+        + '<td>' + e.dateTime +'</td>'
         + '<td>' + buttonHtml + '</td>'
         + '</tr>';
     $tbody.append(row);
