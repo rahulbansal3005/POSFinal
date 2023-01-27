@@ -46,7 +46,7 @@ public class InventoryService {
     public void update(Integer id, InventoryPojo inventoryPojo) throws ApiException {
         // normalize(p);
         InventoryPojo newInventoryPojo = getCheck(id);
-        newInventoryPojo.setProduct_id(inventoryPojo.getProduct_id());
+        newInventoryPojo.setProductId(inventoryPojo.getProductId());
         newInventoryPojo.setQuantity(inventoryPojo.getQuantity());
         dao.update(newInventoryPojo);
     }

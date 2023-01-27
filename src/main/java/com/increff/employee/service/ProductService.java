@@ -44,7 +44,7 @@ public class ProductService {
     public void update(Integer id, ProductPojo productPojo) throws ApiException {
         ProductPojo newproductPojo = getCheck(id);
         newproductPojo.setBarcode(productPojo.getBarcode());
-        newproductPojo.setBrand_category(productPojo.getBrand_category());
+        newproductPojo.setBrandCategory(productPojo.getBrandCategory());
         newproductPojo.setName(productPojo.getName());
         newproductPojo.setMrp(productPojo.getMrp());
         dao.update(newproductPojo);

@@ -28,7 +28,7 @@ public class ProductDto {
     public void add(ProductForm productForm) throws ApiException {
         normalize(productForm);
         ProductPojo productPojo = convertProductFormToProductPojo(productForm);
-        productPojo.setBrand_category(brandService.extractId(productForm));
+        productPojo.setBrandCategory(brandService.extractId(productForm));
         if (Validate.isEmpty(productPojo.getName())) {
             throw new ApiException("name cannot be empty");
         }
