@@ -139,6 +139,7 @@ function displayProductList(data) {
   $tbody.empty();
   for (var i in data) {
     var e = data[i];
+    // console.log(e);
     var buttonHtml =
       '<button onclick="deleteProduct(' + e.id + ')">delete</button>';
     buttonHtml +=
@@ -152,8 +153,11 @@ function displayProductList(data) {
       e.barcode +
       "</td>" +
       "<td>" +
-      e.brand_category +
+      e.brand +
       "</td>" +
+        "<td>" +
+        e.category +
+        "</td>"+
       "<td>" +
       e.name +
       "</td>" +

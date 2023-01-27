@@ -64,7 +64,7 @@ public class helper {
         OrderItemPojo orderItemPojo =new OrderItemPojo();
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setQuantity(orderItem.getQuantity());
-        orderItemPojo.setSellingPrice(orderItem.getMrp());
+        orderItemPojo.setSellingPrice(orderItem.getSellingPrice());
         return orderItemPojo;
     }
 //    public static List<OrderItemPojo> convertOrderFormToOrderItemPojoList(OrderForm orderForm, int orderId) throws ApiException {

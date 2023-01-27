@@ -29,8 +29,8 @@ public class OrderApiController {
 
     @ApiOperation(value = "Create one Order")
     @RequestMapping(path = "/api/order", method = RequestMethod.POST)
-    public void add(@RequestBody OrderForm form) throws ApiException {
-        orderDto.add(form);
+    public void add(@RequestBody OrderItem[] orderForm) throws ApiException {
+        orderDto.add(orderForm);
     }
     @ApiOperation(value = "Gets an Order by ID")
     @RequestMapping(path = "/api/order/{id}", method = RequestMethod.GET)

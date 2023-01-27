@@ -35,37 +35,37 @@ public class OrderDto {
     @Autowired
     private OrderService service;
 
-    public void add(OrderForm orderForm) throws ApiException {
+    public void add(OrderItem[] orderForm) throws ApiException {
 //        1) Validate all the Order Items in our inventory.
+
         List<String> errorMessages=new ArrayList<>();
 
-        for(OrderItem orderItem:orderForm.getC())
+        for(OrderItem orderItem:orderForm)
         {
             check(orderItem);
         }
 
         if(errorMessages.size()!=0)
         {
-            return;
+            for(String s:errorMessages)
+            {
+                System.out.println(s);
+            }
+            throw new ApiException("Too many errors in Order Item List ");
         }
 
         // 2) Create new Order.
         OrderPojo orderPojo = convertOrderFormToOrder();
         LocalDateTime now = LocalDateTime.now();
         orderPojo.setTime(dtf.format(now));
-        service.add(orderPojo);
+        service.addOrder(orderPojo);
 
         // 3) Add order Items in database.
-        add(orderForm,orderPojo.getId());
-    }
-    public void add(OrderForm orderForm, int orderId) throws ApiException {
-        List<OrderItemPojo> orderItemPojoList= new ArrayList<>();
-        for(OrderItem orderItem:orderForm.getC())
-        {
-            OrderItemPojo orderItemPojo= convertOrderItemToOrderItemPojo(orderItem,orderId);
-            orderItemPojo.setProductId(ps.extractProd_Id(orderItem.getBarCode()));
-        }
-        service.add(orderItemPojoList);
+        service.addOrderItems(orderForm,orderPojo.getId());
+
+
+        // 4) Reduce Items from inventory
+
     }
     public boolean check(OrderItem c) throws ApiException {
         int prod_id= ps.extractProd_Id(c.getBarCode());

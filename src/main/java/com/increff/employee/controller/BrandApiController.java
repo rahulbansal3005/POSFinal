@@ -70,8 +70,8 @@ public class BrandApiController {
 
     @ApiOperation(value = "Updates a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
-        dto.update(id, f);
+    public void update(@PathVariable int id, @RequestBody BrandForm brandForm) throws ApiException {
+        dto.update(id, brandForm);
     }
 
 }

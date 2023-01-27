@@ -27,8 +27,8 @@ public class OrderItemDao extends AbstractDao {
     private EntityManager em;
 
     @Transactional
-    public void insert(OrderItemPojo p) {
-        em.persist(p);
+    public void insert(OrderItemPojo orderItemPojo) {
+        em.persist(orderItemPojo);
     }
 
     public int delete(int id) {

@@ -43,11 +43,15 @@ public class ProductDto {
         return convertProductPojoToProductData(productPojo);
     }
 
-    public List<ProductData> getAll() {
+    public List<ProductData> getAll() throws ApiException {
         List<ProductPojo> productPojoList = service.getAll();
         List<ProductData> productDataList = new ArrayList<ProductData>();
         for (ProductPojo productPojo : productPojoList) {
-            productDataList.add(convertProductPojoToProductData(productPojo));
+//            TODO use brandservice for brand and category name remove brandCategoryID
+            ProductData productData =convertProductPojoToProductData(productPojo);
+            productData.setBrand(brandService.getBrandName(productData.getId()));
+            productData.setCategory(brandService.getCategoryName(productData.getId()));
+            productDataList.add(productData);
         }
         return productDataList;
     }

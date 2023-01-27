@@ -10,178 +10,173 @@
 
 <div class="container">
 
-<h3>Customer Page</h3>
+	<h3>Orders</h3>
 
- <!-- Top row with form-->
- <div class="row">
-	 <div class="col-12">
-			  <button type="button" class="btn btn-primary" id="add-Order" >Add Order Items</button>
-			  &nbsp;
-			  <button type="button" class="btn btn-primary" id="refresh-Orderdata">Refresh Orders</button>
-			  &nbsp;
-<!--			  <button type="button" class="btn btn-primary" id="upload-data">Upload</button>-->
-	 </div>
-</div> 
-
-
-<!-- Blank Row -->
-<div class="row">
-	&nbsp;
-</div>
-<div class="row">
-
- <!-- Table -->
- <div class="col-12">
-	<table class="table table-striped" id="customer-table">
-	  <thead>
-	  <tr>
-	      <th scope="col">OrderID</th>
-		  <th scope="col">Order Date-Time </th>
-	      <th scope="col">Actions</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	  </tbody>
-	</table>
-
-</div> 
+	<!-- Top row with form-->
+	<div class="row">
+		<div class="col-12">
+			<form class="form-inline" id="order-form">
+				<button type="button" class="btn btn-primary" id="add-order">Create Order</button>
+				&nbsp;
+				<button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+			</form>
+		</div>
+	</div>
 
 
-</div>
+	<!-- Blank Row -->
+	<div class="row">
+		&nbsp;
+	</div>
+	<div class="row">
 
+		<!-- Table -->
+		<div class="col-12">
+			<table class="table table-striped" id="order-table">
+				<thead>
+				<tr>
+					<th scope="col">OrderId</th>
+					<th scope="col">Placed at</th>
+					<th scope="col">Actions</th>
+				</tr>
+				</thead>
+				<tr>
+					<td>1</td>
+					<td>12-01-2023</td>
+					<td>View</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>12-01-2023</td>
+					<td>View</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>12-01-2023</td>
+					<td>View</td>
+				</tr>
+			</table>
 
+		</div>
+	</div>
 
-<!--Add Order Items Modal-->
-
-	<div class="modal" tabindex="-1" role="dialog" id="add-customer-modal">
-		<div class="modal-dialog" role="document">
+	<!-- Add order Model-->
+	<div class="modal" tabindex="-1" role="dialog" id="add-order-item-modal">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Order Items </h5>
+					<h5 class="modal-title">Cart</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form class="form-inline" id="customer-form">
+					<form class="form-inline" id="order-item-form">
 						<div class="form-group">
-							<label for="inputBarcode" class="col-sm-2 col-form-label">BarCode</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="Enter BarCode">
+							<label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="inputBarcode" name="barCode" placeholder="Enter barcode">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter Quantity">
+							<p style="color:red;" id="inputQuantity"></p>
+							<div class="col-sm-8">
+								<input type="number" class="form-control" id="inputQty" name="quantity" placeholder="Enter quantity">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputMrp" class="col-sm-2 col-form-label">MRP</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="enter MRP">
+							<label for="inputSellingPrice" class="col-sm-2 col-form-label">Selling Price</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="inputSellingPrice" name="sellingPrice" placeholder="Enter Selling Price">
 							</div>
 						</div>
-<!--						<input type="hidden" name="id" >-->
-						&nbsp;
-<!--						<button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>-->
-<!--						&nbsp;-->
-<!--						<button type="button" class="btn btn-primary" id="upload-data">Upload</button>-->
+						<button type="button" class="btn btn-primary" id="add-order-item">
+							Add Item
+						</button>
 					</form>
-					<button type="button" class="btn btn-primary" id="add-orderItem">Add</button>
+					<div class="row">
+						&nbsp;
+					</div>
+					<div class="row">
 
+						<div class="col-12">
+							<table class="table table-striped" id="order-item-table">
+								<thead>
+								<tr>
+									<th scope="col">Barcode</th>
+									<th scope="col">Quantity</th>
+									<th scope="col">Selling Price</th>
+									<th scope="col">Actions</th>
+								</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" id="submit-order">Submit</button>
+					<button type="button" class="btn btn-primary" id="place-order">Place Order</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- View order Model-->
+	<div class="modal" tabindex="-1" role="dialog" id="view-order-item-modal">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Cart</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="row">
+						<div class="col-12"> Order Id : <p id="view-order-id"></p></div>
+					</div>
+					<div class="row">
+
+						<div class="col-12">
+							<table class="table table-striped" id="view-order-item-table">
+								<thead>
+								<tr>
+									<th scope="col">Barcode</th>
+									<th scope="col">Quantity</th>
+									<th scope="col">Selling Price</th>
+								</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-	<!-- Customer Edit Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="edit-customer-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Order Items <Details></Details></h5>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-			<form class="form-inline" id="customer-edit-form">
-			  <div class="form-group">
-			    <label for="inputBarcode" class="col-sm-2 col-form-label">Bar Code</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="barcode" placeholder="enter barcode">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="quantity" placeholder="enter Quantity">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label for="inputMrp" class="col-sm-2 col-form-label">MRP</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="mrp" placeholder="enter MRP">
-			    </div>
-			  </div>
- 	        <input type="hidden" name="id" >
-			</form>        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="update-customer">Update</button>
-      </div>
-    </div>
-  </div>
+
 </div>
-
-
-<!-- Customer Upload Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="upload-customer-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      
-      <div class="modal-header">
-        <h5 class="modal-title">Upload Customer Order</h5>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div class="modal-body">
-      	<div class="customer-file">
-		  <input type="file" class="custom-file-input" id="customerFile">
-		  <label class="custom-file-label" for="customerFile" id="customerFileName">Choose file</label>
-		</div>
-		<a th:href="@{/sample/customer.tsv}" target="_blank">Download Sample</a> 
-		<br>
-		Rows: <span id="rowCount">0</span>, 
-		Processed: <span id="processCount">0</span>, 
-		Errors: <span id="errorCount">0</span>
-      </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="process-data">Upload</button>
-        <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div> <!-- Container end-->
 
 <footer th:replace="snippets.html :: name_footer"></footer>
 
-<script th:src="@{/static/customer.js}"/></script>
+<script th:src="@{/static/order.js}"/></script>
 
-</body>	
+</body>
 
 </html>

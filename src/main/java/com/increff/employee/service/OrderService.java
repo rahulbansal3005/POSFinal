@@ -10,14 +10,13 @@ import com.increff.employee.model.OrderForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// import com.increff.employee.dao.CustomerDao;
 import com.increff.employee.dao.OrderDao;
 import com.increff.employee.dao.OrderItemDao;
 import com.increff.employee.model.OrderItem;
-// import com.increff.employee.model.InventoryForm;
-// import com.increff.employee.pojo.CustomerPojo;
 import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
+
+import static com.increff.employee.util.helper.convertOrderItemToOrderItemPojo;
 // import com.increff.employee.util.StringUtil;
 
 @Service
@@ -25,10 +24,6 @@ public class OrderService {
 
     @Autowired
     private OrderDao orderDao;
-
-    // @Autowired
-    // private InventoryService is;
-
     @Autowired
     private ProductService ps;
 
@@ -36,11 +31,9 @@ public class OrderService {
 
     private OrderItemDao orderItemDao;
 
-    // @Autowired
-    // private BrandService bs;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(OrderPojo p) throws ApiException {
+    public void addOrder(OrderPojo p) throws ApiException {
         // normalize(p);
         // if (StringUtil.isEmpty(p.getName())) {
         // throw new ApiException("name cannot be empty");
@@ -48,14 +41,28 @@ public class OrderService {
         orderDao.insert(p);
     }
 
+
+    public void addOrderItems(OrderItem[] orderForm, int orderId) throws ApiException {
+        List<OrderItemPojo> orderItemPojoList= new ArrayList<OrderItemPojo>();
+        for(OrderItem orderItem:orderForm)
+        {
+//            TODO remove extractProdID
+            OrderItemPojo orderItemPojo= convertOrderItemToOrderItemPojo(orderItem,orderId);
+            orderItemPojo.setProductId(ps.extractProd_Id(orderItem.getBarCode()));
+            orderItemPojoList.add(orderItemPojo);
+        }
+        add(orderItemPojoList);
+    }
+
     @Transactional(rollbackOn = ApiException.class)
-    public void add(List<OrderItemPojo> p) throws ApiException {
+    public void add(List<OrderItemPojo> orderItemPojoList) throws ApiException {
         // normalize(p);
         // if (StringUtil.isEmpty(p.getName())) {
         // throw new ApiException("name cannot be empty");
         // }
-        for (OrderItemPojo i : p) {
-            orderItemDao.insert(i);
+        for (OrderItemPojo orderItemPojo : orderItemPojoList) {
+            System.out.println(orderItemPojo);
+            orderItemDao.insert(orderItemPojo);
         }
     }
 
@@ -71,11 +78,6 @@ public class OrderService {
     public void deleteOrderItem(int id) {
         orderItemDao.delete(id);
     }
-
-    // @Transactional(rollbackOn = ApiException.class)
-    // public CustomerPojo get(int id) throws ApiException {
-    // return getCheck(id);
-    // }
 
     @Transactional(rollbackOn = ApiException.class)
     public OrderPojo getOrder(int id) throws ApiException {
@@ -104,7 +106,7 @@ public class OrderService {
         for (OrderItemPojo i : p) {
             OrderItem temp = new OrderItem();
             temp.setBarCode(ps.extractBarCode(i.getProductId()));
-            temp.setMrp(i.getSellingPrice());
+            temp.setSellingPrice(i.getSellingPrice());
             temp.setQuantity(i.getQuantity());
 
             c.add(temp);

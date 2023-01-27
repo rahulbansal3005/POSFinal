@@ -56,6 +56,18 @@ public class BrandService {
         return brandPojo;
     }
 
+    @Transactional
+    public String getBrandName(Integer id) throws ApiException {
+        BrandPojo brandPojo=get(id);
+        return brandPojo.getBrand();
+    }
+
+    @Transactional
+    public String getCategoryName(Integer id) throws ApiException {
+        BrandPojo brandPojo=get(id);
+        return brandPojo.getCategory();
+    }
+
 
     @Transactional
     public int extractId(ProductForm productForm) throws ApiException {
