@@ -95,4 +95,11 @@ public class helper {
         d.setC(c);
         return d;
     }
+
+    public static BrandForm convertBrandPojotoBrandForm(BrandPojo brandPojo) {
+        BrandForm brandForm = new BrandForm();
+        brandForm.setCategory(brandPojo.getCategory());
+        brandForm.setBrand(brandPojo.getBrand());
+        return brandForm;
+    }
 }

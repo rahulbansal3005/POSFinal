@@ -1,19 +1,27 @@
 package com.increff.employee.pojo;
 
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Date;
-
+@Entity
 @Getter
 @Setter
-@Entity
-public class DailySalesPojo {
+public class DailySalesPojo implements Serializable{
+
     @Id
-    private Date date;
-    private int orders;
-    private int items;
-    private double revenue;
+    @Column(nullable = false)
+    private ZonedDateTime date;
+    @Column(nullable = false)
+    private Integer orderCount;
+    @Column(nullable = false)
+    private Integer itemsCount;
+    @Column(nullable = false)
+    private Double totalRevenue;
 }

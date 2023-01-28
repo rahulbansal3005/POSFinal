@@ -35,6 +35,7 @@ public class ProductService {
         return getCheck(id);
     }
 
+
     @Transactional
     public List<ProductPojo> getAll() {
         return dao.selectAll();
@@ -66,6 +67,10 @@ public class ProductService {
             throw new ApiException("Product with given ID does not exist, id: " + id);
         }
         return p;
+    }
+    @Transactional
+    public List<ProductPojo> getProductByBrandCategoryId(int brandCategoryId) {
+        return dao.getProductByBrandCategory(brandCategoryId);
     }
 
 

@@ -17,4 +17,6 @@ public class Normalize {
      p.setBarcode(Validate.toLowerCase(p.getBarcode()));
      }
 
+    public static void normalizeBrandForm(BrandForm brandForm) {
+    }
 }

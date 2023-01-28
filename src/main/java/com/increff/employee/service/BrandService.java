@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.increff.employee.model.Form.BrandForm;
+import com.increff.employee.util.Normalize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,5 +78,10 @@ public class BrandService {
             throw new ApiException("Brand-Category combination does not exist ");
         }
         return brandPojo.getId();
+    }
+
+    public List<BrandPojo> searchBrandCategoryData(BrandForm brandForm) {
+        Normalize.normalizeBrandForm(brandForm);
+        return dao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
     }
 }
