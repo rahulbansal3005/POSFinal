@@ -89,12 +89,12 @@ public class helper {
         return orderPojo;
     }
 
-    public static OrderData convertOrderPojoToOrderData(OrderPojo p, List<OrderItem> c) {
-        OrderData d = new OrderData();
-        d.setId(p.getId());
-        d.setDateTime(p.getTime());
-        d.setC(c);
-        return d;
+    public static OrderData convertOrderPojoToOrderData(OrderPojo orderPojo, List<OrderItem> c) {
+        OrderData orderData = new OrderData();
+        orderData.setId(orderPojo.getId());
+        orderData.setDateTime(orderPojo.getDate());
+        orderData.setC(c);
+        return orderData;
     }
 
     public static BrandForm convertBrandPojotoBrandForm(BrandPojo brandPojo) {
@@ -104,9 +104,9 @@ public class helper {
         return brandForm;
     }
 
-    public static BrandForm convertSalesReportFormtoBrandForm(SalesReportForm salesReportForm) {
-    }
-
-    public static Object convertToSalesReportData(OrderItemPojo o, BrandPojo brandPojo) {
-    }
+//    public static BrandForm convertSalesReportFormtoBrandForm(SalesReportForm salesReportForm) {
+//    }
+//
+//    public static Object convertToSalesReportData(OrderItemPojo o, BrandPojo brandPojo) {
+//    }
 }

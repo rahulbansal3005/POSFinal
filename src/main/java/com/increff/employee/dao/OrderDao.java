@@ -29,6 +29,8 @@ public class OrderDao extends AbstractDao {
         em.persist(p);
     }
 
+
+    @Transactional
     public int delete(int id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);
@@ -46,7 +48,7 @@ public class OrderDao extends AbstractDao {
         query.setParameter("barcode", barCode);
         return getSingle(query);
     }
-
+    @Transactional
     public List<OrderPojo> selectAll() {
         TypedQuery<OrderPojo> query = getQuery(select_all, OrderPojo.class);
         return query.getResultList();

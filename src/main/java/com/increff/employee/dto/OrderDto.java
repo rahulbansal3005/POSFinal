@@ -55,7 +55,9 @@ public class OrderDto {
         // 2) Create new Order.
         OrderPojo orderPojo = convertOrderFormToOrder();
         LocalDateTime now = LocalDateTime.now();
-        orderPojo.setTime(dtf.format(now));
+        java.util.Date date=new java.util.Date();
+//        orderPojo.setDate(dtf.format(now));
+        orderPojo.setDate(date);
         service.addOrder(orderPojo);
 
         // 3) Add order Items in database.

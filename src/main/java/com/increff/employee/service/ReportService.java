@@ -16,14 +16,14 @@ public class ReportService {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         for (OrderPojo orderPojo1 : orderPojo) {
             // Split datetime with space and get first element of array as date
-            String receivedDate = sdf.format(orderPojo1.getTime());
+            String receivedDate = sdf.format(orderPojo1.getDate());
             // Compares date with startdate and enddate
             if ((sdf.parse(startdate).before(sdf.parse(receivedDate))
                     || sdf.parse(startdate).equals(sdf.parse(receivedDate)))
                     && (sdf.parse(receivedDate).before(sdf.parse(enddate))
                     || sdf.parse(receivedDate).equals(sdf.parse(enddate)))) {
                 // Add id to array
-                orderIds.add(p.getId());
+                orderIds.add(orderPojo1.getId());
             }
         }
         if (orderIds.size() == 0) {

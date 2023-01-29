@@ -45,9 +45,9 @@ public class ReportApiController {
         return reportDto.getSalesReport(salesReportForm);
     }
 
-    @ApiOperation(value = "Gets list of daily sales report")
-    @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
-    public List<DailySalesPojo> getDailySales() throws ApiException {
-        return reportDto.getDailySales();
-    }
+//    @ApiOperation(value = "Gets list of daily sales report")
+//    @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
+//    public List<DailySalesPojo> getDailySales() throws ApiException {
+//        return reportDto.getDailySales();
+//    }
 }

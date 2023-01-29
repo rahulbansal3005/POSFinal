@@ -69,7 +69,7 @@ public class OrderService {
 
      @Transactional(rollbackOn = ApiException.class)
     public List<OrderPojo> getAll(){
-        return OrderDao.selectAll();
+        return orderDao.selectAll();
     }
 
     @Transactional
@@ -125,7 +125,7 @@ public class OrderService {
         // ex.setBrand_category(p.getBrand_category());
         // ex.setName(p.getName());
         // ex.setMrp(p.getMrp());
-        ex.setTime(p.getTime());
+        ex.setDate(p.getDate());
         orderDao.update(ex);
     }
 
