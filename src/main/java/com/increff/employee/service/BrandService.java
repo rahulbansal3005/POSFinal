@@ -1,6 +1,8 @@
 package com.increff.employee.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
@@ -24,7 +26,7 @@ public class BrandService {
         dao.insert(brandPojo);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public void delete(Integer id) {
         dao.delete(id);
     }
@@ -34,7 +36,7 @@ public class BrandService {
         return getCheck(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> getAll() {
         return dao.selectAll();
     }
@@ -49,7 +51,7 @@ public class BrandService {
     public List<BrandPojo> getCategory(String brand) throws ApiException {
         return dao.getCategory(brand);
     }
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public BrandPojo getCheck(Integer id) throws ApiException {
         BrandPojo brandPojo = dao.select(id);
         if (brandPojo == null) {
@@ -58,20 +60,20 @@ public class BrandService {
         return brandPojo;
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public String getBrandName(Integer id) throws ApiException {
         BrandPojo brandPojo=get(id);
         return brandPojo.getBrand();
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public String getCategoryName(Integer id) throws ApiException {
         BrandPojo brandPojo=get(id);
         return brandPojo.getCategory();
     }
 
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public int extractId(ProductForm productForm) throws ApiException {
         BrandPojo brandPojo = dao.getBrand_category(productForm);
         if (brandPojo == null) {
@@ -79,9 +81,25 @@ public class BrandService {
         }
         return brandPojo.getId();
     }
-
+    @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> searchBrandCategoryData(BrandForm brandForm) {
         Normalize.normalizeBrandForm(brandForm);
         return dao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
+    }
+    @Transactional(rollbackOn = ApiException.class)
+    public List<BrandPojo> getByNameCategory(String brand, String category) {
+        if(Objects.equals(brand, "") && Objects.equals(category, "")) {
+            return dao.selectAll();
+        }
+        if(Objects.equals(brand, "")) {
+            return dao.selectByCategory(category);
+        }
+        if(Objects.equals(category, "")) {
+            return dao.selectByName(brand);
+        }
+
+        List<BrandPojo> brands = new ArrayList<>();
+        brands.add(dao.select(brand, category));
+        return brands;
     }
 }

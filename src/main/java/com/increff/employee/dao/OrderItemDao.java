@@ -63,6 +63,12 @@ public class OrderItemDao extends AbstractDao {
     public void update(OrderItemPojo p) {
     }
 
+    public List<OrderItemPojo> selectAllId(int orderId) {
+        TypedQuery<OrderItemPojo> query = getQuery(select_id, OrderItemPojo.class);
+        query.setParameter("orderId", orderId);
+        return query.getResultList();
+    }
+
     // public OrderItemPojo getOrderItem_id(InventoryForm f) {
     // return null;
     // }

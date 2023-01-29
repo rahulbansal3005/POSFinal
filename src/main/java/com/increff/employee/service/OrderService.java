@@ -1,6 +1,7 @@
 package com.increff.employee.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,8 +67,10 @@ public class OrderService {
         }
     }
 
-    // @Transactional(rollbackOn = ApiException.class)
-    // List<OrderPojo> getAll()
+     @Transactional(rollbackOn = ApiException.class)
+    public List<OrderPojo> getAll(){
+        return OrderDao.selectAll();
+    }
 
     @Transactional
     public void deleteOrder(int id) {
@@ -172,6 +175,11 @@ public class OrderService {
             ps.checker(bc, quant, errors);
 
         }
+
+    }
+
+    public List<OrderPojo> getAllInTimeDuration(Date startDate, Date endDate) {
+        return orderDao.selectAllInTimeDuration(startDate, endDate);
 
     }
 

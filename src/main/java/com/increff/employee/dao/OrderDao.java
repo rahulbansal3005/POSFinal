@@ -1,5 +1,6 @@
 package com.increff.employee.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ public class OrderDao extends AbstractDao {
     private static String select_id = "select p from OrderPojo p where id=:id";
     private static String select_all = "select p from OrderPojo p ";
     private static String findBarCode = "select p from OrderPojo p where barcode=:barcode";
-
+    private static String get_by_time = "select p from OrderPojo p where date>=:start and date<=:end";
     @PersistenceContext
     private EntityManager em;
 
@@ -52,6 +53,13 @@ public class OrderDao extends AbstractDao {
     }
 
     public void update(OrderPojo p) {
+    }
+
+    public List<OrderPojo> selectAllInTimeDuration(Date startDate, Date endDate) {
+        TypedQuery<OrderPojo> query = getQuery(get_by_time, OrderPojo.class);
+        query.setParameter("start", startDate);
+        query.setParameter("end", endDate);
+        return query.getResultList();
     }
 
     // public OrderPojo getOrder_id(InventoryForm f) {

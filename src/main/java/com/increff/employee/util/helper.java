@@ -4,6 +4,7 @@ import com.increff.employee.model.Data.*;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.model.Form.ProductForm;
+import com.increff.employee.model.Form.SalesReportForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 
@@ -101,5 +102,11 @@ public class helper {
         brandForm.setCategory(brandPojo.getCategory());
         brandForm.setBrand(brandPojo.getBrand());
         return brandForm;
+    }
+
+    public static BrandForm convertSalesReportFormtoBrandForm(SalesReportForm salesReportForm) {
+    }
+
+    public static Object convertToSalesReportData(OrderItemPojo o, BrandPojo brandPojo) {
     }
 }

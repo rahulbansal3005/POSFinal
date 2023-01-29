@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -23,5 +25,6 @@ public class OrderPojo {
             @Parameter(name = "increment_size", value = "1")
     })
     private int id;
-    private String time;
+    private Date date;
+    private boolean isInvoiceGenerated;
 }

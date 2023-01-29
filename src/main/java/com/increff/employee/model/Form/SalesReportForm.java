@@ -13,4 +13,8 @@ public class SalesReportForm {
     private String category;
     private Date startDate;
     private Date endDate;
+//public String startdate;
+//    public String enddate;
+//    public String brand;
+//    public String category;
 }

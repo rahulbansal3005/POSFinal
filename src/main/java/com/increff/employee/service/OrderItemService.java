@@ -23,4 +23,7 @@ public class OrderItemService {
     }
 
 
+    public List<OrderItemPojo> getAllByOrderId(int orderId) {
+        return orderItemDao.selectAllId(orderId);
+    }
 }
