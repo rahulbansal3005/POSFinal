@@ -32,7 +32,7 @@ public class ReportApiController {
 
 
     @ApiOperation(value = "Gets Inventory Report")
-    @RequestMapping(value = "/inventory-report", method = RequestMethod.GET)
+    @RequestMapping(value = "/inventory-report", method = RequestMethod.POST)
     public List<InventoryReportData> searchInventoryReport() throws ApiException {
         List<InventoryReportData> data =  reportDto.getInventoryReport();
         return data;

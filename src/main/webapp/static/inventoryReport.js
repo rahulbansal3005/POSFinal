@@ -13,7 +13,7 @@ function filterReport() {
     var json = toJson($form);
     var url = getInventoryUrl();
 
-    console.log($form);
+    console.log(json);
 
     $.ajax({
         url: url,
@@ -43,7 +43,7 @@ function displayInventoryList(data){
             + '<td>' + index++ + '</td>'
             + '<td>' + e.brand + '</td>'
             + '<td>' + e.category + '</td>'
-            + '<td>'  + numberWithCommas(e.quantity) + '</td>'
+            + '<td>'  +e.quantity + '</td>'
             + '</tr>';
         $tbody.append(row);
     }
@@ -70,8 +70,10 @@ const populateBrand = data => {
 
     let brands = new Set();
     for(var i in data){
+
         var e = data[i];
-        brands.add(e.name);
+        console.log(e);
+        brands.add(e.brand);
     }
 
     for(brand of brands.values()) {
@@ -86,6 +88,7 @@ const populateCategory = data => {
     let categories = new Set();
     for(var i in data){
         var e = data[i];
+        console.log(e);
         categories.add(e.category);
     }
 
