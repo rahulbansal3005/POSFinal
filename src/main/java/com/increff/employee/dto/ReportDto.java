@@ -97,8 +97,8 @@ public class ReportDto {
         List<SalesReportUtil> allItems = new ArrayList<>();
 
         List<OrderPojo> orders = orderService.getAllInTimeDuration(salesReportForm.getStartDate(), salesReportForm.getEndDate());
-        for (OrderPojo p : orders) {
-            int id = p.getId();
+        for (OrderPojo orderPojo : orders) {
+            int id = orderPojo.getId();
             List<OrderItemPojo> items = orderItemService.getAllByOrderId(id);
             for (OrderItemPojo item : items) {
                 int productId = item.getProductId();

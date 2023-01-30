@@ -7,6 +7,7 @@ import com.increff.employee.service.ApiException;
 import com.increff.employee.service.InventoryService;
 import com.increff.employee.service.OrderService;
 import com.increff.employee.service.ProductService;
+import com.increff.employee.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,6 @@ public class OrderDto {
 
     @Autowired
     InventoryService is;
-
-
     @Autowired
     private ProductService ps;
     @Autowired
@@ -35,12 +34,14 @@ public class OrderDto {
 
     public void add(OrderItem[] orderForm) throws ApiException {
 //        1) Validate all the Order Items in our inventory.
-
+//        orderForm.size()
         List<String> errorMessages=new ArrayList<>();
 
         for(OrderItem orderItem:orderForm)
         {
-            check(orderItem,errorMessages);
+            Validate.checkOrderItem(orderItem,errorMessages);
+            Validate.ContainDuplicates(orderForm,errorMessages);
+            checkInventory(orderItem,errorMessages);
         }
 
         if(errorMessages.size()!=0)
@@ -54,7 +55,7 @@ public class OrderDto {
 
         // 2) Create new Order.
         OrderPojo orderPojo = convertOrderFormToOrder();
-        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime now = LocalDateTime.now();
         java.util.Date date=new java.util.Date();
 //        orderPojo.setDate(dtf.format(now));
         orderPojo.setDate(date);
@@ -66,10 +67,17 @@ public class OrderDto {
 
         // 4) Reduce Items from inventory
 
+
+
     }
-    public boolean check(OrderItem c, List<String>errorMessages) throws ApiException {
+    public void checkInventory(OrderItem c, List<String>errorMessages) throws ApiException {
         int prod_id= ps.extractProd_Id(c.getBarCode());
-        return is.checkQuantity(prod_id,c.getQuantity());
+        if(is.checkQuantity(prod_id,c.getQuantity())==false)
+        {
+            String error="product with given BarCode:"+c.getBarCode()+"does not have sufficient quantity ";
+            errorMessages.add(error);
+        }
+        return;
     }
 
     public OrderData getOrder( int id) throws ApiException {

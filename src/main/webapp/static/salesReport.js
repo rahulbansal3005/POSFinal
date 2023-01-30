@@ -42,7 +42,7 @@ function displaySalesReport(data) {
             + '<td>' + b.brand + '</td>'
             + '<td>' + b.category + '</td>'
             + '<td>' + b.quantity + '</td>'
-            + '<td class="text-right">' + numberWithCommas(parseFloat(b.revenue ).toFixed(2))+ '</td>'
+            + '<td class="text-right">' + parseFloat(b.revenue).toFixed(2)+ '</td>'
             + '</tr>';
         $tbody.append(row);
     }
@@ -71,7 +71,8 @@ const populateBrand = data => {
     let brands = new Set();
     for(var i in data){
         var e = data[i];
-        brands.add(e.name);
+        console.log(e);
+        brands.add(e.brand);
     }
 
     for(let brand of brands.values()) {

@@ -27,7 +27,7 @@ public class InventoryService {
         dao.insert(inventoryPojo);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public void delete(Integer id) {
         dao.delete(id);
     }
@@ -37,7 +37,7 @@ public class InventoryService {
         return getCheck(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public List<InventoryPojo> getAll() {
         return dao.selectAll();
     }
@@ -51,7 +51,7 @@ public class InventoryService {
         dao.update(newInventoryPojo);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public InventoryPojo getCheck(Integer id) throws ApiException {
         InventoryPojo inventoryPojo = dao.select(id);
         if (inventoryPojo == null) {
@@ -60,7 +60,7 @@ public class InventoryService {
         return inventoryPojo;
     }
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public Boolean checker(Integer id, Integer quant) {
         InventoryPojo inventoryPojo = dao.select(id);
         if (inventoryPojo.getQuantity() < quant) {
@@ -70,7 +70,7 @@ public class InventoryService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public boolean checkQuantity(Integer id, Integer quant) {
         InventoryPojo inventoryPojo = dao.select(id);
         if (inventoryPojo.getQuantity()> quant) {
