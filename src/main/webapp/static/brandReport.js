@@ -66,7 +66,7 @@ const populateBrand = data => {
     let brands = new Set();
     for(var i in data){
         var e = data[i];
-        brands.add(e.name);
+        brands.add(e.brand);
     }
 
     for(let brand of brands.values()) {
