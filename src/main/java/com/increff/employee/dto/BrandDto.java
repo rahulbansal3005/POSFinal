@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 import static com.increff.employee.util.Normalize.normalize;
-import static com.increff.employee.util.helper.convertBrandFormToBrandPojo;
-import static com.increff.employee.util.helper.convertBrandPojoToBrandData;
+import static com.increff.employee.util.Helper.convertBrandFormToBrandPojo;
+import static com.increff.employee.util.Helper.convertBrandPojoToBrandData;
 
 @Service
 public class BrandDto {

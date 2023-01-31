@@ -17,7 +17,7 @@ import com.increff.employee.model.Data.OrderItem;
 import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
 
-import static com.increff.employee.util.helper.convertOrderItemToOrderItemPojo;
+import static com.increff.employee.util.Helper.convertOrderItemToOrderItemPojo;
 // import com.increff.employee.util.StringUtil;
 
 @Service
@@ -181,6 +181,19 @@ public class OrderService {
     public List<OrderPojo> getAllInTimeDuration(Date startDate, Date endDate) {
         return orderDao.selectAllInTimeDuration(startDate, endDate);
 
+    }
+
+    public void update(int id, OrderPojo orderPojo) throws ApiException {
+        OrderPojo ex = getCheckonId(id);
+        ex.setInvoiceGenerated(orderPojo.isInvoiceGenerated());
+        orderDao.update(ex);
+    }
+    public OrderPojo getCheckonId(int id) throws ApiException {
+        OrderPojo orderPojo = orderDao.select(id);
+        if (orderPojo == null) {
+            throw new ApiException("Order with given ID does not exit, id: " + id);
+        }
+        return orderPojo;
     }
 
     // protected static void normalize(CustomerPojo p) {

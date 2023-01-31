@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.increff.employee.util.Normalize.normalize;
-import static com.increff.employee.util.helper.convertProductFormToProductPojo;
-import static com.increff.employee.util.helper.convertProductPojoToProductData;
+import static com.increff.employee.util.Helper.convertProductFormToProductPojo;
+import static com.increff.employee.util.Helper.convertProductPojoToProductData;
 
 
 @Service

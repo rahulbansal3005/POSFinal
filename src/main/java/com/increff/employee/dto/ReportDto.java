@@ -8,13 +8,11 @@ import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.SalesReportForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.*;
-import com.increff.employee.util.helper;
+import com.increff.employee.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class ReportDto {
@@ -42,7 +40,7 @@ public class ReportDto {
         List<BrandPojo> brandPojoList = brandService.searchBrandCategoryData(brandForm);
         List<BrandForm> brandFormList = new ArrayList<BrandForm>();
         for (BrandPojo brandPojo : brandPojoList) {
-            brandFormList.add(helper.convertBrandPojotoBrandForm(brandPojo));
+            brandFormList.add(Helper.convertBrandPojotoBrandForm(brandPojo));
         }
         return brandFormList;
     }

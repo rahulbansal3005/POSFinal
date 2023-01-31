@@ -36,7 +36,7 @@ public class PDF_Generator {
             String xsltfile = new File("src/main/resources/apache\\style.xsl").toURI().getPath();
             File pdfDir = new File("src/main/resources/apache./PdfFile");
             pdfDir.mkdirs();
-            File pdfFile = new File(pdfDir, "hello.pdf");
+            File pdfFile = new File(pdfDir, ""+d.getOrderId()+"_invoice.pdf");
             System.out.println(pdfFile.getAbsolutePath());
             // configure fopFactory as desired
             final FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());

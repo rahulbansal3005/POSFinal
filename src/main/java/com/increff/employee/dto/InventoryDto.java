@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.employee.util.helper.convertInventoryFormToInventoryPojo;
-import static com.increff.employee.util.helper.convertInventoryPojoToInventoryData;
+import static com.increff.employee.util.Helper.convertInventoryFormToInventoryPojo;
+import static com.increff.employee.util.Helper.convertInventoryPojoToInventoryData;
 
 @Service
 public class InventoryDto {

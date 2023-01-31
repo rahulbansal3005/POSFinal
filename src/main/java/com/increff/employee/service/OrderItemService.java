@@ -24,6 +24,9 @@ public class OrderItemService {
 
 
     public List<OrderItemPojo> getAllByOrderId(int orderId) {
-        return orderItemDao.selectAllId(orderId);
+        return orderItemDao.selectAllonOrderId(orderId);
     }
+
+//    public List<OrderItemPojo> getByOrderId(int id) {
+//    }
 }

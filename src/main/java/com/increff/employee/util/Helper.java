@@ -4,13 +4,13 @@ import com.increff.employee.model.Data.*;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.model.Form.ProductForm;
-import com.increff.employee.model.Form.SalesReportForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class helper {
+public class Helper {
 
     public static BrandData convertBrandPojoToBrandData(BrandPojo p) {
         BrandData brandData = new BrandData();
@@ -102,6 +102,19 @@ public class helper {
         brandForm.setCategory(brandPojo.getCategory());
         brandForm.setBrand(brandPojo.getBrand());
         return brandForm;
+    }
+
+    public static Double convertOrderItemPojoToPdfData(OrderItemPojo orderItemPojo, List<PdfListData> list, PdfData pdfData,Integer c,ProductPojo productPojo) {
+        PdfListData pdfListData = new PdfListData();
+        pdfListData.setSno(c);
+        pdfListData.setBarcode(productPojo.getBarcode());
+        pdfListData.setProduct(productPojo.getName());
+        pdfListData.setQuantity(orderItemPojo.getQuantity());
+        pdfListData.setUnitPrice(orderItemPojo.getSellingPrice());
+        Double v = orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();
+        pdfListData.setAmount(v);
+        list.add(pdfListData);
+        return v;
     }
 
 //    public static BrandForm convertSalesReportFormtoBrandForm(SalesReportForm salesReportForm) {
