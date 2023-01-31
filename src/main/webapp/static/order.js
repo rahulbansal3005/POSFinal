@@ -192,10 +192,17 @@ function displayOrderList(data){
       // buttonHtml += '<button type="button" class="btn btn-secondary" id="download" onclick="download(' + e.id + ')">Download Invoice</button>'
 
     // else{
-      buttonHtml += '<button type="button" class="btn btn-success" id="place-order" onclick="GenerateInvoice(' + e.id + ')"> Genereate invoice</button>'
     // }
     if(e.status==true){
-      buttonHtml += '<button type="button" class="btn btn-secondary" id="download" onclick="download(' + e.id + ')"><i class="fa-solid fa-file-arrow-down"></i></button>'
+      buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" >Download Invoice</button>'
+      buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Genereate invoice</button>'
+
+    }
+    else{
+      console.log("else");
+      buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Genereate invoice</button>'
+      buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" disabled>Download Invoice</button>'
+
     }
     var date = new Date(e.updated)
     var row = '<tr>'
@@ -232,6 +239,7 @@ function init() {
   $('#add-order-item').click(addOrderItem);
   $('#place-order').click(placeOrder);
   $('#refresh-data').click(getOrderList);
+  $('#generateInvoice').click(getOrderList);
 }
 
 $(document).ready(init);
