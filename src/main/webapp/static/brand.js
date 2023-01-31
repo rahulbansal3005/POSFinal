@@ -46,7 +46,7 @@ function updateBrand(event) {
     success: function (response) {
       getBrandList();
     },
-    error: handleAjaxError,
+    error: handleAjaxError
   });
 
   return false;

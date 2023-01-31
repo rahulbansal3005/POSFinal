@@ -24,15 +24,18 @@ public class PdfApiController {
 
     @Autowired
     private PdfDto dto;
-
-
     @ApiOperation(value = "Generates PDF")
     @RequestMapping(path = "/api/pdf/{id}", method = RequestMethod.GET)
     public void get(@PathVariable int id) throws ApiException {
-        PDF_Generator pdf_generator= new PDF_Generator();
+//        System.out.println("api called 1");
+        PDF_Generator pdf_generator = new PDF_Generator();
+//        System.out.println("api called 2");
         PdfData pdfData = dto.get(id);
+//        System.out.println("api called 3");
         pdf_generator.pdf_generator(pdfData);
+//        System.out.println("api called 4");
     }
+
     @ApiOperation(value = "generate pdf")
     @RequestMapping(path = "/api/pdf/download/{id}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@PathVariable int id) throws ApiException, IOException {

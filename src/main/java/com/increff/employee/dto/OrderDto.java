@@ -58,6 +58,7 @@ public class OrderDto {
         java.util.Date date=new java.util.Date();
 //        orderPojo.setDate(dtf.format(now));
         orderPojo.setDate(date);
+//        orderPojo.setInvoiceGenerated(0);
         service.addOrder(orderPojo);
 
         // 3) Add order Items in database.

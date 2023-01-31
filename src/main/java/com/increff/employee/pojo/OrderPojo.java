@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.xpath.operations.Bool;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,7 +25,15 @@ public class OrderPojo {
             @Parameter(name = "initial_value", value = "1001"),
             @Parameter(name = "increment_size", value = "1")
     })
-    private int id;
+    private Integer id;
     private Date date;
-    private boolean isInvoiceGenerated;
+    private Boolean isInvoiceGenerated;
+
+    public Boolean getInvoiceGenerated() {
+        return isInvoiceGenerated;
+    }
+
+    public void setInvoiceGenerated(Boolean invoiceGenerated) {
+        isInvoiceGenerated = invoiceGenerated;
+    }
 }

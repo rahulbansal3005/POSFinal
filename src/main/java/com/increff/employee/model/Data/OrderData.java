@@ -11,4 +11,5 @@ import java.util.Date;
 public class OrderData extends OrderForm {
     private int id;
     private Date dateTime;
+    private Boolean status;
 }

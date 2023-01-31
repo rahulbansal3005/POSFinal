@@ -84,12 +84,12 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public OrderPojo getOrder(int id) throws ApiException {
-        return getCheckOrder(id);
+        return getCheckonId(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public OrderItemPojo getOrderItem(int id) throws ApiException {
-        return getCheckOrerItem(id);
+        return getCheckOrderItem(id);
     }
 
     @Transactional
@@ -120,7 +120,7 @@ public class OrderService {
     @Transactional(rollbackOn = ApiException.class)
     public void updateOrder(int id, OrderPojo p) throws ApiException {
         // normalize(p);
-        OrderPojo ex = getCheckOrder(id);
+        OrderPojo ex = getCheckonId(id);
         // ex.setBarcode(p.getBarcode());
         // ex.setBrand_category(p.getBrand_category());
         // ex.setName(p.getName());
@@ -132,7 +132,7 @@ public class OrderService {
     @Transactional(rollbackOn = ApiException.class)
     public void updateOrderItem(int id, OrderItemPojo p) throws ApiException {
         // normalize(p);
-        OrderItemPojo ex = getCheckOrerItem(id);
+        OrderItemPojo ex = getCheckOrderItem(id);
         // ex.setBarcode(p.getBarcode());
         // ex.setBrand_category(p.getBrand_category());
         // ex.setName(p.getName());
@@ -150,17 +150,10 @@ public class OrderService {
         return p;
     }
 
-    @Transactional
-    public OrderPojo getCheckOrder(int id) throws ApiException {
-        OrderPojo p = orderDao.select(id);
-        if (p == null) {
-            throw new ApiException("Order with given ID does not exist, id: " + id);
-        }
-        return p;
-    }
+
 
     @Transactional
-    public OrderItemPojo getCheckOrerItem(int id) throws ApiException {
+    public OrderItemPojo getCheckOrderItem(int id) throws ApiException {
         OrderItemPojo p = orderItemDao.select(id);
         if (p == null) {
             throw new ApiException("OrderItems with given ID does not exist, id: " + id);
@@ -183,11 +176,17 @@ public class OrderService {
 
     }
 
-    public void update(int id, OrderPojo orderPojo) throws ApiException {
+    @Transactional(rollbackOn = ApiException.class)
+    public void update(int id) throws ApiException {
         OrderPojo ex = getCheckonId(id);
-        ex.setInvoiceGenerated(orderPojo.isInvoiceGenerated());
-        orderDao.update(ex);
+//        System.out.println(ex.getInvoiceGenerated()+ "INSIDE ORDER SERVICE");
+//        System.out.println(orderPojo.getId()+ " ID");
+        ex.setInvoiceGenerated(true);
+//        System.out.println(ex.getInvoiceGenerated()+ "INSIDE ORDER SERVICE");
+//        orderDao.update(ex);
     }
+
+    @Transactional
     public OrderPojo getCheckonId(int id) throws ApiException {
         OrderPojo orderPojo = orderDao.select(id);
         if (orderPojo == null) {
@@ -195,6 +194,15 @@ public class OrderService {
         }
         return orderPojo;
     }
+
+//    @Transactional
+//    public OrderPojo getCheckOrder(int id) throws ApiException {
+//        OrderPojo p = orderDao.select(id);
+//        if (p == null) {
+//            throw new ApiException("Order with given ID does not exist, id: " + id);
+//        }
+//        return p;
+//    }
 
     // protected static void normalize(CustomerPojo p) {
     // p.setName(StringUtil.toLowerCase(p.getName()));
