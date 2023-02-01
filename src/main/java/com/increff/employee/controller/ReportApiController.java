@@ -23,31 +23,50 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class ReportApiController {
 
+
+    //    BRAND REPORT'S CODE
     @Autowired
     private ReportDto reportDto;
+
     @ApiOperation(value = "Gets Brand report")
-    @RequestMapping(value = "/brand-report",method = RequestMethod.POST)
-    public List<BrandForm> searchBrandReport(@RequestBody BrandForm form){
-        return reportDto.getBrandReport(form); }
+    @RequestMapping(value = "/brand-report", method = RequestMethod.POST)
+    public List<BrandForm> searchBrandReport(@RequestBody BrandForm form) {
+        return reportDto.getBrandReport(form);
+    }
 
+//----------------------------------------------------------------------------------------
 
+    //    INVENTORY REPORT'S CODE
     @ApiOperation(value = "Gets Inventory Report")
     @RequestMapping(value = "/inventory-report", method = RequestMethod.POST)
     public List<InventoryReportData> searchInventoryReport() throws ApiException {
-        List<InventoryReportData> data =  reportDto.getInventoryReport();
+        List<InventoryReportData> data = reportDto.getInventoryReport();
         return data;
     }
+//----------------------------------------------------------------------------------------
 
+    //    SALES REPORT CODE
     @ApiOperation(value = "Gets Sales Report")
     @RequestMapping(value = "/sales-report", method = RequestMethod.POST)
     public List<SalesReportData> getSalesReport(@RequestBody SalesReportForm salesReportForm)
             throws ApiException {
-        return reportDto.getSalesReport(salesReportForm);
+        return reportDto.getDateWiseSalesReport(salesReportForm);
     }
 
-//    @ApiOperation(value = "Gets list of daily sales report")
-//    @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
-//    public List<DailySalesPojo> getDailySales() throws ApiException {
-//        return reportDto.getDailySales();
-//    }
+    @ApiOperation(value = "get all sales report")
+    @RequestMapping(path = "/sales-report", method = RequestMethod.GET)
+    public List<SalesReportData> getAll() throws ApiException {
+        return reportDto.getAll();
+    }
+
+//----------------------------------------------------------------------------------------
+
+    //    SCHEDULER'S CODE
+    @ApiOperation(value = "Gets list of daily sales report")
+    @RequestMapping(path = "/daySales-report", method = RequestMethod.POST)
+    public List<DailySalesPojo> getDailySales() throws ApiException {
+        return reportDto.getDailySales();
+    }
+
+
 }

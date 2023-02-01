@@ -2,16 +2,14 @@ package com.increff.employee.pojo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.xpath.operations.Bool;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,7 +24,7 @@ public class OrderPojo {
             @Parameter(name = "increment_size", value = "1")
     })
     private Integer id;
-    private Date date;
+    private LocalDateTime date;
     private Boolean isInvoiceGenerated;
 
     public Boolean getInvoiceGenerated() {

@@ -35,11 +35,7 @@ public class PdfDto {
             throw new ApiException("no order items present in order to place");
 
         PdfData pdfData = new PdfData();
-//        OrderPojo orderPojo=orderService.getOrder(id);
-//        orderPojo.setInvoiceGenerated(true);
         orderService.update(id);
-
-//        System.out.println(orderPojo.getInvoiceGenerated()+" ORDERPOJO");
         List<PdfListData> pdfListData = new ArrayList<>();
         Integer c = 0;
         Double total = 0.0;

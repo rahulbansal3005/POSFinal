@@ -1,5 +1,6 @@
 package com.increff.employee.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -170,20 +171,10 @@ public class OrderService {
         }
 
     }
-
-    public List<OrderPojo> getAllInTimeDuration(Date startDate, Date endDate) {
-        return orderDao.selectAllInTimeDuration(startDate, endDate);
-
-    }
-
     @Transactional(rollbackOn = ApiException.class)
     public void update(int id) throws ApiException {
         OrderPojo ex = getCheckonId(id);
-//        System.out.println(ex.getInvoiceGenerated()+ "INSIDE ORDER SERVICE");
-//        System.out.println(orderPojo.getId()+ " ID");
         ex.setInvoiceGenerated(true);
-//        System.out.println(ex.getInvoiceGenerated()+ "INSIDE ORDER SERVICE");
-//        orderDao.update(ex);
     }
 
     @Transactional
@@ -193,6 +184,10 @@ public class OrderService {
             throw new ApiException("Order with given ID does not exit, id: " + id);
         }
         return orderPojo;
+    }
+
+    public List<OrderPojo> getOrdersInDateRange(LocalDateTime sdate, LocalDateTime edate) {
+        return orderDao.selectAllOrdersInDateRange(sdate,edate);
     }
 
 //    @Transactional

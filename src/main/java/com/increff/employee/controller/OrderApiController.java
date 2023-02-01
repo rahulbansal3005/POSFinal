@@ -31,11 +31,13 @@ public class OrderApiController {
     public void add(@RequestBody OrderItem[] orderForm) throws ApiException {
         orderDto.add(orderForm);
     }
+
     @ApiOperation(value = "Gets an Order by ID")
     @RequestMapping(path = "/api/order/{id}", method = RequestMethod.GET)
     public OrderData getOrder(@PathVariable int id) throws ApiException {
         return orderDto.getOrder(id);
     }
+
     @ApiOperation(value = "Gets list of all the Orders")
     @RequestMapping(path = "/api/order", method = RequestMethod.GET)
     public List<OrderData> getAll() throws ApiException {

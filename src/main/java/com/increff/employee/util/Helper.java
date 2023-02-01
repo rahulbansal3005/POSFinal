@@ -7,6 +7,7 @@ import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +56,6 @@ public class Helper {
     }
 
 
-
-
     public static InventoryPojo convertInventoryFormToInventoryPojo(InventoryForm inventoryForm) throws ApiException {
 //        TODO helper cannot use services like productServices.
         InventoryPojo inventoryPojo = new InventoryPojo();
@@ -64,8 +63,8 @@ public class Helper {
         return inventoryPojo;
     }
 
-    public static OrderItemPojo convertOrderItemToOrderItemPojo(OrderItem orderItem,int orderId) throws ApiException {
-        OrderItemPojo orderItemPojo =new OrderItemPojo();
+    public static OrderItemPojo convertOrderItemToOrderItemPojo(OrderItem orderItem, int orderId) throws ApiException {
+        OrderItemPojo orderItemPojo = new OrderItemPojo();
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setQuantity(orderItem.getQuantity());
         orderItemPojo.setSellingPrice(orderItem.getSellingPrice());
@@ -90,9 +89,11 @@ public class Helper {
     }
 
     public static OrderData convertOrderPojoToOrderData(OrderPojo orderPojo, List<OrderItem> c) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = orderPojo.getDate().format(dateTimeFormatter);
         OrderData orderData = new OrderData();
         orderData.setId(orderPojo.getId());
-        orderData.setDateTime(orderPojo.getDate());
+        orderData.setDateTime(formattedDateTime);
         orderData.setC(c);
         orderData.setStatus(orderPojo.getInvoiceGenerated());
         return orderData;
@@ -105,7 +106,7 @@ public class Helper {
         return brandForm;
     }
 
-    public static Double convertOrderItemPojoToPdfData(OrderItemPojo orderItemPojo, List<PdfListData> list, PdfData pdfData,Integer c,ProductPojo productPojo) {
+    public static Double convertOrderItemPojoToPdfData(OrderItemPojo orderItemPojo, List<PdfListData> list, PdfData pdfData, Integer c, ProductPojo productPojo) {
         PdfListData pdfListData = new PdfListData();
         pdfListData.setSno(c);
         pdfListData.setBarcode(productPojo.getBarcode());
