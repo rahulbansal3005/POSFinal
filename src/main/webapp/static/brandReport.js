@@ -14,7 +14,7 @@ function displayBrandList(data){
     $tbody.empty();
     for(const i in data){
         const e = data[i];
-        console.log("e from brand report",e);
+        // console.log("e from brand report",e);
         const row = '<tr>'
             + '<td>' + index++ + '</td>'
             + '<td>' + e.brand + '</td>'
@@ -30,7 +30,7 @@ function filterReport() {
     let json = toJson($form);
     let url = getBrandUrl();
 
-    console.log(json);
+    // console.log(json);
 
     $.ajax({
         url: url,
@@ -40,7 +40,7 @@ function filterReport() {
             'Content-Type': 'application/json'
         },
         success: function(response) {
-            console.log("from filter report",response);
+            // console.log("from filter report",response);
             displayBrandList(response);
         },
         error: handleAjaxError

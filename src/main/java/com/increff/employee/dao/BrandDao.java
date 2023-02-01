@@ -22,7 +22,7 @@ public class BrandDao extends AbstractDao {
 
     private static String select_category = "select b from BrandPojo b where brand=:brand";
     private static String brand_cat_id = "select p from BrandPojo p where brand=:brand and category=:category";
-    private static String select_cat = "select p from BrandPojo p where category=:category";
+    private static String select_brand = "select p from BrandPojo p where category=:category";
     private static String search = "select p from BrandPojo p where brand like :brand and category like :category";
 
     @PersistenceContext
@@ -74,12 +74,12 @@ public class BrandDao extends AbstractDao {
     }
 
     public List<BrandPojo> selectByCategory(String category) {
-        TypedQuery<BrandPojo> query = getQuery(select_cat, BrandPojo.class);
+        TypedQuery<BrandPojo> query = getQuery(select_brand, BrandPojo.class);
         query.setParameter("category", category);
         return query.getResultList();
     }
 
-    public List<BrandPojo> selectByName(String brand) {
+    public List<BrandPojo> selectByBrand(String brand) {
         TypedQuery<BrandPojo> query = getQuery(select_category, BrandPojo.class);
         query.setParameter("brand", brand);
         return query.getResultList();

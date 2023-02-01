@@ -1,6 +1,7 @@
 package com.increff.employee.util;
 
 import com.increff.employee.model.Data.OrderItem;
+import com.increff.employee.model.Form.BrandForm;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,4 +46,7 @@ public class Validate {
 			}
 		}
 	}
+
+    public static void checkBrandCategory(BrandForm brandForm) {
+    }
 }

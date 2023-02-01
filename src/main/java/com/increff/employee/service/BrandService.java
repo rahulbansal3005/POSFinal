@@ -82,24 +82,43 @@ public class BrandService {
         return brandPojo.getId();
     }
     @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> searchBrandCategoryData(BrandForm brandForm) {
+    public List<BrandPojo> searchBrandCategoryData(BrandForm brandForm) throws ApiException {
+//        Validate.checkBrandCategory(brandForm);
         Normalize.normalizeBrandForm(brandForm);
-        return dao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
-    }
-    @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> getByNameCategory(String brand, String category) {
-        if(Objects.equals(brand, "") && Objects.equals(category, "")) {
-            return dao.selectAll();
+        List<BrandPojo> brandPojoList;
+        if(brandForm.getBrand()=="" && brandForm.getCategory()=="")
+        {
+            brandPojoList=dao.selectAll();
         }
-        if(Objects.equals(brand, "")) {
-            return dao.selectByCategory(category);
+        else if(brandForm.getBrand()=="")
+        {
+            brandPojoList=dao.selectByCategory(brandForm.getCategory());
         }
-        if(Objects.equals(category, "")) {
-            return dao.selectByName(brand);
+        else if(brandForm.getCategory()=="")
+        {
+            brandPojoList=dao.selectByBrand(brandForm.getBrand());
         }
+        else
+            brandPojoList=dao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
 
-        List<BrandPojo> brands = new ArrayList<>();
-        brands.add(dao.select(brand, category));
-        return brands;
+        if(brandPojoList.size()==0)
+            throw new ApiException("Brand-Category Pair does not exist");
+        return brandPojoList;
     }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public List<BrandPojo> getByNameCategory(String brand, String category) {
+//        if(Objects.equals(brand, "") && Objects.equals(category, "")) {
+//            return dao.selectAll();
+//        }
+//        if(Objects.equals(brand, "")) {
+//            return dao.selectByCategory(category);
+//        }
+//        if(Objects.equals(category, "")) {
+//            return dao.selectByBrand(brand);
+//        }
+//
+//        List<BrandPojo> brands = new ArrayList<>();
+//        brands.add(dao.select(brand, category));
+//        return brands;
+//    }
 }

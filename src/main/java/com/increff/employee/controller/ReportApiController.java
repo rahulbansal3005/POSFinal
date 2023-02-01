@@ -30,7 +30,7 @@ public class ReportApiController {
 
     @ApiOperation(value = "Gets Brand report")
     @RequestMapping(value = "/brand-report", method = RequestMethod.POST)
-    public List<BrandForm> searchBrandReport(@RequestBody BrandForm form) {
+    public List<BrandForm> searchBrandReport(@RequestBody BrandForm form) throws ApiException {
         return reportDto.getBrandReport(form);
     }
 
