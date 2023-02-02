@@ -98,4 +98,12 @@ public class InventoryService {
         int quantity = inventoryPojo.getQuantity();
         inventoryPojo.setQuantity(quantity-orderItem.getQuantity());
     }
+
+    @Transactional(rollbackOn = ApiException.class)
+    public void updateIventory(int id,int quantity) throws ApiException {
+        InventoryPojo inventoryPojo=getCheck(id);
+        int quant=inventoryPojo.getQuantity();
+        inventoryPojo.setQuantity(quantity+quant);
+        return;
+    }
 }

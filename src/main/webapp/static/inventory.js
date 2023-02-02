@@ -21,6 +21,7 @@ function addInventory(event) {
     },
     success: function (response) {
       getInventoryList();
+      handleAjaxError();
     },
     error: handleAjaxError,
   });

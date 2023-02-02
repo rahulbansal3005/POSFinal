@@ -27,11 +27,19 @@ public class InventoryDto {
 
 
     public void add( InventoryForm inventoryForm) throws ApiException {
-        InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
 
-        inventoryPojo.setProductId(productService.extractProd_Id(inventoryForm.getBarcode()));
-
-        inventoryService.add(inventoryPojo);
+        int prodId=productService.extractProd_Id(inventoryForm.getBarcode());
+        InventoryPojo inventoryPojo=inventoryService.selectOnProdId(prodId);
+        if(inventoryPojo!=null)
+        {
+            inventoryService.updateIventory(inventoryPojo.getId(),inventoryForm.getQuantity());
+            return;
+        }
+        else{
+            inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
+            inventoryPojo.setProductId(prodId);
+            inventoryService.add(inventoryPojo);
+        }
     }
     public void delete(Integer id) {
         inventoryService.delete(id);
