@@ -24,7 +24,9 @@ function addBrand(event) {
         },
         success: function (response) {
             getBrandList();
-            resetForm
+            resetForm();
+            // console.log("here");
+            SuccessMessage();
         },
         error: handleAjaxError,
     });

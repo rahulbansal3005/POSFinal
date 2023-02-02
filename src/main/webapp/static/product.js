@@ -146,9 +146,9 @@ function displayProductList(data) {
     var e = data[i];
     // console.log(e);
     var buttonHtml =
-      '<button onclick="deleteProduct(' + e.id + ')">delete</button>';
+      '<button type="button" class="btn btn-secondary" onclick="deleteProduct(' + e.id + ')">delete</button>';
     buttonHtml +=
-      ' <button onclick="displayEditProduct(' + e.id + ')">edit</button>';
+      ' <button type="button" class="btn btn-secondary" onclick="displayEditProduct(' + e.id + ')">edit</button>';
     var row =
       "<tr>" +
       "<td>" +

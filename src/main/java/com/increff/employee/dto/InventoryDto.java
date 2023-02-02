@@ -7,6 +7,7 @@ import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.InventoryService;
 import com.increff.employee.service.ProductService;
+import com.increff.employee.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class InventoryDto {
 
 
     public void add( InventoryForm inventoryForm) throws ApiException {
-
+        Validate.validateInventoryForm(inventoryForm);
         int prodId=productService.extractProd_Id(inventoryForm.getBarcode());
         InventoryPojo inventoryPojo=inventoryService.selectOnProdId(prodId);
         if(inventoryPojo!=null)

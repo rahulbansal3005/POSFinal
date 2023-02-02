@@ -2,6 +2,8 @@ package com.increff.employee.util;
 
 import com.increff.employee.model.Data.OrderItem;
 import com.increff.employee.model.Form.BrandForm;
+import com.increff.employee.model.Form.InventoryForm;
+import com.increff.employee.service.ApiException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +25,11 @@ public class Validate {
 	public static void checkOrderItem(OrderItem orderItem, List<String> errorMessages)
 	{
 		if(orderItem.getQuantity()<0) {
-			String error="Inavalid quantity of product with BarCode "+orderItem.getBarCode();
+			String error="Invalid quantity of product with BarCode "+orderItem.getBarCode();
 			errorMessages.add(error);
 		}
 		if(orderItem.getSellingPrice()<0) {
-			String error="Inavalid Selling Price of product with BarCode "+orderItem.getBarCode();
+			String error="Invalid Selling Price of product with BarCode "+orderItem.getBarCode();
 			errorMessages.add(error);
 		}
 	}
@@ -49,4 +51,16 @@ public class Validate {
 
     public static void checkBrandCategory(BrandForm brandForm) {
     }
+
+	public static void validateInventoryForm(InventoryForm inventoryForm) throws ApiException {
+		if(inventoryForm.getQuantity()<0)
+			throw new ApiException("Entered Quantity is negative");
+		if(inventoryForm.getQuantity()==null)
+			throw new ApiException("Entered Quantity is not right");
+		if(inventoryForm.getBarcode().equals(""))
+			throw new ApiException("Bar Code field is empty");
+		if(inventoryForm.getBarcode()==null)
+			throw new ApiException("Bar Code field is NULL");
+
+	}
 }
