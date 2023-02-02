@@ -3,7 +3,6 @@ package com.increff.employee.dto;
 import com.increff.employee.dao.ProductDao;
 import com.increff.employee.model.Data.InventoryReportData;
 import com.increff.employee.model.Data.SalesReportData;
-import com.increff.employee.model.Data.SalesReportUtil;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.SalesReportForm;
 import com.increff.employee.pojo.*;
@@ -47,24 +46,35 @@ public class ReportDto {
         return brandFormList;
     }
 
-    public List<InventoryReportData> getInventoryReport() throws ApiException {
-        List<InventoryReportData> inventoryReportData = new ArrayList<>();
-        List<BrandPojo> brandCategoryList = brandService.getAll();
-        for (BrandPojo brandCategory : brandCategoryList) {
-            InventoryReportData inventoryReportItemDataItem = new InventoryReportData();
-            inventoryReportItemDataItem.setBrand(brandCategory.getBrand());
-            inventoryReportItemDataItem.setCategory(brandCategory.getCategory());
-            inventoryReportItemDataItem.setId(brandCategory.getId());
-            int quantity = 0;
-            List<ProductPojo> productList = productService.getProductByBrandCategoryId(brandCategory.getId());
-            for (ProductPojo pojo : productList) {
-                InventoryPojo inventoryPojo = inventoryService.get(pojo.getId());
-                quantity += inventoryPojo.getQuantity();
+    public List<InventoryReportData> getInventoryReport(BrandForm brandForm) throws ApiException {
+        List<InventoryReportData> inventoryReportDataList = new ArrayList<>();
+        List<BrandPojo> brandCategoryList=brandService.searchBrandCategoryData(brandForm);
+        for(BrandPojo brandPojo:brandCategoryList)
+        {
+            List<ProductPojo> productPojoList=productService.getProductByBrandCategoryId(brandPojo.getId());
+            if(productPojoList.size()!=0)
+            {
+                Integer quantity=0;
+                for(ProductPojo productPojo:productPojoList)
+                {
+                    List<InventoryPojo> inventoryPojoList=inventoryService.selectOnProdId(productPojo.getId());
+                    if(inventoryPojoList.size()!=0)
+                    {
+                        InventoryReportData inventoryReportData=new InventoryReportData();
+                        for(InventoryPojo inventoryPojo:inventoryPojoList)
+                        {
+                            quantity+=inventoryPojo.getQuantity();
+                        }
+                        inventoryReportData.setQuantity(quantity);
+                        inventoryReportData.setBrand(brandPojo.getBrand());
+                        inventoryReportData.setCategory(brandPojo.getCategory());
+                        inventoryReportData.setId(brandPojo.getId());
+                        inventoryReportDataList.add(inventoryReportData);
+                    }
+                }
             }
-            inventoryReportItemDataItem.setQuantity(quantity);
-            inventoryReportData.add(inventoryReportItemDataItem);
         }
-        return inventoryReportData;
+        return inventoryReportDataList;
     }
 
     public List<SalesReportData> getDateWiseSalesReport(SalesReportForm salesReportForm) throws ApiException {

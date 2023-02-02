@@ -78,4 +78,12 @@ public class InventoryService {
         }
         return false;
     }
+
+
+
+    @Transactional(rollbackOn = ApiException.class)
+    public List<InventoryPojo> selectOnProdId(int prodId)
+    {
+        return dao.selectOnProdId(prodId);
+    }
 }

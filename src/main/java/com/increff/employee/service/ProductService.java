@@ -68,7 +68,7 @@ public class ProductService {
         }
         return p;
     }
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public List<ProductPojo> getProductByBrandCategoryId(int brandCategoryId) {
         return dao.getProductByBrandCategory(brandCategoryId);
     }

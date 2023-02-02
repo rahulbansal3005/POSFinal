@@ -39,8 +39,8 @@ public class ReportApiController {
     //    INVENTORY REPORT'S CODE
     @ApiOperation(value = "Gets Inventory Report")
     @RequestMapping(value = "/inventory-report", method = RequestMethod.POST)
-    public List<InventoryReportData> searchInventoryReport() throws ApiException {
-        List<InventoryReportData> data = reportDto.getInventoryReport();
+    public List<InventoryReportData> searchInventoryReport(@RequestBody BrandForm brandForm) throws ApiException {
+        List<InventoryReportData> data = reportDto.getInventoryReport(brandForm);
         return data;
     }
 //----------------------------------------------------------------------------------------
@@ -53,11 +53,11 @@ public class ReportApiController {
         return reportDto.getDateWiseSalesReport(salesReportForm);
     }
 
-    @ApiOperation(value = "get all sales report")
-    @RequestMapping(path = "/sales-report", method = RequestMethod.GET)
-    public List<SalesReportData> getAll() throws ApiException {
-        return reportDto.getAll();
-    }
+//    @ApiOperation(value = "get all sales report")
+//    @RequestMapping(path = "/sales-report", method = RequestMethod.GET)
+//    public List<SalesReportData> getAll() throws ApiException {
+//        return reportDto.getAll();
+//    }
 
 //----------------------------------------------------------------------------------------
 

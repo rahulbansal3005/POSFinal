@@ -9,5 +9,5 @@ public class InventoryReportData {
     public int id;
     private String brand;
     private String category;
-    private int quantity;
+    private Integer quantity;
 }
