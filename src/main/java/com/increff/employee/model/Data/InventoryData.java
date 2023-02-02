@@ -8,6 +8,5 @@ import lombok.Setter;
 @Setter
 public class InventoryData extends InventoryForm {
 
-    private int id;
-    private int product_id;
+    private Integer id;
 }

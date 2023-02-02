@@ -2,10 +2,12 @@ function getInventoryUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/inventory";
 }
+function resetForm() {
+  var element = document.getElementById("inventory-form");
+  element.reset()
+}
 
-//BUTTON ACTIONS
 function addInventory(event) {
-  //Set the values to update
   var $form = $("#inventory-form");
   var json = toJson($form);
   var url = getInventoryUrl();
@@ -22,7 +24,7 @@ function addInventory(event) {
     },
     error: handleAjaxError,
   });
-
+  resetForm();
   return false;
 }
 
@@ -135,22 +137,21 @@ function downloadErrors() {
 function displayInventoryList(data) {
   var $tbody = $("#inventory-table").find("tbody");
   $tbody.empty();
+  let index=1;
   for (var i in data) {
     var e = data[i];
+    console.log(e);
     var buttonHtml =
-      '<button onclick="deleteInventory(' + e.id + ')">delete</button>';
+      '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
     buttonHtml +=
-      ' <button onclick="displayEditInventory(' + e.id + ')">edit</button>';
+      ' <button type="button" class="btn btn-secondary" onclick="displayEditInventory(' + e.id + ')">Edit</button>';
     var row =
       "<tr>" +
       "<td>" +
-      e.id +
+      index++ +
       "</td>" +
       "<td>" +
       e.barcode +
-      "</td>" +
-      "<td>" +
-      e.quantity +
       "</td>" +
       "<td>" +
       e.quantity +
@@ -206,7 +207,7 @@ function displayUploadData() {
 }
 
 function displayInventory(data) {
-  $("#inventory-edit-form input[name=inventory]").val(data.inventory);
+  $("#inventory-edit-form input[name=barcode]").val(data.barcode);
   $("#inventory-edit-form input[name=category]").val(data.category);
   $("#inventory-edit-form input[name=id]").val(data.id);
   $("#edit-inventory-modal").modal("toggle");

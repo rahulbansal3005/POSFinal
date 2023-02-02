@@ -3,6 +3,11 @@ function getEmployeeUrl() {
   return baseUrl + "/api/employee";
 }
 
+function resetForm() {
+  var element = document.getElementById("inventory-form");
+  element.reset()
+}
+
 //BUTTON ACTIONS
 function addEmployee(event) {
   //Set the values to update

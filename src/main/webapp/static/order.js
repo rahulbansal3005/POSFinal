@@ -1,11 +1,6 @@
 var completeOrder = []
 let processedItems = {};
 
-function getOrderItemUrl() {
-    var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/order";
-}
-
 function getOrderUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
     return baseUrl + "/api/order";
@@ -15,16 +10,6 @@ function getInvoiceUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
     return baseUrl + "/api/pdf";
 }
-
-// function getProductUrl() {
-//   var baseUrl = $("meta[name=baseUrl]").attr("content")
-//   return baseUrl + "/api/product";
-// }
-//
-// function getInventoryUrl() {
-//   var baseUrl = $("meta[name=baseUrl]").attr("content")
-//   return baseUrl + "/api/inventory";
-// }
 
 function resetForm() {
     var element = document.getElementById("order-item-form");
@@ -139,7 +124,7 @@ function displayOrder(id) {
 
 
 function placeOrder() {
-    var url = getOrderItemUrl();
+    var url = getOrderUrl();
     completeOrder = Object.values(processedItems);
     $.ajax({
         url: url,

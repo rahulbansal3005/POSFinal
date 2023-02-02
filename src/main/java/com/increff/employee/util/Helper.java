@@ -50,7 +50,7 @@ public class Helper {
     public static InventoryData convertInventoryPojoToInventoryData(InventoryPojo inventoryPojo) {
         InventoryData inventoryData = new InventoryData();
         inventoryData.setId(inventoryPojo.getId());
-        inventoryData.setProduct_id(inventoryPojo.getProductId());
+//        inventoryData.setBarcode(inventoryPojo.ge());
         inventoryData.setQuantity(inventoryPojo.getQuantity());
         return inventoryData;
     }

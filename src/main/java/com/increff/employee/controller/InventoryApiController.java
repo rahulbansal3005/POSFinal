@@ -42,9 +42,9 @@ public class InventoryApiController {
         return dto.get(id);
     }
 
-    @ApiOperation(value = "Gets list of all inventorys")
+    @ApiOperation(value = "Gets list of all the items in the inventory")
     @RequestMapping(path = "/api/inventory", method = RequestMethod.GET)
-    public List<InventoryData> getAll() {
+    public List<InventoryData> getAll() throws ApiException {
         return dto.getAll();
     }
 

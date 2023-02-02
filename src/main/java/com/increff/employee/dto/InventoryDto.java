@@ -20,40 +20,42 @@ import static com.increff.employee.util.Helper.convertInventoryPojoToInventoryDa
 public class InventoryDto {
 
     @Autowired
-    private ProductService ps;
+    private ProductService productService;
 
     @Autowired
-    private InventoryService service;
+    private InventoryService inventoryService;
 
 
     public void add( InventoryForm inventoryForm) throws ApiException {
         InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
 
-        inventoryPojo.setProductId(ps.extractProd_Id(inventoryForm.getBarcode()));
+        inventoryPojo.setProductId(productService.extractProd_Id(inventoryForm.getBarcode()));
 
-        service.add(inventoryPojo);
+        inventoryService.add(inventoryPojo);
     }
     public void delete(Integer id) {
-        service.delete(id);
+        inventoryService.delete(id);
     }
 
     public InventoryData get( Integer id) throws ApiException {
-        InventoryPojo inventoryPojo = service.get(id);
+        InventoryPojo inventoryPojo = inventoryService.get(id);
         return convertInventoryPojoToInventoryData(inventoryPojo);
     }
 
 
-    public List<InventoryData> getAll() {
-        List<InventoryPojo> inventoryPojoList = service.getAll();
+    public List<InventoryData> getAll() throws ApiException {
+        List<InventoryPojo> inventoryPojoList = inventoryService.getAll();
         List<InventoryData> inventoryDataList = new ArrayList<InventoryData>();
         for (InventoryPojo inventoryPojo : inventoryPojoList) {
-            inventoryDataList.add(convertInventoryPojoToInventoryData(inventoryPojo));
+            InventoryData inventoryData= convertInventoryPojoToInventoryData(inventoryPojo);
+            inventoryData.setBarcode(productService.extractBarCode(inventoryPojo.getProductId()));
+            inventoryDataList.add(inventoryData);
         }
         return inventoryDataList;
     }
 
     public void update( Integer id, InventoryForm inventoryForm) throws ApiException {
         InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
-        service.update(id, inventoryPojo);
+        inventoryService.update(id, inventoryPojo);
     }
 }

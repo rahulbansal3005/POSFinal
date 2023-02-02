@@ -3,6 +3,11 @@ function getBrandUrl() {
   return baseUrl + "/api/brand";
 }
 
+function resetForm() {
+  var element = document.getElementById("inventory-form");
+  element.reset()
+}
+
 //BUTTON ACTIONS
 function addBrand(event) {
   //Set the values to update

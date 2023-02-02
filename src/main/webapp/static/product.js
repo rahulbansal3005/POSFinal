@@ -3,6 +3,11 @@ function getProductUrl() {
   return baseUrl + "/api/product";
 }
 
+function resetForm() {
+  var element = document.getElementById("inventory-form");
+  element.reset()
+}
+
 //BUTTON ACTIONS
 function addProduct(event) {
   //Set the values to update
