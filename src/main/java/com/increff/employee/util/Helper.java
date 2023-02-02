@@ -13,19 +13,19 @@ import java.util.List;
 
 public class Helper {
 
-    public static BrandData convertBrandPojoToBrandData(BrandPojo p) {
+    public static BrandData convertBrandPojoToBrandData(BrandPojo brandPojo) {
         BrandData brandData = new BrandData();
-        brandData.setCategory(p.getCategory());
-        brandData.setBrand(p.getBrand());
-        brandData.setId(p.getId());
+        brandData.setCategory(brandPojo.getCategory());
+        brandData.setBrand(brandPojo.getBrand());
+        brandData.setId(brandPojo.getId());
         return brandData;
     }
 
-    public static BrandPojo convertBrandFormToBrandPojo(BrandForm f) {
-        BrandPojo p = new BrandPojo();
-        p.setCategory(f.getCategory());
-        p.setBrand(f.getBrand());
-        return p;
+    public static BrandPojo convertBrandFormToBrandPojo(BrandForm brandForm) {
+        BrandPojo brandPojo = new BrandPojo();
+        brandPojo.setCategory(brandForm.getCategory());
+        brandPojo.setBrand(brandForm.getBrand());
+        return brandPojo;
     }
 
     public static ProductData convertProductPojoToProductData(ProductPojo productPojo) {
@@ -50,7 +50,6 @@ public class Helper {
     public static InventoryData convertInventoryPojoToInventoryData(InventoryPojo inventoryPojo) {
         InventoryData inventoryData = new InventoryData();
         inventoryData.setId(inventoryPojo.getId());
-//        inventoryData.setBarcode(inventoryPojo.ge());
         inventoryData.setQuantity(inventoryPojo.getQuantity());
         return inventoryData;
     }

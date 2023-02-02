@@ -1,13 +1,10 @@
 package com.increff.employee.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.transaction.Transactional;
 
 import com.increff.employee.model.Form.BrandForm;
-import com.increff.employee.util.Normalize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +15,17 @@ import com.increff.employee.pojo.BrandPojo;
 public class BrandService {
 
     @Autowired
-    private BrandDao dao;
+    private BrandDao brandDao;
 
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(BrandPojo brandPojo) throws ApiException {
-        dao.insert(brandPojo);
+        brandDao.insert(brandPojo);
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public void delete(Integer id) {
-        dao.delete(id);
+        brandDao.delete(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -38,7 +35,7 @@ public class BrandService {
 
     @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> getAll() {
-        return dao.selectAll();
+        return brandDao.selectAll();
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -49,11 +46,11 @@ public class BrandService {
     }
 
     public List<BrandPojo> getCategory(String brand) throws ApiException {
-        return dao.getCategory(brand);
+        return brandDao.getCategory(brand);
     }
     @Transactional(rollbackOn = ApiException.class)
     public BrandPojo getCheck(Integer id) throws ApiException {
-        BrandPojo brandPojo = dao.select(id);
+        BrandPojo brandPojo = brandDao.select(id);
         if (brandPojo == null) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
@@ -75,7 +72,7 @@ public class BrandService {
 
     @Transactional(rollbackOn = ApiException.class)
     public int extractId(ProductForm productForm) throws ApiException {
-        BrandPojo brandPojo = dao.getBrand_category(productForm);
+        BrandPojo brandPojo = brandDao.getBrand_category(productForm);
         if (brandPojo == null) {
             throw new ApiException("Brand-Category combination does not exist ");
         }
@@ -88,18 +85,18 @@ public class BrandService {
         List<BrandPojo> brandPojoList;
         if(brandForm.getBrand()=="" && brandForm.getCategory()=="")
         {
-            brandPojoList=dao.selectAll();
+            brandPojoList= brandDao.selectAll();
         }
         else if(brandForm.getBrand()=="")
         {
-            brandPojoList=dao.selectByCategory(brandForm.getCategory());
+            brandPojoList= brandDao.selectByCategory(brandForm.getCategory());
         }
         else if(brandForm.getCategory()=="")
         {
-            brandPojoList=dao.selectByBrand(brandForm.getBrand());
+            brandPojoList= brandDao.selectByBrand(brandForm.getBrand());
         }
         else
-            brandPojoList=dao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
+            brandPojoList= brandDao.searchBrandData(brandForm.getBrand(),brandForm.getCategory());
 
         if(brandPojoList.size()==0)
             throw new ApiException("Brand-Category Pair does not exist");
@@ -109,7 +106,7 @@ public class BrandService {
 
     @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> getBrandPojosonCategoryName(String category) throws ApiException {
-        List<BrandPojo> brandPojoList=dao.selectByCategory(category);
+        List<BrandPojo> brandPojoList= brandDao.selectByCategory(category);
         if(brandPojoList.size()==0)
             throw new ApiException("Brand-Category Pair does not exist in Brand Category");
         return brandPojoList;
@@ -119,25 +116,17 @@ public class BrandService {
 
     @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> getBrandPojosonBrandName(String brand) throws ApiException {
-        List<BrandPojo> brandPojoList=dao.selectByBrand(brand);
+        List<BrandPojo> brandPojoList= brandDao.selectByBrand(brand);
         if(brandPojoList.size()==0)
             throw new ApiException("Brand-Category Pair does not exist in Brand Category");
         return brandPojoList;
     }
-//    @Transactional(rollbackOn = ApiException.class)
-//    public List<BrandPojo> getByNameCategory(String brand, String category) {
-//        if(Objects.equals(brand, "") && Objects.equals(category, "")) {
-//            return dao.selectAll();
-//        }
-//        if(Objects.equals(brand, "")) {
-//            return dao.selectByCategory(category);
-//        }
-//        if(Objects.equals(category, "")) {
-//            return dao.selectByBrand(brand);
-//        }
-//
-//        List<BrandPojo> brands = new ArrayList<>();
-//        brands.add(dao.select(brand, category));
-//        return brands;
-//    }
+    @Transactional(rollbackOn = ApiException.class)
+    public void getByNameCategory(String brand, String category) throws ApiException {
+
+        BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
+        if(brandPojo!=null)
+            throw new ApiException("Brand-Category already existed");
+        return;
+    }
 }
