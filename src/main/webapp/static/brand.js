@@ -8,6 +8,11 @@ function resetForm() {
     element.reset()
 }
 
+function toggleModal(){
+    $('#add-brand-item-modal').modal('toggle');
+
+}
+
 //BUTTON ACTIONS
 function addBrand(event) {
     //Set the values to update
@@ -23,10 +28,11 @@ function addBrand(event) {
             "Content-Type": "application/json",
         },
         success: function (response) {
+            $('#add-brand-item-modal').modal('toggle');
             getBrandList();
             resetForm();
-            // console.log("here");
             SuccessMessage();
+
         },
         error: handleAjaxError,
     });
@@ -219,6 +225,7 @@ function displayBrand(data) {
 
 //INITIALIZATION CODE
 function init() {
+    $("#add-brand-modal").click(toggleModal);
     $("#add-brand").click(addBrand);
     $("#update-brand").click(updateBrand);
     $("#refresh-data").click(getBrandList);

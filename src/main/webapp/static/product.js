@@ -7,6 +7,9 @@ function resetForm() {
   var element = document.getElementById("product-form");
   element.reset()
 }
+function toggleModal(){
+  $('#add-product-item-modal').modal('toggle');
+}
 
 //BUTTON ACTIONS
 function addProduct(event) {
@@ -23,9 +26,11 @@ function addProduct(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      $('#add-product-item-modal').modal('toggle');
       getProductList();
       resetForm();
       SuccessMessage();
+
     },
     error: handleAjaxError,
   });
@@ -286,6 +291,7 @@ const populateCategory = data => {
 
 //INITIALIZATION CODE
 function init() {
+  $("#add-product-modal").click(toggleModal);
   $("#add-product").click(addProduct);
   $("#update-product").click(updateProduct);
   $("#refresh-data").click(getProductList);

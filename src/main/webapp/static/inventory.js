@@ -6,7 +6,9 @@ function resetForm() {
   var element = document.getElementById("inventory-form");
   element.reset()
 }
-
+function toggleModal(){
+  $('#add-inventory-item-modal').modal('toggle');
+}
 function addInventory(event) {
   var $form = $("#inventory-form");
   var json = toJson($form);
@@ -20,6 +22,7 @@ function addInventory(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      $('#add-inventory-item-modal').modal('toggle');
       getInventoryList();
       handleAjaxError();
     },
@@ -216,6 +219,7 @@ function displayInventory(data) {
 
 //INITIALIZATION CODE
 function init() {
+  $("#add-inventory-modal").click(toggleModal);
   $("#add-inventory").click(addInventory);
   $("#update-inventory").click(updateInventory);
   $("#refresh-data").click(getInventoryList);
