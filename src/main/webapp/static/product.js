@@ -4,7 +4,7 @@ function getProductUrl() {
 }
 
 function resetForm() {
-  var element = document.getElementById("inventory-form");
+  var element = document.getElementById("product-form");
   element.reset()
 }
 
@@ -24,6 +24,8 @@ function addProduct(event) {
     },
     success: function (response) {
       getProductList();
+      resetForm();
+      SuccessMessage();
     },
     error: handleAjaxError,
   });
@@ -142,6 +144,7 @@ function downloadErrors() {
 function displayProductList(data) {
   var $tbody = $("#product-table").find("tbody");
   $tbody.empty();
+  var index=1;
   for (var i in data) {
     var e = data[i];
     // console.log(e);
@@ -152,7 +155,7 @@ function displayProductList(data) {
     var row =
       "<tr>" +
       "<td>" +
-      e.id +
+      index++ +
       "</td>" +
       "<td>" +
       e.barcode +

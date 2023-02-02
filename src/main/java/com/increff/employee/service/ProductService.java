@@ -15,19 +15,19 @@ import com.increff.employee.pojo.ProductPojo;
 public class ProductService {
 
     @Autowired
-    private ProductDao dao;
+    private ProductDao productDao;
 
     @Autowired
-    private InventoryService is;
+    private InventoryService inventoryService;
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(ProductPojo productPojo) throws ApiException {
-        dao.insert(productPojo);
+        productDao.insert(productPojo);
     }
 
     @Transactional
     public void delete(Integer id) {
-        dao.delete(id);
+        productDao.delete(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -38,7 +38,7 @@ public class ProductService {
 
     @Transactional
     public List<ProductPojo> getAll() {
-        return dao.selectAll();
+        return productDao.selectAll();
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -48,21 +48,21 @@ public class ProductService {
         newproductPojo.setBrandCategory(productPojo.getBrandCategory());
         newproductPojo.setName(productPojo.getName());
         newproductPojo.setMrp(productPojo.getMrp());
-        dao.update(newproductPojo);
+        productDao.update(newproductPojo);
     }
 
     @Transactional
     public ProductPojo getCheck(String barCode) throws ApiException {
-        ProductPojo p = dao.select_barcode(barCode);
-        if (p == null) {
+        ProductPojo productPojo = productDao.select_barcode(barCode);
+        if (productPojo == null) {
             return null;
         }
-        return p;
+        return productPojo;
     }
 
     @Transactional
     public ProductPojo getCheck(Integer id) throws ApiException {
-        ProductPojo p = dao.select(id);
+        ProductPojo p = productDao.select(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exist, id: " + id);
         }
@@ -70,13 +70,13 @@ public class ProductService {
     }
     @Transactional(rollbackOn = ApiException.class)
     public List<ProductPojo> getProductByBrandCategoryId(int brandCategoryId) {
-        return dao.getProductByBrandCategory(brandCategoryId);
+        return productDao.getProductByBrandCategory(brandCategoryId);
     }
 
 
     @Transactional
     public int extractProd_Id(String barCode) throws ApiException {
-        ProductPojo p = dao.select_barcode(barCode);
+        ProductPojo p = productDao.select_barcode(barCode);
         if (p == null) {
             throw new ApiException("Product does not exist is Product List");
         }
@@ -85,7 +85,7 @@ public class ProductService {
 
     @Transactional
     public String extractBarCode(Integer prodID) throws ApiException {
-        ProductPojo p = dao.select(prodID);
+        ProductPojo p = productDao.select(prodID);
         if (p == null) {
             throw new ApiException("Product does not does not exist with this Product ID ");
         }
@@ -94,11 +94,11 @@ public class ProductService {
 
     @Transactional
     public void checker(String barcode, Integer quant, HashMap<String, Integer> errors) {
-        ProductPojo p = dao.select_barcode(barcode);
+        ProductPojo p = productDao.select_barcode(barcode);
         if (p == null) {
             errors.put(barcode, -1);
         } else {
-            Boolean v = is.checker(p.getId(), quant);
+            Boolean v = inventoryService.checker(p.getId(), quant);
             if (v) {
                 errors.put(barcode, quant);
             }

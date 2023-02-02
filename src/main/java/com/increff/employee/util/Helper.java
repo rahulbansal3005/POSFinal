@@ -38,7 +38,7 @@ public class Helper {
         return productData;
     }
 
-    public static ProductPojo convertProductFormToProductPojo(ProductForm productForm) throws ApiException {
+    public static ProductPojo convertProductFormToProductPojo(ProductForm productForm) {
         ProductPojo productPojo = new ProductPojo();
         productPojo.setBarcode(productForm.getBarcode());
         productPojo.setName(productForm.getName());

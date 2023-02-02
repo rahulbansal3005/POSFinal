@@ -9,6 +9,6 @@ public class ProductForm {
     private String barcode;
     private String brand;
     private String name;
-    private double mrp;
+    private Double mrp;
     private String category;
 }

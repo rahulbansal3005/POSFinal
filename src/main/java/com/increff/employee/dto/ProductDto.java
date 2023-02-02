@@ -21,30 +21,45 @@ import static com.increff.employee.util.Helper.convertProductPojoToProductData;
 @Service
 public class ProductDto {
     @Autowired
-    private ProductService service;
+    private ProductService productService;
     @Autowired
     private BrandService brandService;
 
     public void add(ProductForm productForm) throws ApiException {
-        normalize(productForm);
-        ProductPojo productPojo = convertProductFormToProductPojo(productForm);
-        productPojo.setBrandCategory(brandService.extractId(productForm));
-        if (Validate.isEmpty(productPojo.getName())) {
-            throw new ApiException("name cannot be empty");
+
+        if (Validate.isEmpty(productForm.getName())) {
+            throw new ApiException("Name cannot be empty or null");
+        }if (Validate.isEmpty(productForm.getBarcode())) {
+            throw new ApiException("Barcode cannot be empty or null");
+        }if (Validate.isEmpty(productForm.getBrand())) {
+            throw new ApiException("Brand cannot be empty or null");
+        }if (Validate.isEmpty(productForm.getCategory())) {
+            throw new ApiException("Category cannot be null or empty");
+        }if (productForm.getMrp()<0) {
+            throw new ApiException("MRP cannot be negative");
+        }if (productForm.getMrp()==null) {
+            throw new ApiException("MRP cannot be empty");
         }
-        service.add(productPojo);
+
+        normalize(productForm);
+        ProductPojo productPojo=productService.getCheck(productForm.getBarcode());
+        if(productPojo!=null)
+            throw new ApiException("Barcode already present in the Database");
+        productPojo = convertProductFormToProductPojo(productForm);
+        productPojo.setBrandCategory(brandService.extractId(productForm));
+        productService.add(productPojo);
     }
     public void delete( Integer id) {
-        service.delete(id);
+        productService.delete(id);
     }
 
     public ProductData get(Integer id) throws ApiException {
-        ProductPojo productPojo = service.get(id);
+        ProductPojo productPojo = productService.get(id);
         return convertProductPojoToProductData(productPojo);
     }
 
     public List<ProductData> getAll() throws ApiException {
-        List<ProductPojo> productPojoList = service.getAll();
+        List<ProductPojo> productPojoList = productService.getAll();
         List<ProductData> productDataList = new ArrayList<ProductData>();
         for (ProductPojo productPojo : productPojoList) {
 //            TODO use brandservice for brand and category name remove brandCategoryID
@@ -60,7 +75,7 @@ public class ProductDto {
     public void update(Integer id, ProductForm productForm) throws ApiException {
         normalize(productForm);
         ProductPojo productPojo = convertProductFormToProductPojo(productForm);
-        service.update(id, productPojo);
+        productService.update(id, productPojo);
     }
 
 }
