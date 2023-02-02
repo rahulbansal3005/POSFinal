@@ -228,6 +228,59 @@ function displayProduct(data) {
   $("#edit-product-modal").modal("toggle");
 }
 
+
+
+//Fill dropdown Options
+const getBrandUrl = (brand = "", category = "") => {
+  var baseUrl = $("meta[name=baseUrl]").attr("content")
+  return baseUrl + "/api/brand?brand=" + brand + "&category=" + category;
+}
+const fillOptions = () => {
+  var url = getBrandUrl();
+
+  $.ajax({
+    url: url,
+    type: 'GET',
+    success: function (response) {
+      console.log(response);
+      populateBrand(response);
+      populateCategory(response);
+    },
+    error: handleAjaxError
+  });
+}
+
+const populateBrand = data => {
+  let $selectBrand = $("#inputBrand");
+
+  let brands = new Set();
+  for (var i in data) {
+    var e = data[i];
+    console.log(e);
+    brands.add(e.brand);
+  }
+
+  for (let brand of brands.values()) {
+    var ele = '<option value="' + brand + '">' + brand + '</option>';
+    $selectBrand.append(ele);
+  }
+}
+
+const populateCategory = data => {
+  let $selectCategory = $("#inputCategory");
+
+  let categories = new Set();
+  for (var i in data) {
+    var e = data[i];
+    categories.add(e.category);
+  }
+
+  for (let category of categories.values()) {
+    var ele = '<option value="' + category + '">' + category + '</option>';
+    $selectCategory.append(ele);
+  }
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-product").click(addProduct);
@@ -237,6 +290,8 @@ function init() {
   $("#process-data").click(processData);
   $("#download-errors").click(downloadErrors);
   $("#productFile").on("change", updateFileName);
+  fillOptions();
+
 }
 
 $(document).ready(init);

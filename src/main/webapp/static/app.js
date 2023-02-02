@@ -26,6 +26,12 @@ function handleAjaxError(response) {
         "extendedTimeOut": "0"
     });
 }
+
+// function fillBrandCategoryOptions(){
+
+// }
+
+
 function SuccessMessage()
 {
     toastr.success("Successfully added","Success: ",{

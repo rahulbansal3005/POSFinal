@@ -3,11 +3,6 @@ function getSalesReportUrl() {
     return baseUrl + "/api/sales-report";
 }
 
-const getBrandUrl = (brand = "", category = "") => {
-    var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/brand?brand=" + brand + "&category=" + category;
-}
-
 function filterSalesReport() {
     var $form = $("#sales-form");
     var json = toJson($form);
@@ -48,8 +43,10 @@ function displaySalesReport(data) {
     }
     $('thead').show();
 }
-
-
+const getBrandUrl = (brand = "", category = "") => {
+    var baseUrl = $("meta[name=baseUrl]").attr("content")
+    return baseUrl + "/api/brand?brand=" + brand + "&category=" + category;
+}
 const fillOptions = () => {
     var url = getBrandUrl();
 
@@ -95,7 +92,6 @@ const populateCategory = data => {
         $selectCategory.append(ele);
     }
 }
-
 function init() {
     $('#filter-sales-report').click(filterSalesReport);
     $('thead').hide();
