@@ -50,11 +50,16 @@ public class InventoryDao extends AbstractDao {
     }
 
 
-    public List<InventoryPojo> selectOnProdId(int productId)
-    {
+//    public List<InventoryPojo> selectOnProdId(int productId)
+//    {
+//        TypedQuery<InventoryPojo> query = getQuery(select_on_prod_id, InventoryPojo.class);
+//        query.setParameter("productId", productId);
+//        return getSingle(query);
+//    }
+
+    public InventoryPojo findPojoOnProductId(int productId) {
         TypedQuery<InventoryPojo> query = getQuery(select_on_prod_id, InventoryPojo.class);
         query.setParameter("productId", productId);
-        return query.getResultList();
+        return getSingle(query);
     }
-
 }

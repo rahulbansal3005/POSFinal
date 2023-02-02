@@ -48,23 +48,19 @@ public class ReportDto {
 
     public List<InventoryReportData> getInventoryReport(BrandForm brandForm) throws ApiException {
         List<InventoryReportData> inventoryReportDataList = new ArrayList<>();
-        List<BrandPojo> brandCategoryList=brandService.searchBrandCategoryData(brandForm);
-        for(BrandPojo brandPojo:brandCategoryList)
-        {
-            List<ProductPojo> productPojoList=productService.getProductByBrandCategoryId(brandPojo.getId());
-            if(productPojoList.size()!=0)
-            {
-                Integer quantity=0;
-                for(ProductPojo productPojo:productPojoList)
-                {
-                    List<InventoryPojo> inventoryPojoList=inventoryService.selectOnProdId(productPojo.getId());
-                    if(inventoryPojoList.size()!=0)
-                    {
-                        InventoryReportData inventoryReportData=new InventoryReportData();
-                        for(InventoryPojo inventoryPojo:inventoryPojoList)
-                        {
-                            quantity+=inventoryPojo.getQuantity();
-                        }
+        List<BrandPojo> brandCategoryList = brandService.searchBrandCategoryData(brandForm);
+        for (BrandPojo brandPojo : brandCategoryList) {
+            List<ProductPojo> productPojoList = productService.getProductByBrandCategoryId(brandPojo.getId());
+            if (productPojoList.size() != 0) {
+                Integer quantity = 0;
+                for (ProductPojo productPojo : productPojoList) {
+                    InventoryPojo inventoryPojo = inventoryService.selectOnProdId(productPojo.getId());
+                    if (inventoryPojo != null) {
+                        InventoryReportData inventoryReportData = new InventoryReportData();
+//                        for(InventoryPojo inventoryPojo:inventoryPojoList)
+//                        {
+                        quantity += inventoryPojo.getQuantity();
+//                        }
                         inventoryReportData.setQuantity(quantity);
                         inventoryReportData.setBrand(brandPojo.getBrand());
                         inventoryReportData.setCategory(brandPojo.getCategory());

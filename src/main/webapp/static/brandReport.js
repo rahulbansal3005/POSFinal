@@ -29,9 +29,6 @@ function filterReport() {
     let $form = $("#brand-form");
     let json = toJson($form);
     let url = getBrandUrl();
-
-    // console.log(json);
-
     $.ajax({
         url: url,
         type: 'POST',
@@ -40,7 +37,6 @@ function filterReport() {
             'Content-Type': 'application/json'
         },
         success: function(response) {
-            // console.log("from filter report",response);
             displayBrandList(response);
         },
         error: handleAjaxError
@@ -53,7 +49,7 @@ const fillOptions = () => {
         url: url,
         type: 'GET',
         success: function(response) {
-            console.log("from brandCategoryURL",response);
+            // console.log("from brandCategoryURL",response);
             populateBrand(response);
             populateCategory(response);
         },

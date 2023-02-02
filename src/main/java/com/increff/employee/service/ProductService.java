@@ -55,7 +55,7 @@ public class ProductService {
     public ProductPojo getCheck(String barCode) throws ApiException {
         ProductPojo p = dao.select_barcode(barCode);
         if (p == null) {
-            throw new ApiException("Product with given ID does not exit, id: " + barCode);
+            return null;
         }
         return p;
     }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.increff.employee.model.Data.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import com.increff.employee.pojo.InventoryPojo;
 public class InventoryService {
 
     @Autowired
-    private InventoryDao dao;
+    private InventoryDao inventoryDao;
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(InventoryPojo inventoryPojo) throws ApiException {
@@ -24,12 +25,12 @@ public class InventoryService {
         // if (StringUtil.isEmpty(p.getName())) {
         // throw new ApiException("name cannot be empty");
         // }
-        dao.insert(inventoryPojo);
+        inventoryDao.insert(inventoryPojo);
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public void delete(Integer id) {
-        dao.delete(id);
+        inventoryDao.delete(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -39,7 +40,7 @@ public class InventoryService {
 
     @Transactional(rollbackOn = ApiException.class)
     public List<InventoryPojo> getAll() {
-        return dao.selectAll();
+        return inventoryDao.selectAll();
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -48,12 +49,12 @@ public class InventoryService {
         InventoryPojo newInventoryPojo = getCheck(id);
         newInventoryPojo.setProductId(inventoryPojo.getProductId());
         newInventoryPojo.setQuantity(inventoryPojo.getQuantity());
-        dao.update(newInventoryPojo);
+        inventoryDao.update(newInventoryPojo);
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public InventoryPojo getCheck(Integer id) throws ApiException {
-        InventoryPojo inventoryPojo = dao.select(id);
+        InventoryPojo inventoryPojo = inventoryDao.select(id);
         if (inventoryPojo == null) {
             throw new ApiException("Inventory with given ID does not exist, id: " + id);
         }
@@ -62,7 +63,7 @@ public class InventoryService {
 
     @Transactional(rollbackOn = ApiException.class)
     public Boolean checker(Integer id, Integer quant) {
-        InventoryPojo inventoryPojo = dao.select(id);
+        InventoryPojo inventoryPojo = inventoryDao.select(id);
         if (inventoryPojo.getQuantity() < quant) {
             return true;
         }
@@ -72,7 +73,7 @@ public class InventoryService {
 
     @Transactional(rollbackOn = ApiException.class)
     public boolean checkQuantity(Integer id, Integer quant) {
-        InventoryPojo inventoryPojo = dao.select(id);
+        InventoryPojo inventoryPojo = inventoryDao.select(id);
         if (inventoryPojo.getQuantity()> quant) {
             return true;
         }
@@ -82,8 +83,19 @@ public class InventoryService {
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public List<InventoryPojo> selectOnProdId(int prodId)
+    public InventoryPojo selectOnProdId(int prodId)
     {
-        return dao.selectOnProdId(prodId);
+        InventoryPojo inventoryPojo=inventoryDao.findPojoOnProductId(prodId);
+        if(inventoryPojo==null)
+            return null;
+        return inventoryPojo;
+    }
+
+    @Transactional(rollbackOn = ApiException.class)
+    public void reduceInventory(OrderItem orderItem, int prod_id)
+    {
+        InventoryPojo inventoryPojo=inventoryDao.findPojoOnProductId(prod_id);
+        int quantity = inventoryPojo.getQuantity();
+        inventoryPojo.setQuantity(quantity-orderItem.getQuantity());
     }
 }

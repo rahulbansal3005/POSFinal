@@ -2,7 +2,9 @@ package com.increff.employee.dto;
 
 import com.increff.employee.model.Data.OrderData;
 import com.increff.employee.model.Data.OrderItem;
+import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.pojo.OrderPojo;
+import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.InventoryService;
 import com.increff.employee.service.OrderService;
@@ -12,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.increff.employee.util.Helper.*;
@@ -23,14 +24,14 @@ public class OrderDto {
 
 
     @Autowired
-    InventoryService is;
+    InventoryService inventoryService;
     @Autowired
-    private ProductService ps;
+    private ProductService productService;
     @Autowired
     private OrderItemDto orderItemDto;
 
     @Autowired
-    private OrderService service;
+    private OrderService orderService;
 
     public void add(OrderItem[] orderForm) throws ApiException {
 //        1) Validate all the Order Items in our inventory.
@@ -47,8 +48,9 @@ public class OrderDto {
             for (String s : errorMessages) {
                 System.out.println(s);
             }
-            throw new ApiException("Too many errors in Order Item List ");
+            throw new ApiException(errorMessages.toString());
         }
+
 
         // 2) Create new Order.
         OrderPojo orderPojo = convertOrderFormToOrder();
@@ -60,34 +62,54 @@ public class OrderDto {
         orderPojo.setDate(now);
 //        orderPojo.setDate(date);
         orderPojo.setInvoiceGenerated(false);
-        service.addOrder(orderPojo);
+        orderService.addOrder(orderPojo);
 
         // 3) Add order Items in database.
-        service.addOrderItems(orderForm, orderPojo.getId());
+        orderService.addOrderItems(orderForm, orderPojo.getId());
 
 
         // 4) Reduce Items from inventory
+        for (OrderItem orderItem : orderForm) {
+            int prod_id = productService.extractProd_Id(orderItem.getBarCode());
+            inventoryService.reduceInventory(orderItem,prod_id);
+        }
 
 
     }
-
-    public void checkInventory(OrderItem c, List<String> errorMessages) throws ApiException {
-        int prod_id = ps.extractProd_Id(c.getBarCode());
-        if (!is.checkQuantity(prod_id, c.getQuantity())) {
-            String error = "product with given BarCode:" + c.getBarCode() + "does not have sufficient quantity ";
+    public void checkInventory(OrderItem orderItem, List<String> errorMessages) throws ApiException {
+        ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
+        if(productPojo==null)
+        {
+            String error="product does not exist in Product List"+ orderItem.getBarCode();
             errorMessages.add(error);
+//            throw new ApiException("Product does not exist");
+            return;
+        }
+        InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
+        if(inventoryPojo==null)
+        {
+            String error = "product with given BarCode:" + orderItem.getBarCode() + "does not exist in inventory";
+            errorMessages.add(error);
+//            throw new ApiException("Product does not exist inventory");
+            return;
+        }
+        else if (inventoryPojo.getQuantity()<orderItem.getQuantity()) {
+            String error = "product with given BarCode:" + orderItem.getBarCode() + "does not have sufficient quantity ";
+            errorMessages.add(error);
+//            throw new ApiException("Product does not exist in inventory in required quantity");
+            return;
         }
     }
 
     public OrderData getOrder(int id) throws ApiException {
-        OrderPojo p = service.getOrder(id);
-        List<OrderItem> c = service.getOrderItems(p.getId());
+        OrderPojo p = orderService.getOrder(id);
+        List<OrderItem> c = orderService.getOrderItems(p.getId());
         return convertOrderPojoToOrderData(p, c);
     }
 
 
     public List<OrderData> getAll() throws ApiException {
-        List<OrderPojo> list = service.getAllOrder();
+        List<OrderPojo> list = orderService.getAllOrder();
         List<OrderData> list2 = new ArrayList<OrderData>();
         for (OrderPojo p : list) {
             list2.add(getOrder(p.getId()));
