@@ -53,15 +53,16 @@ public class OrderDto {
 
 
         // 2) Create new Order.
-        OrderPojo orderPojo = convertOrderFormToOrder();
-        LocalDateTime now = LocalDateTime.now();
+
 //        java.util.Date date=new java.util.Date();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String formatDateTime = now.format(format);
+        OrderPojo orderPojo = convertOrderFormToOrder();
+        LocalDateTime now = LocalDateTime.now();
         System.out.println(now + "OrderDTO  now");
         orderPojo.setDate(now);
 //        orderPojo.setDate(date);
-        orderPojo.setInvoiceGenerated(false);
+        orderPojo.setIsInvoiceGenerated(false);
         orderService.addOrder(orderPojo);
 
         // 3) Add order Items in database.

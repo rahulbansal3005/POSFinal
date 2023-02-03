@@ -12,6 +12,16 @@
 
     <h1>Daily Sales Report</h1>
 
+    <!-- Top row with form-->
+    <div class="row">
+        <div class="col-12">
+            <form class="form-inline">
+                <button type="button" class="btn btn-primary" id="add-brand-modal">Add New Brand</button>
+                &nbsp;
+                <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+            </form>
+        </div>
+    </div>
     <!-- Blank Row -->
     <div class="row">
         &nbsp;
@@ -25,8 +35,8 @@
                 <tr>
                     <th scope="col">S no.</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Orders Count</th>
-                    <th scope="col">Items Count</th>
+                    <th scope="col">Invoiced Orders Count</th>
+                    <th scope="col">Invoiced Items Count</th>
                     <th class="text-right" scope="col">Total Revenue</th>
                 </tr>
                 </thead>

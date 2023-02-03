@@ -94,7 +94,7 @@ public class Helper {
         orderData.setId(orderPojo.getId());
         orderData.setDateTime(formattedDateTime);
         orderData.setC(c);
-        orderData.setStatus(orderPojo.getInvoiceGenerated());
+        orderData.setStatus(orderPojo.getIsInvoiceGenerated());
         return orderData;
     }
 

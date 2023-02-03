@@ -9,9 +9,12 @@ import com.increff.employee.pojo.*;
 import com.increff.employee.service.*;
 import com.increff.employee.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -84,11 +87,17 @@ public class ReportDto {
     }
 
     public List<DailySalesPojo> getDailySales() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(now.atZone(ZoneId.of("Asia/Kolkata")).format(formatter));
         return dailySalesService.getAll();
     }
 
     public List<SalesReportData> getAll() {
         List<SalesReportData> salesReportData = new ArrayList<>();
         return salesReportData;
+    }
+
+    public void createReport() {
     }
 }

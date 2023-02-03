@@ -26,12 +26,5 @@ public class OrderPojo {
     private Integer id;
     private LocalDateTime date;
     private Boolean isInvoiceGenerated;
-
-    public Boolean getInvoiceGenerated() {
-        return isInvoiceGenerated;
-    }
-
-    public void setInvoiceGenerated(Boolean invoiceGenerated) {
-        isInvoiceGenerated = invoiceGenerated;
-    }
+    private LocalDateTime invoiceTime;
 }

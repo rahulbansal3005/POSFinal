@@ -51,7 +51,6 @@ public class InventoryDto {
         return convertInventoryPojoToInventoryData(inventoryPojo);
     }
 
-
     public List<InventoryData> getAll() throws ApiException {
         List<InventoryPojo> inventoryPojoList = inventoryService.getAll();
         List<InventoryData> inventoryDataList = new ArrayList<InventoryData>();

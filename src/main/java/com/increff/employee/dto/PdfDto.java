@@ -35,7 +35,10 @@ public class PdfDto {
             throw new ApiException("no order items present in order to place");
 
         PdfData pdfData = new PdfData();
-        orderService.update(id);
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now + "OrderDTO  now");
+//        orderPojo.setDate(now);
+        orderService.update(id,now);
         List<PdfListData> pdfListData = new ArrayList<>();
         Integer c = 0;
         Double total = 0.0;

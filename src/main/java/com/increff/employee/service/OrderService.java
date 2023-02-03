@@ -172,9 +172,10 @@ public class OrderService {
 
     }
     @Transactional(rollbackOn = ApiException.class)
-    public void update(int id) throws ApiException {
+    public void update(int id,LocalDateTime time) throws ApiException {
         OrderPojo ex = getCheckonId(id);
-        ex.setInvoiceGenerated(true);
+        ex.setIsInvoiceGenerated(true);
+        ex.setInvoiceTime(time);
     }
 
     @Transactional

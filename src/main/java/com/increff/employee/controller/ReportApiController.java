@@ -63,7 +63,7 @@ public class ReportApiController {
 
     //    SCHEDULER'S CODE
     @ApiOperation(value = "Gets list of daily sales report")
-    @RequestMapping(path = "/daySales-report", method = RequestMethod.POST)
+    @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
     public List<DailySalesPojo> getDailySales() throws ApiException {
         return reportDto.getDailySales();
     }

@@ -27,13 +27,9 @@ public class PdfApiController {
     @ApiOperation(value = "Generates PDF")
     @RequestMapping(path = "/api/pdf/{id}", method = RequestMethod.GET)
     public void get(@PathVariable int id) throws ApiException {
-//        System.out.println("api called 1");
         PDF_Generator pdf_generator = new PDF_Generator();
-//        System.out.println("api called 2");
         PdfData pdfData = dto.get(id);
-//        System.out.println("api called 3");
         pdf_generator.pdf_generator(pdfData);
-//        System.out.println("api called 4");
     }
 
     @ApiOperation(value = "generate pdf")

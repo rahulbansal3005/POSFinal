@@ -2,24 +2,24 @@
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="baseUrl" th:attr="content=${baseUrl}">
 
-    <script src="https://kit.fontawesome.com/c30beb553f.js" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/c30beb553f.js"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/static/app.css}">
 
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_site_navbar">
     <a class="navbar-brand" th:href="@{/}">
-        <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
+        <img alt="" class="d-inline-block align-top" th:src="@{/static/logo.jpg}">
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -43,15 +43,17 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light  mb-1" th:fragment="name_app_navbar">
     <a class="navbar-brand" th:href="@{/}">
-        <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
+        <img alt="" class="d-inline-block align-top" th:src="@{/static/logo.jpg}">
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <!--        <ul class="navbar-nav">-->
+        <ul class="nav nav-pills">
+
             <li class="nav-item">
                 <a class="nav-link" id="home-link" th:href="@{/ui/home}">Home</a>
             </li>
@@ -74,9 +76,9 @@
                 <a class="nav-link" id="order-link" th:href="@{/ui/order}">Order</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="reports-link" th:href="@{/ui/report}" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Reports</a>
-                <div class="dropdown-menu shadow" aria-labelledby="reports-link">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                   id="reports-link" th:href="@{/ui/report}">Reports</a>
+                <div aria-labelledby="reports-link" class="dropdown-menu shadow">
                     <a class="dropdown-item" th:href="@{/ui/report/inventoryReport}">Inventory Report</a>
                     <a class="dropdown-item" th:href="@{/ui/report/brandReport}">Brand Category Report</a>
                     <a class="dropdown-item" th:href="@{/ui/report/salesReport}">Sales Report</a>
@@ -104,7 +106,16 @@
 
 <footer class="footer  mt-1" th:fragment="name_footer">
     Copyright Increff 2022
-    &nbsp;
+    &nbsp;<script>
+    const navLinks = document.querySelectorAll(".nav-item .nav-link");
+    const currentUrl = window.location.pathname;
+    console.log("In the active");
+    navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentUrl) {
+            link.classList.add("active");
+        }
+    });
+</script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
