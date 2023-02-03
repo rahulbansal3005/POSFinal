@@ -26,7 +26,7 @@ public class ProductDto {
     private BrandService brandService;
 
     public void add(ProductForm productForm) throws ApiException {
-
+//TODO create validate productform method in validate class.
         if (Validate.isEmpty(productForm.getName())) {
             throw new ApiException("Name cannot be empty or null");
         }if (Validate.isEmpty(productForm.getBarcode())) {
@@ -42,6 +42,8 @@ public class ProductDto {
         }
 
         normalize(productForm);
+
+
         ProductPojo productPojo=productService.getCheck(productForm.getBarcode());
         if(productPojo!=null)
             throw new ApiException("Barcode already present in the Database");

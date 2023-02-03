@@ -40,6 +40,7 @@ public class BrandService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void update(Integer id, BrandPojo brandPojo) throws ApiException {
+//        TODO
         BrandPojo newbrandPojo = getCheck(id);
         newbrandPojo.setCategory(brandPojo.getCategory());
         newbrandPojo.setBrand(brandPojo.getBrand());

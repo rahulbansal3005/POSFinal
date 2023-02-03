@@ -38,26 +38,28 @@ public class BrandDto {
         brandService.add(brandPojo);
     }
 
-    public void delete(int brandId) {
+    public void delete(Integer brandId) {
         brandService.delete(brandId);
     }
 
-    public BrandData get(int brandId) throws ApiException {
+    public BrandData get(Integer brandId) throws ApiException {
         BrandPojo brandPojo = brandService.get(brandId);
         return convertBrandPojoToBrandData(brandPojo);
     }
 
     public List<BrandData> getAll() {
         List<BrandPojo> brandPojoList = brandService.getAll();
-        List<BrandData> brandDataList = new ArrayList<BrandData>();
+        List<BrandData> brandDataList = new ArrayList<>();
         for (BrandPojo p : brandPojoList) {
             brandDataList.add(convertBrandPojoToBrandData(p));
         }
         return brandDataList;
     }
 
-    public void update(int brandId,BrandForm brandForm) throws ApiException {
+    public void update(Integer brandId,BrandForm brandForm) throws ApiException {
+//        TODO validate form.
         normalize(brandForm);
+//        TODO check for existing pojo in the database.
         BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
         brandService.update(brandId, brandPojo);
     }

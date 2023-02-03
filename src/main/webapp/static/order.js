@@ -174,10 +174,10 @@ function displayOrderList(data) {
         var buttonHtml = ' <button type="button" class="btn btn-secondary" onclick="displayOrder(' + e.id + ')">View Order</button>'
         // console.log("isInvoiceGenerated",isInvoiceGenerated);
         if (e.status == true) {
-            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Genereate invoice</button>'
+            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Generate invoice</button>'
             buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" >Download Invoice</button>'
         } else {
-            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Genereate invoice</button>'
+            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Generate invoice</button>'
             buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" disabled>Download Invoice</button>'
         }
         var date = new Date(e.updated)

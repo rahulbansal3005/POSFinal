@@ -24,8 +24,9 @@ public class ReportService {
 
     @Autowired
     private ProductService productService;
+
     public List<SalesReportData> get(List<OrderPojo> orderPojos, String brand, String category) throws ApiException {
-        HashMap<Integer,SalesReportData> map = new HashMap<>();
+        HashMap<Integer, SalesReportData> map = new HashMap<>();
 
         for (OrderPojo orderPojo : orderPojos) {
             List<OrderItemPojo> oip = orderItemService.getByOrderId(orderPojo.getId());
@@ -35,25 +36,88 @@ public class ReportService {
                 if (!map.containsKey(brandPojo.getId())) {
                     map.put(brandPojo.getId(), new SalesReportData());
                 }
-                SalesReportData d = map.get(brandPojo.getId());
-                d.setQuantity(d.getQuantity() + orderItemPojo.getQuantity());
-                d.setRevenue(d.getRevenue() + (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice()));
+                SalesReportData salesReportData = map.get(brandPojo.getId());
+                salesReportData.setQuantity(salesReportData.getQuantity() + orderItemPojo.getQuantity());
+                salesReportData.setRevenue(salesReportData.getRevenue() + (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice()));
+                salesReportData.setBrand(brandPojo.getBrand());
+                salesReportData.setCategory(brandPojo.getCategory());
+                map.replace(brandPojo.getId(), salesReportData);
             }
         }
 
 
         List<SalesReportData> output = new ArrayList<>();
 
-        for (Map.Entry<Integer,SalesReportData> e : map.entrySet()){
+//        for (Map.Entry<Integer,SalesReportData> e : map.entrySet()){
+//
+//            BrandPojo bp = brandService.get(e.getKey());
+//            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,"")) && (Objects.equals(category,bp.getCategory()) || Objects.equals(category,""))){
+//                SalesReportData salesReportData = e.getValue();
+//                salesReportData.setBrand(bp.getBrand());
+//                salesReportData.setCategory(bp.getCategory());
+//                output.add(salesReportData);
+//            }
+//        }
 
-            BrandPojo bp = brandService.get(e.getKey());
-            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,"all")) && (Objects.equals(category,bp.getCategory()) || Objects.equals(category,"all"))){
-                SalesReportData salesReportData = e.getValue();
-                salesReportData.setBrand(bp.getBrand());
-                salesReportData.setCategory(bp.getCategory());
-                output.add(salesReportData);
+        for (Map.Entry<Integer, SalesReportData> e : map.entrySet()) {
+            if (brand == "" && category == "") {
+                output.add(e.getValue());
+            }
+            else if (brand=="" && category!="") {
+                if(category.equals(e.getValue().getCategory()))
+                {
+                    output.add(e.getValue());
+                }
+            }
+            else if (brand!="" && category=="") {
+                if(brand.equals(e.getValue().getBrand()))
+                {
+                    output.add(e.getValue());
+                }
+            }
+            else{
+                if(e.getValue().getBrand()==brand && e.getValue().getCategory()==category)
+                {
+                    output.add(e.getValue());
+                }
             }
         }
+
+
+//        if(brand=="" && category=="")
+//        {
+//            System.out.println("first");
+//            for (Map.Entry<Integer,SalesReportData> e : map.entrySet()) {
+//                output.add(e.getValue());
+//            }
+//        } else if (brand=="" && category!="") {
+//            System.out.println("second");
+//            for (Map.Entry<Integer, SalesReportData> e : map.entrySet()) {
+//                if(e.getValue().getCategory()==category)
+//                {
+//                    output.add(e.getValue());
+//                }
+//            }
+//
+//        } else if (brand!="" && category=="") {
+//            System.out.println("third");
+//            for (Map.Entry<Integer, SalesReportData> e : map.entrySet()) {
+//                System.out.println(e.getValue().getBrand()+ "   "+ brand);
+//                if(Objects.equals(brand,e.getValue().getBrand()))
+//                {
+//                    output.add(e.getValue());
+//                }
+//            }
+//        }
+//        else {
+//            System.out.println("fourth");
+//            for (Map.Entry<Integer, SalesReportData> e : map.entrySet()) {
+//                if(e.getValue().getBrand()==brand && e.getValue().getCategory()==category)
+//                {
+//                    output.add(e.getValue());
+//                }
+//            }
+//        }
 
 
         return output;

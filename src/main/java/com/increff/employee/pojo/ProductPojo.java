@@ -16,9 +16,6 @@ public class ProductPojo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String barcode;
-
-//    TODO snakeCase->camelCase
-//    TODO data types int ->Integer. primitive ->class
     private Integer brandCategory;
     private String name;
     private Double mrp;

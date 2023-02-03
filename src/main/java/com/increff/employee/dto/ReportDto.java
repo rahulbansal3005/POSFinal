@@ -56,20 +56,22 @@ public class ReportDto {
             List<ProductPojo> productPojoList = productService.getProductByBrandCategoryId(brandPojo.getId());
             if (productPojoList.size() != 0) {
                 Integer quantity = 0;
+                boolean flag=false;
                 for (ProductPojo productPojo : productPojoList) {
                     InventoryPojo inventoryPojo = inventoryService.selectOnProdId(productPojo.getId());
                     if (inventoryPojo != null) {
-                        InventoryReportData inventoryReportData = new InventoryReportData();
-//                        for(InventoryPojo inventoryPojo:inventoryPojoList)
-//                        {
                         quantity += inventoryPojo.getQuantity();
-//                        }
-                        inventoryReportData.setQuantity(quantity);
-                        inventoryReportData.setBrand(brandPojo.getBrand());
-                        inventoryReportData.setCategory(brandPojo.getCategory());
-                        inventoryReportData.setId(brandPojo.getId());
-                        inventoryReportDataList.add(inventoryReportData);
+                       flag=true;
                     }
+                }
+                if(flag)
+                {
+                    InventoryReportData inventoryReportData = new InventoryReportData();
+                    inventoryReportData.setQuantity(quantity);
+                    inventoryReportData.setBrand(brandPojo.getBrand());
+                    inventoryReportData.setCategory(brandPojo.getCategory());
+                    inventoryReportData.setId(brandPojo.getId());
+                    inventoryReportDataList.add(inventoryReportData);
                 }
             }
         }
@@ -83,6 +85,10 @@ public class ReportDto {
         LocalDateTime sdate = LocalDateTime.parse(startDate, dateTimeFormatter);
         LocalDateTime edate = LocalDateTime.parse(endDate, dateTimeFormatter);
         List<OrderPojo> orderPojos = orderService.getOrdersInDateRange(sdate, edate);
+//        for(OrderPojo o:orderPojos)
+//        {
+//            System.out.println(o.getId());
+//        }
         return reportService.get(orderPojos, salesReportForm.getBrand(), salesReportForm.getCategory());
     }
 
