@@ -1,7 +1,7 @@
 //HELPER METHOD
 function toJson($form) {
     var serialized = $form.serializeArray();
-    console.log(serialized);
+    // console.log(serialized);
     var s = '';
     var data = {};
     for (s in serialized) {
@@ -11,11 +11,6 @@ function toJson($form) {
     return json;
 }
 
-
-// function handleAjaxError(response){
-// 	var response = JSON.parse(response.responseText);
-// 	alert(response.message);
-// }
 function handleAjaxError(response) {
     console.log(response);
     var response = JSON.parse(response.responseText);
@@ -32,9 +27,9 @@ function handleAjaxError(response) {
 // }
 
 
-function SuccessMessage()
+function SuccessMessage(res)
 {
-    toastr.success("Successfully added","Success: ",{
+    toastr.success(res,"Success: ",{
         "closeButton": true,
         "debug": false,
         "newestOnTop": true,

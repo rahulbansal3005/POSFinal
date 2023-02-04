@@ -23,12 +23,12 @@ function addInventory(event) {
     },
     success: function (response) {
       $('#add-inventory-item-modal').modal('toggle');
+      resetForm();
+      SuccessMessage("Successfully added");
       getInventoryList();
-      handleAjaxError();
     },
     error: handleAjaxError,
   });
-  resetForm();
   return false;
 }
 
@@ -40,6 +40,7 @@ function updateInventory(event) {
 
   //Set the values to update
   var $form = $("#inventory-edit-form");
+  console.log($form);
   var json = toJson($form);
 
   $.ajax({
@@ -50,11 +51,11 @@ function updateInventory(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      SuccessMessage('Updated successfully');
       getInventoryList();
     },
     error: handleAjaxError,
   });
-
   return false;
 }
 
@@ -64,6 +65,7 @@ function getInventoryList() {
     url: url,
     type: "GET",
     success: function (data) {
+
       displayInventoryList(data);
     },
     error: handleAjaxError,
@@ -144,7 +146,7 @@ function displayInventoryList(data) {
   let index=1;
   for (var i in data) {
     var e = data[i];
-    console.log(e);
+    // console.log(e);
     var buttonHtml =
       '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
     buttonHtml +=
@@ -211,6 +213,7 @@ function displayUploadData() {
 }
 
 function displayInventory(data) {
+  console.log(data);
   $("#inventory-edit-form input[name=barcode]").val(data.barcode);
   $("#inventory-edit-form input[name=category]").val(data.category);
   $("#inventory-edit-form input[name=id]").val(data.id);

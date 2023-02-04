@@ -78,7 +78,7 @@ public class ProductService {
     public int extractProd_Id(String barCode) throws ApiException {
         ProductPojo p = productDao.select_barcode(barCode);
         if (p == null) {
-            throw new ApiException("Product does not exist is Product List");
+            throw new ApiException("Product does not exist in the Product List");
         }
         return p.getId();
     }

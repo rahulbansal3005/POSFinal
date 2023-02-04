@@ -27,9 +27,9 @@ function addProduct(event) {
     },
     success: function (response) {
       $('#add-product-item-modal').modal('toggle');
-      getProductList();
       resetForm();
-      SuccessMessage();
+      SuccessMessage("Successfully added");
+      getProductList();
 
     },
     error: handleAjaxError,
@@ -58,6 +58,7 @@ function updateProduct(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      SuccessMessage("Successfully Updated");
       getProductList();
     },
     error: handleAjaxError,

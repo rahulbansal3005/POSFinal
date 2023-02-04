@@ -48,7 +48,10 @@ public class InventoryDto {
 
     public InventoryData get( Integer id) throws ApiException {
         InventoryPojo inventoryPojo = inventoryService.get(id);
-        return convertInventoryPojoToInventoryData(inventoryPojo);
+//        return convertInventoryPojoToInventoryData(inventoryPojo);
+        InventoryData inventoryData= convertInventoryPojoToInventoryData(inventoryPojo);
+        inventoryData.setBarcode(productService.extractBarCode(inventoryPojo.getProductId()));
+        return inventoryData;
     }
 
     public List<InventoryData> getAll() throws ApiException {
@@ -56,6 +59,7 @@ public class InventoryDto {
         List<InventoryData> inventoryDataList = new ArrayList<InventoryData>();
         for (InventoryPojo inventoryPojo : inventoryPojoList) {
             InventoryData inventoryData= convertInventoryPojoToInventoryData(inventoryPojo);
+            System.out.println(inventoryPojo.getProductId());
             inventoryData.setBarcode(productService.extractBarCode(inventoryPojo.getProductId()));
             inventoryDataList.add(inventoryData);
         }
@@ -63,7 +67,17 @@ public class InventoryDto {
     }
 
     public void update( Integer id, InventoryForm inventoryForm) throws ApiException {
-        InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
-        inventoryService.update(id, inventoryPojo);
+        Validate.validateInventoryForm(inventoryForm);
+//        int productId=productService.extractProd_Id(inventoryForm.getBarcode());
+//        InventoryPojo inventoryPojo1=inventoryService.selectOnProdId(productId);
+//        if(inventoryPojo1!=null)
+//        {
+//            throw new ApiException("item already existed");
+//        }
+//        System.out.println('1');
+
+//        InventoryPojo inventoryPojo = convertInventoryFormToInventoryPojo(inventoryForm);
+        inventoryService.update(id, inventoryForm.getQuantity());
+//        System.out.println('2');
     }
 }

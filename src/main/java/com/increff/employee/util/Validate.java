@@ -57,10 +57,5 @@ public class Validate {
 			throw new ApiException("Entered Quantity is negative");
 		if(inventoryForm.getQuantity()==null)
 			throw new ApiException("Entered Quantity is not right");
-		if(inventoryForm.getBarcode().equals(""))
-			throw new ApiException("Bar Code field is empty");
-		if(inventoryForm.getBarcode()==null)
-			throw new ApiException("Bar Code field is NULL");
-
 	}
 }

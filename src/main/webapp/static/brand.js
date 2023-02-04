@@ -29,9 +29,9 @@ function addBrand(event) {
         },
         success: function (response) {
             $('#add-brand-item-modal').modal('toggle');
-            getBrandList();
             resetForm();
-            SuccessMessage();
+            SuccessMessage("Successfully Added");
+            getBrandList();
 
         },
         error: handleAjaxError,
@@ -58,6 +58,7 @@ function updateBrand(event) {
             "Content-Type": "application/json",
         },
         success: function (response) {
+            SuccessMessage("Successfully Updated")
             getBrandList();
         },
         error: handleAjaxError

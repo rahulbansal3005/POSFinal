@@ -44,12 +44,12 @@ public class InventoryService {
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public void update(Integer id, InventoryPojo inventoryPojo) throws ApiException {
+    public void update(Integer id, int quantity) throws ApiException {
         // normalize(p);
         InventoryPojo newInventoryPojo = getCheck(id);
-        newInventoryPojo.setProductId(inventoryPojo.getProductId());
-        newInventoryPojo.setQuantity(inventoryPojo.getQuantity());
-        inventoryDao.update(newInventoryPojo);
+//        newInventoryPojo.setProductId(inventoryPojo.getProductId());
+        newInventoryPojo.setQuantity(quantity);
+//        inventoryDao.update(newInventoryPojo);
     }
 
     @Transactional(rollbackOn = ApiException.class)
