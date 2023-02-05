@@ -32,7 +32,6 @@ public class ProductApiController {
 
     @ApiOperation(value = "Deletes a product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.DELETE)
-    // /api/1
     public void delete(@PathVariable Integer id) {
         dto.delete(id);
     }
@@ -48,10 +47,6 @@ public class ProductApiController {
     public List<ProductData> getAll() throws ApiException {
         return dto.getAll();
     }
-
-
-
-//    TODO restrict barcode, brand and category to update, can update only mrp and name.
     @ApiOperation(value = "Updates a product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer id, @RequestBody ProductForm productForm) throws ApiException {

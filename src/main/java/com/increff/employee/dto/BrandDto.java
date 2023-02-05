@@ -26,12 +26,7 @@ public class BrandDto {
     private BrandService brandService;
 
     public void add(BrandForm brandForm) throws ApiException {
-        if (Validate.isEmpty(brandForm.getBrand())) {
-            throw new ApiException("brand name cannot be null or empty");
-        }
-        if (Validate.isEmpty(brandForm.getCategory())) {
-            throw new ApiException("category name cannot be null or empty");
-        }
+        Validate.BrandForm(brandForm);
         Normalize.normalize(brandForm);                         // Normalize Forms and not Pojos.
         brandService.getByNameCategory(brandForm.getBrand(),brandForm.getCategory());
         BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
@@ -57,9 +52,13 @@ public class BrandDto {
     }
 
     public void update(Integer brandId,BrandForm brandForm) throws ApiException {
-//        TODO validate form.
+        Validate.BrandForm(brandForm);
         normalize(brandForm);
 //        TODO check for existing pojo in the database.
+        List<BrandPojo> brandPojoList=brandService.searchBrandCategoryData(brandForm);
+        if(brandPojoList.size()!=0)
+            throw new ApiException("Brand-Category already existed");
+
         BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
         brandService.update(brandId, brandPojo);
     }

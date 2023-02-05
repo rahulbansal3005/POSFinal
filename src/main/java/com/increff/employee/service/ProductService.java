@@ -42,12 +42,12 @@ public class ProductService {
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public void update(Integer id, ProductPojo productPojo) throws ApiException {
+    public void update(Integer id, String name, Double mrp) throws ApiException {
         ProductPojo newproductPojo = getCheck(id);
-        newproductPojo.setBarcode(productPojo.getBarcode());
-        newproductPojo.setBrandCategory(productPojo.getBrandCategory());
-        newproductPojo.setName(productPojo.getName());
-        newproductPojo.setMrp(productPojo.getMrp());
+//        newproductPojo.setBarcode(productPojo.getBarcode());
+//        newproductPojo.setBrandCategory(productPojo.getBrandCategory());
+        newproductPojo.setName(name);
+        newproductPojo.setMrp(mrp);
         productDao.update(newproductPojo);
     }
 
@@ -87,7 +87,7 @@ public class ProductService {
     public String extractBarCode(Integer prodID) throws ApiException {
         ProductPojo p = productDao.select(prodID);
         if (p == null) {
-            throw new ApiException("Product does not does not exist with this Product ID ");
+            throw new ApiException("Product does not exist with the given Product ID ");
         }
         return p.getBarcode();
     }

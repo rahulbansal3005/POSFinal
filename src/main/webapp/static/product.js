@@ -49,7 +49,7 @@ function updateProduct(event) {
   //Set the values to update
   var $form = $("#product-edit-form");
   var json = toJson($form);
-
+console.log(json)
   $.ajax({
     url: url,
     type: "PUT",
@@ -229,10 +229,12 @@ function displayUploadData() {
 }
 
 function displayProduct(data) {
+  // console.log(data);
   $("#product-edit-form input[name=name]").val(data.name);
-  $("#product-edit-form input[name=brand_category]").val(data.brand_category);
+  $("#product-edit-form input[name=brand]").val(data.brand);
   $("#product-edit-form input[name=barcode]").val(data.barcode);
   $("#product-edit-form input[name=mrp]").val(data.mrp);
+  $("#product-edit-form input[name=category]").val(data.category);
   $("#product-edit-form input[name=id]").val(data.id);
   $("#edit-product-modal").modal("toggle");
 }
@@ -251,7 +253,7 @@ const fillOptions = () => {
     url: url,
     type: 'GET',
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       populateBrand(response);
       populateCategory(response);
     },
@@ -265,7 +267,7 @@ const populateBrand = data => {
   let brands = new Set();
   for (var i in data) {
     var e = data[i];
-    console.log(e);
+    // console.log(e);
     brands.add(e.brand);
   }
 

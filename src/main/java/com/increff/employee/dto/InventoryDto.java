@@ -28,7 +28,7 @@ public class InventoryDto {
 
 
     public void add( InventoryForm inventoryForm) throws ApiException {
-        Validate.validateInventoryForm(inventoryForm);
+        Validate.validateInventoryFormonAdd(inventoryForm);
         int prodId=productService.extractProd_Id(inventoryForm.getBarcode());
         InventoryPojo inventoryPojo=inventoryService.selectOnProdId(prodId);
         if(inventoryPojo!=null)
@@ -67,7 +67,7 @@ public class InventoryDto {
     }
 
     public void update( Integer id, InventoryForm inventoryForm) throws ApiException {
-        Validate.validateInventoryForm(inventoryForm);
+        Validate.validateInventoryFormonUpdate(inventoryForm);
 //        int productId=productService.extractProd_Id(inventoryForm.getBarcode());
 //        InventoryPojo inventoryPojo1=inventoryService.selectOnProdId(productId);
 //        if(inventoryPojo1!=null)

@@ -38,8 +38,6 @@ public class BrandApiController {
         dto.delete(id);
     }
 
-
-//    TODO check where get is using
     @ApiOperation(value = "Gets a Brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
     public BrandData get(@PathVariable Integer id) throws ApiException {

@@ -45,7 +45,7 @@ function updateBrand(event) {
     //Get the ID
     var id = $("#brand-edit-form input[name=id]").val();
     var url = getBrandUrl() + "/" + id;
-
+    // console.log(id);
     //Set the values to update
     var $form = $("#brand-edit-form");
     var json = toJson($form);
@@ -150,6 +150,7 @@ function downloadErrors() {
 function displayBrandList(data) {
     var $tbody = $("#brand-table").find("tbody");
     $tbody.empty();
+    var index=1;
     for (var i in data) {
         var e = data[i];
         var buttonHtml =
@@ -159,7 +160,7 @@ function displayBrandList(data) {
         var row =
             "<tr>" +
             "<td>" +
-            e.id +
+            index++ +
             "</td>" +
             "<td>" +
             e.brand +
