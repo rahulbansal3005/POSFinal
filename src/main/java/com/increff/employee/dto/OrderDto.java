@@ -35,7 +35,6 @@ public class OrderDto {
 
     public void add(OrderItem[] orderForm) throws ApiException {
 //        1) Validate all the Order Items in our inventory.
-//        orderForm.size()
         List<String> errorMessages = new ArrayList<>();
 
         for (OrderItem orderItem : orderForm) {

@@ -49,8 +49,15 @@ function displayOrderItemList(data) {
 function addOrderItem(event) {
     var $form = $("#order-item-form");
     var json = JSON.parse(toJson($form));
-    console.log("check:")
-    console.log(json);
+    console.log(json,"json");
+    if(json.barCode=="" || json.quantity=="" || json.sellingPrice=="")
+        return frontendChecks("Fields are empty");
+    if(json.quantity<0)
+        return frontendChecks("quantity is negative")
+    if(json.sellingPrice<0)
+        return frontendChecks("Selling Price is negative");
+
+    // console.log(json);
     if (processedItems[json.barCode]) {
         if (processedItems[json.barCode].sellingPrice !== json.sellingPrice) {
             alert("Error: MRP mismatch for item with Barcode: " + json.barCode);
@@ -170,15 +177,15 @@ function displayOrderList(data) {
 
     for (var i in data) {
         var e = data[i];
-        console.log("E", e);
+        // console.log("E", e);
         var buttonHtml = ' <button type="button" class="btn btn-secondary" onclick="displayOrder(' + e.id + ')">View Order</button>'
         // console.log("isInvoiceGenerated",isInvoiceGenerated);
         if (e.status == true) {
-            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Generate invoice</button>'
-            buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" >Download Invoice</button>'
+            buttonHtml += ' <button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Generate invoice</button>'
+            buttonHtml += ' <button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" >Download Invoice</button>'
         } else {
-            buttonHtml += '<button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Generate invoice</button>'
-            buttonHtml += '<button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" disabled>Download Invoice</button>'
+            buttonHtml += ' <button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Generate invoice</button>'
+            buttonHtml += ' <button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" disabled>Download Invoice</button>'
         }
         var date = new Date(e.updated)
         var row = '<tr>'

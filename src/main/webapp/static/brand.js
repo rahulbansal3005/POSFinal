@@ -20,6 +20,11 @@ function addBrand(event) {
     var json = toJson($form);
     var url = getBrandUrl();
 
+    var parsed=JSON.parse(json);
+    console.log(parsed);
+    if(parsed.barcode=="" || parsed.category=="")
+        return frontendChecks("Fields are empty");
+
     $.ajax({
         url: url,
         type: "POST",

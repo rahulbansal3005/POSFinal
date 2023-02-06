@@ -16,6 +16,12 @@ function addProduct(event) {
   //Set the values to update
   var $form = $("#product-form");
   var json = toJson($form);
+  var parsed=JSON.parse(json);
+  console.log(parsed);
+  if(parsed.barcode=="" || parsed.name=="" || parsed.mrp=="" || parsed.brand=="" || parsed.category=="")
+    return frontendChecks("Fields are empty");
+  if(json.mrp<0)
+    return frontendChecks("mrp is negative")
   var url = getProductUrl();
 
   $.ajax({
@@ -50,6 +56,14 @@ function updateProduct(event) {
   var $form = $("#product-edit-form");
   var json = toJson($form);
 console.log(json)
+
+  var parsed=JSON.parse(json);
+  console.log(parsed);
+  if(parsed.name=="" || parsed.mrp=="")
+    return frontendChecks("Fields are empty");
+  if(json.mrp<0)
+    return frontendChecks("mrp is negative")
+
   $.ajax({
     url: url,
     type: "PUT",

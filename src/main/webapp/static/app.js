@@ -22,6 +22,15 @@ function handleAjaxError(response) {
     });
 }
 
+function frontendChecks(response){
+    console.log(response);
+    toastr.error(response, "Error: ", {
+        "closeButton": true,
+        "timeOut": "0",
+        "extendedTimeOut": "0"
+    });
+}
+
 // function fillBrandCategoryOptions(){
 
 // }

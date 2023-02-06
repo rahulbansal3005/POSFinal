@@ -12,6 +12,15 @@ function toggleModal(){
 function addInventory(event) {
   var $form = $("#inventory-form");
   var json = toJson($form);
+  console.log(json)
+  var parsed=JSON.parse(json);
+  console.log(parsed);
+
+  if(parsed.barcode=="" || parsed.quantity=="")
+    return frontendChecks("Fields are empty");
+  if(parsed.quantity<0)
+    return frontendChecks("quantity is negative")
+
   var url = getInventoryUrl();
 
   $.ajax({
@@ -34,14 +43,20 @@ function addInventory(event) {
 
 function updateInventory(event) {
   $("#edit-inventory-modal").modal("toggle");
-  //Get the ID
   var id = $("#inventory-edit-form input[name=id]").val();
   var url = getInventoryUrl() + "/" + id;
 
-  //Set the values to update
   var $form = $("#inventory-edit-form");
-  console.log($form);
+  // console.log($form);
+
   var json = toJson($form);
+
+  var parsed=JSON.parse(json);
+  console.log(parsed);
+  if(parsed.quantity=="")
+    return frontendChecks("Fields are empty");
+  if(parsed.quantity<0)
+    return frontendChecks("quantity is negative")
 
   $.ajax({
     url: url,
