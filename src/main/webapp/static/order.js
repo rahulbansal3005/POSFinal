@@ -133,6 +133,8 @@ function displayOrder(id) {
 function placeOrder() {
     var url = getOrderUrl();
     completeOrder = Object.values(processedItems);
+    if(completeOrder.length==0)
+        return frontendChecks("No items in order to place");
     $.ajax({
         url: url,
         type: 'POST',
