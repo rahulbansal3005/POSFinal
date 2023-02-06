@@ -9,6 +9,13 @@ function filterSalesReport() {
     var url = getSalesReportUrl();
 
     console.log(json);
+    var parsed=JSON.parse(json);
+    console.log(parsed);
+    if(parsed.startDate=="")
+        return frontendChecks("Start Date is empty");
+
+    if(parsed.startDate!="" && parsed.endDate=="")
+        return frontendChecks("End date is empty");
 
     $.ajax({
         url: url,

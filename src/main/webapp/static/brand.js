@@ -54,7 +54,10 @@ function updateBrand(event) {
     //Set the values to update
     var $form = $("#brand-edit-form");
     var json = toJson($form);
-
+    var parsed=JSON.parse(json);
+    console.log(parsed);
+    if(parsed.barcode=="" || parsed.category=="")
+        return frontendChecks("Fields are empty");
     $.ajax({
         url: url,
         type: "PUT",
