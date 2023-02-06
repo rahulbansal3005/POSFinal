@@ -30,7 +30,6 @@ public class OrderService {
     private ProductService ps;
 
     @Autowired
-
     private OrderItemDao orderItemDao;
 
 
@@ -44,6 +43,7 @@ public class OrderService {
     }
 
 
+    @Transactional(rollbackOn = ApiException.class)
     public void addOrderItems(OrderItem[] orderForm, int orderId) throws ApiException {
         List<OrderItemPojo> orderItemPojoList= new ArrayList<OrderItemPojo>();
         for(OrderItem orderItem:orderForm)

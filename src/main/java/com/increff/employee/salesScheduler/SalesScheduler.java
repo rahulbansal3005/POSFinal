@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.text.ParseException;
+
 @EnableAsync
 public class SalesScheduler {
     @Autowired
@@ -14,7 +16,7 @@ public class SalesScheduler {
 
     @Async
     @Scheduled(cron = "0 0 12 * * *")
-    public void createReport() throws ApiException {
+    public void createReport() throws ApiException, ParseException {
         reportDto.createReport();
     }
 }

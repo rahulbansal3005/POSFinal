@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Api
@@ -66,6 +67,12 @@ public class ReportApiController {
     @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
     public List<DailySalesPojo> getDailySales() throws ApiException {
         return reportDto.getDailySales();
+    }
+
+    @ApiOperation(value = "Schedule Now")
+    @RequestMapping(path = "/schedule", method = RequestMethod.GET)
+    public void scheduleNow() throws ApiException, ParseException {
+         reportDto.createReport();
     }
 
 

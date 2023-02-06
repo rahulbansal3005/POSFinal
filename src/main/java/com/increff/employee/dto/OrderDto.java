@@ -60,7 +60,6 @@ public class OrderDto {
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now + "OrderDTO  now");
         orderPojo.setDate(now);
-//        orderPojo.setDate(date);
         orderPojo.setIsInvoiceGenerated(false);
         orderService.addOrder(orderPojo);
 

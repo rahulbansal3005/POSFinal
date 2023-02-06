@@ -1,10 +1,8 @@
 package com.increff.employee.service;
 
+import com.increff.employee.dao.DailySalesDao;
 import com.increff.employee.model.Data.SalesReportData;
-import com.increff.employee.pojo.BrandPojo;
-import com.increff.employee.pojo.OrderItemPojo;
-import com.increff.employee.pojo.OrderPojo;
-import com.increff.employee.pojo.ProductPojo;
+import com.increff.employee.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +22,10 @@ public class ReportService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private DailySalesDao dailySalesDao;
+
 
     public List<SalesReportData> get(List<OrderPojo> orderPojos, String brand, String category) throws ApiException {
         HashMap<Integer, SalesReportData> map = new HashMap<>();
@@ -121,6 +123,10 @@ public class ReportService {
 
 
         return output;
+    }
+
+    public void addScheduler(SalesPojo salesPojo) {
+        dailySalesDao.insert(salesPojo);
     }
 //    public List<Integer> getOrderIdList(List<OrderPojo> orderPojo, String startdate, String enddate) throws ParseException, ApiException {
 //        List<Integer> orderIds = new ArrayList<Integer>();

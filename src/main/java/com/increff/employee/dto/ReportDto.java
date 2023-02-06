@@ -13,7 +13,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -85,17 +90,13 @@ public class ReportDto {
         LocalDateTime sdate = LocalDateTime.parse(startDate, dateTimeFormatter);
         LocalDateTime edate = LocalDateTime.parse(endDate, dateTimeFormatter);
         List<OrderPojo> orderPojos = orderService.getOrdersInDateRange(sdate, edate);
-//        for(OrderPojo o:orderPojos)
-//        {
-//            System.out.println(o.getId());
-//        }
         return reportService.get(orderPojos, salesReportForm.getBrand(), salesReportForm.getCategory());
     }
 
     public List<DailySalesPojo> getDailySales() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.println(now.atZone(ZoneId.of("Asia/Kolkata")).format(formatter));
+//        System.out.println(now.atZone(ZoneId.of("Asia/Kolkata")).format(formatter));
         return dailySalesService.getAll();
     }
 
@@ -105,8 +106,33 @@ public class ReportDto {
     }
 
     public void createReport() {
+        SalesPojo salesPojo=new SalesPojo();
         LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        LocalDate localDate = now.toLocalDate();
+        LocalDateTime start=now.with(LocalTime.MIN);
+        LocalDateTime end=now.with(LocalTime.MAX);
+        System.out.println(start);
+        System.out.println(end);
+        List<OrderPojo> orderPojos=orderService.getOrdersInDateRange(start,end);
+        int invoiceCount=0;
+        double totalRevenue=0;
+        int totalInvoiceItems=0;
+        for (OrderPojo orderPojo : orderPojos) {
+            if(orderPojo.getIsInvoiceGenerated())
+                invoiceCount++;
+            List<OrderItemPojo> oip = orderItemService.getByOrderId(orderPojo.getId());
+            for (OrderItemPojo orderItemPojo : oip) {
 
-
+                totalInvoiceItems++;
+                totalRevenue+=(orderItemPojo.getQuantity()*orderItemPojo.getSellingPrice());
+            }
+        }
+        salesPojo.setInvoicedItemsCount(totalInvoiceItems);
+        salesPojo.setTotalRevenue(totalRevenue);
+        salesPojo.setLastRun(now);
+        salesPojo.setInvoicedOrderCount(invoiceCount);
+        salesPojo.setDate(localDate);
+        reportService.addScheduler(salesPojo);
     }
 }
