@@ -146,6 +146,7 @@ function placeOrder() {
             $('#add-order-item-modal').modal('toggle');
             completeOrder = []
             processedItems = Object.assign({});
+            SuccessMessage("Successfully added");
             getOrderList();
         },
         error: handleAjaxError
@@ -177,6 +178,7 @@ function displayOrderList(data) {
     var $tbody = $('#order-table').find('tbody');
     $tbody.empty();
 
+    var index=1;
     for (var i in data) {
         var e = data[i];
         // console.log("E", e);
@@ -191,7 +193,7 @@ function displayOrderList(data) {
         }
         var date = new Date(e.updated)
         var row = '<tr>'
-            + '<td>' + e.id + '</td>'
+            + '<td>' + index++ + '</td>'
             + '<td>' + e.dateTime + '</td>'
             + '<td>' + buttonHtml + '</td>'
             + '</tr>';

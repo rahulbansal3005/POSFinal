@@ -1,6 +1,7 @@
 package com.increff.employee.dto;
 
 import com.increff.employee.dao.ProductDao;
+import com.increff.employee.model.Data.DailySalesData;
 import com.increff.employee.model.Data.InventoryReportData;
 import com.increff.employee.model.Data.SalesReportData;
 import com.increff.employee.model.Form.BrandForm;
@@ -93,16 +94,8 @@ public class ReportDto {
         return reportService.get(orderPojos, salesReportForm.getBrand(), salesReportForm.getCategory());
     }
 
-    public List<DailySalesPojo> getDailySales() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        System.out.println(now.atZone(ZoneId.of("Asia/Kolkata")).format(formatter));
+    public List<DailySalesData> getDailySales() {
         return dailySalesService.getAll();
-    }
-
-    public List<SalesReportData> getAll() {
-        List<SalesReportData> salesReportData = new ArrayList<>();
-        return salesReportData;
     }
 
     public void createReport() {

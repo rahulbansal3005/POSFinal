@@ -22,7 +22,7 @@ function addBrand(event) {
 
     var parsed=JSON.parse(json);
     console.log(parsed);
-    if(parsed.barcode=="" || parsed.category=="")
+    if(parsed.brand=="" || parsed.category=="")
         return frontendChecks("Fields are empty");
 
     $.ajax({
@@ -56,7 +56,7 @@ function updateBrand(event) {
     var json = toJson($form);
     var parsed=JSON.parse(json);
     console.log(parsed);
-    if(parsed.barcode=="" || parsed.category=="")
+    if(parsed.brand=="" || parsed.category=="")
         return frontendChecks("Fields are empty");
     $.ajax({
         url: url,
@@ -162,8 +162,8 @@ function displayBrandList(data) {
     for (var i in data) {
         var e = data[i];
         var buttonHtml =
-            '<button type="button" class="btn btn-secondary" onclick="deleteBrand(' + e.id + ')">delete</button>';
-        buttonHtml +=
+            // '<button type="button" class="btn btn-secondary" onclick="deleteBrand(' + e.id + ')">delete</button>';
+        // buttonHtml +=
             ' <button type="button" class="btn btn-secondary" onclick="displayEditBrand(' + e.id + ')">edit</button>';
         var row =
             "<tr>" +

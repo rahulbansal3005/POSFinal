@@ -55,17 +55,19 @@ public class BrandDto {
         Validate.BrandForm(brandForm);
         normalize(brandForm);
 //        TODO check for existing pojo in the database.
-        List<BrandPojo> brandPojoList=brandService.searchBrandCategoryData(brandForm);
-        if(brandPojoList.size()!=0)
+        BrandPojo brandPojo =brandService.searchBrandCategory(brandForm);
+//        System.out.println(brandPojoList.size());
+//        System.out.println(brandPojoList);
+        if(brandPojo!=null)
             throw new ApiException("Brand-Category already existed");
 
-        BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
-        brandService.update(brandId, brandPojo);
+        BrandPojo brandPojo1 = convertBrandFormToBrandPojo(brandForm);
+        brandService.update(brandId, brandPojo1);
     }
 
     public List<String> getCategory(String category) throws ApiException {
         if(Validate.isEmpty(category)){
-            throw new ApiException("brand name cannot be empty");
+            throw new ApiException("Brand name cannot be empty");
         }
         List<BrandPojo> brandPojoList = brandService.getCategory(category);
         List<String> stringList = new ArrayList<String>();

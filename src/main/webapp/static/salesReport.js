@@ -9,12 +9,12 @@ function filterSalesReport() {
     var url = getSalesReportUrl();
 
     console.log(json);
-    var parsed=JSON.parse(json);
+    var parsed = JSON.parse(json);
     console.log(parsed);
-    if(parsed.startDate=="")
+    if (parsed.startDate == "")
         return frontendChecks("Start Date is empty");
 
-    if(parsed.startDate!="" && parsed.endDate=="")
+    if (parsed.startDate != "" && parsed.endDate == "")
         return frontendChecks("End date is empty");
 
     $.ajax({
@@ -50,6 +50,7 @@ function displaySalesReport(data) {
     }
     $('thead').show();
 }
+
 const getBrandUrl = (brand = "", category = "") => {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
     return baseUrl + "/api/brand?brand=" + brand + "&category=" + category;
@@ -99,7 +100,56 @@ const populateCategory = data => {
         $selectCategory.append(ele);
     }
 }
+
+function readyDates() {
+    // Get references to the startDate and endDate inputs
+    const startDateInput = document.getElementById("inputStartDate");
+    const endDateInput = document.getElementById("inputEndDate");
+
+
+    //SETTING END DATE TO TODAY'S DATE
+    let today = new Date();
+    var year = today.getFullYear();
+    var month = (today.getMonth() + 1).toString().padStart(2, '0');
+    var day = today.getDate().toString().padStart(2, '0');
+    document.getElementById("inputEndDate").value = year + "-" + month + "-" + day;
+
+
+    //SETTING START DATE TO 30 DAYS AGO
+    today.setDate(today.getDate() - 30);
+    var year = today.getFullYear();
+    var month = (today.getMonth() + 1).toString().padStart(2, '0');
+    var day = today.getDate().toString().padStart(2, '0');
+    var thirtybefore = year + "-" + month + "-" + day;
+    document.getElementById("inputStartDate").value = thirtybefore;
+
+
+    // Get today's date
+    // const today = new Date();
+
+    // Set the minimum value for the startDate to be 30 days from today's date
+    startDateInput.min = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString().split("T")[0];
+    startDateInput.max = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30).toISOString().split("T")[0];
+    // Update the endDate's min and max values whenever the startDate value changes
+    startDateInput.addEventListener("input", function () {
+        // endDateInput.min = startDateInput.value;
+        // endDateInput.max = today.toISOString().split("T")[0];
+        // if (startDateInput.value) {
+        //     endDateInput.disabled = false;
+
+        endDateInput.min = startDateInput.value;
+        console.log(endDateInput.min);
+        today=new Date();
+        endDateInput.max = today.toISOString().split("T")[0];
+        // } else {
+        //     endDateInput.disabled = true;
+        // }
+    });
+
+}
+
 function init() {
+    readyDates();
     $('#filter-sales-report').click(filterSalesReport);
     $('thead').hide();
     fillOptions();

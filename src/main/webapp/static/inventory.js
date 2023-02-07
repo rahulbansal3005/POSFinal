@@ -163,8 +163,8 @@ function displayInventoryList(data) {
     var e = data[i];
     // console.log(e);
     var buttonHtml =
-      '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
-    buttonHtml +=
+      // '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
+    // buttonHtml +=
       ' <button type="button" class="btn btn-secondary" onclick="displayEditInventory(' + e.id + ')">Edit</button>';
     var row =
       "<tr>" +

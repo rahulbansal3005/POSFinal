@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class OrderData extends OrderForm {
-    private int id;
+    private Integer id;
     private String dateTime;
     private Boolean status;
 }

@@ -79,7 +79,7 @@ public class OrderDto {
         ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
         if(productPojo==null)
         {
-            String error="product does not exist in Product List"+ orderItem.getBarCode();
+            String error="Product does not exist in Product List"+ orderItem.getBarCode();
             errorMessages.add(error);
 //            throw new ApiException("Product does not exist");
             return;
@@ -87,13 +87,13 @@ public class OrderDto {
         InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
         if(inventoryPojo==null)
         {
-            String error = "product with given BarCode:" + orderItem.getBarCode() + "does not exist in inventory";
+            String error = "Product with given BarCode: " + orderItem.getBarCode() + "does not exist in inventory";
             errorMessages.add(error);
 //            throw new ApiException("Product does not exist inventory");
             return;
         }
         else if (inventoryPojo.getQuantity()<orderItem.getQuantity()) {
-            String error = "product with given BarCode:" + orderItem.getBarCode() + "does not have sufficient quantity ";
+            String error = "Product with given BarCode: " + orderItem.getBarCode() + " does not have sufficient quantity ";
             errorMessages.add(error);
 //            throw new ApiException("Product does not exist in inventory in required quantity");
             return;
@@ -101,17 +101,17 @@ public class OrderDto {
     }
 
     public OrderData getOrder(int id) throws ApiException {
-        OrderPojo p = orderService.getOrder(id);
-        List<OrderItem> c = orderService.getOrderItems(p.getId());
-        return convertOrderPojoToOrderData(p, c);
+        OrderPojo orderPojo = orderService.getOrder(id);
+        List<OrderItem> orderItemList = orderService.getOrderItems(orderPojo.getId());
+        return convertOrderPojoToOrderData(orderPojo, orderItemList);
     }
 
 
     public List<OrderData> getAll() throws ApiException {
         List<OrderPojo> list = orderService.getAllOrder();
         List<OrderData> list2 = new ArrayList<OrderData>();
-        for (OrderPojo p : list) {
-            list2.add(getOrder(p.getId()));
+        for (OrderPojo orderPojo : list) {
+            list2.add(getOrder(orderPojo.getId()));
         }
         return list2;
     }

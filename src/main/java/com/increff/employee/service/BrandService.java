@@ -81,8 +81,6 @@ public class BrandService {
     }
     @Transactional(rollbackOn = ApiException.class)
     public List<BrandPojo> searchBrandCategoryData(BrandForm brandForm) throws ApiException {
-//        Validate.checkBrandCategory(brandForm);
-//        Normalize.normalizeBrandForm(brandForm);
         List<BrandPojo> brandPojoList;
         if(brandForm.getBrand()=="" && brandForm.getCategory()=="")
         {
@@ -109,7 +107,7 @@ public class BrandService {
     public List<BrandPojo> getBrandPojosonCategoryName(String category) throws ApiException {
         List<BrandPojo> brandPojoList= brandDao.selectByCategory(category);
         if(brandPojoList.size()==0)
-            throw new ApiException("Brand-Category Pair does not exist in Brand Category");
+            throw new ApiException("Brand-Category Pair does not exist");
         return brandPojoList;
 
     }
@@ -119,7 +117,7 @@ public class BrandService {
     public List<BrandPojo> getBrandPojosonBrandName(String brand) throws ApiException {
         List<BrandPojo> brandPojoList= brandDao.selectByBrand(brand);
         if(brandPojoList.size()==0)
-            throw new ApiException("Brand-Category Pair does not exist in Brand Category");
+            throw new ApiException("Brand-Category Pair does not exist");
         return brandPojoList;
     }
     @Transactional(rollbackOn = ApiException.class)
@@ -129,5 +127,11 @@ public class BrandService {
         if(brandPojo!=null)
             throw new ApiException("Brand-Category already existed");
         return;
+    }
+
+    public BrandPojo searchBrandCategory(BrandForm brandForm) {
+
+        BrandPojo brandPojo= brandDao.selectonBrandCategory(brandForm.getBrand(),brandForm.getCategory());
+        return brandPojo;
     }
 }

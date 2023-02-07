@@ -87,13 +87,13 @@ public class Helper {
         return orderPojo;
     }
 
-    public static OrderData convertOrderPojoToOrderData(OrderPojo orderPojo, List<OrderItem> c) {
+    public static OrderData convertOrderPojoToOrderData(OrderPojo orderPojo, List<OrderItem> orderItemList) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = orderPojo.getDate().format(dateTimeFormatter);
         OrderData orderData = new OrderData();
         orderData.setId(orderPojo.getId());
         orderData.setDateTime(formattedDateTime);
-        orderData.setC(c);
+        orderData.setC(orderItemList);
         orderData.setStatus(orderPojo.getIsInvoiceGenerated());
         return orderData;
     }
@@ -105,9 +105,9 @@ public class Helper {
         return brandForm;
     }
 
-    public static Double convertOrderItemPojoToPdfData(OrderItemPojo orderItemPojo, List<PdfListData> list, PdfData pdfData, Integer c, ProductPojo productPojo) {
+    public static Double convertOrderItemPojoToPdfData(OrderItemPojo orderItemPojo, List<PdfListData> list, PdfData pdfData, Integer integer, ProductPojo productPojo) {
         PdfListData pdfListData = new PdfListData();
-        pdfListData.setSno(c);
+        pdfListData.setSno(integer);
         pdfListData.setBarcode(productPojo.getBarcode());
         pdfListData.setProduct(productPojo.getName());
         pdfListData.setQuantity(orderItemPojo.getQuantity());

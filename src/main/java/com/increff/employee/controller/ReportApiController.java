@@ -2,11 +2,12 @@ package com.increff.employee.controller;
 
 
 import com.increff.employee.dto.ReportDto;
+import com.increff.employee.model.Data.DailySalesData;
 import com.increff.employee.model.Data.InventoryReportData;
 import com.increff.employee.model.Data.SalesReportData;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.SalesReportForm;
-import com.increff.employee.pojo.DailySalesPojo;
+//import com.increff.employee.pojo.DailySalesPojo;
 import com.increff.employee.service.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -65,13 +66,13 @@ public class ReportApiController {
     //    SCHEDULER'S CODE
     @ApiOperation(value = "Gets list of daily sales report")
     @RequestMapping(path = "/daySales-report", method = RequestMethod.GET)
-    public List<DailySalesPojo> getDailySales() throws ApiException {
+    public List<DailySalesData> getDailySales() {
         return reportDto.getDailySales();
     }
 
     @ApiOperation(value = "Schedule Now")
     @RequestMapping(path = "/schedule", method = RequestMethod.GET)
-    public void scheduleNow() throws ApiException, ParseException {
+    public void scheduleNow() {
          reportDto.createReport();
     }
 

@@ -36,14 +36,14 @@
                     <label for="inputStartDate" class="col-form-label">Start date</label>
                     <div class="">
                         <input type="date" class="form-control" name="startDate" id="inputStartDate"
-                               min="< today's date + 30 days >"/>
+                               max="< today's date >" min="< Today's date - 30 Days>"/>
                     </div>
                 </div>
                 <div class="col-10 col-sm-5 form-group">
                     <label for="inputEndDate" class="col-form-label">End date</label>
                     <div class="">
                         <input type="date" class="form-control" name="endDate" id="inputEndDate"
-                               min="< startDate's value >" max="< today's date >" disabled/>
+                               min="< startDate's value >" max="< today's date >"/>
                     </div>
                 </div>
             </div>
@@ -89,28 +89,7 @@
 <script th:src="@{/static/salesReport.js}"/>
 </script>
 <script>
-    // Get references to the startDate and endDate inputs
-    const startDateInput = document.getElementById("inputStartDate");
-    const endDateInput = document.getElementById("inputEndDate");
 
-    // Get today's date
-    const today = new Date();
-
-    // Set the minimum value for the startDate to be 30 days from today's date
-    startDateInput.min = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30).toISOString().split("T")[0];
-    startDateInput.max = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString().split("T")[0];
-    // Update the endDate's min and max values whenever the startDate value changes
-    startDateInput.addEventListener("input", function () {
-        // endDateInput.min = startDateInput.value;
-        // endDateInput.max = today.toISOString().split("T")[0];
-        if (startDateInput.value) {
-            endDateInput.disabled = false;
-            endDateInput.min = startDateInput.value;
-            endDateInput.max = today.toISOString().split("T")[0];
-        } else {
-            endDateInput.disabled = true;
-        }
-    });
 </script>
 
 </body>

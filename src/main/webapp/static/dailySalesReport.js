@@ -10,15 +10,12 @@ function scheduler(){
 
 function getDaySalesList(){
     var url = getDaySalesReportUrl();
-    // call api
-    console.log(url)
+    // console.log(url)
     $.ajax({
         url: url,
         type: 'GET',
         success: function(data) {
-            // display data
             console.log(data);
-            // displayDaySalesList(data);
         },
         error: handleAjaxError
     });
@@ -40,5 +37,6 @@ function scheduleNow(){
 function init(){
     $('#run-scheduler').click(scheduleNow);
     $(document).ready(getDaySalesList);
+    $('#refresh-data').click(getDaySalesList);
 }
 $(document).ready(init);

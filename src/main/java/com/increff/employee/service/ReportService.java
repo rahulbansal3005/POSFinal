@@ -1,6 +1,7 @@
 package com.increff.employee.service;
 
 import com.increff.employee.dao.DailySalesDao;
+import com.increff.employee.model.Data.DailySalesData;
 import com.increff.employee.model.Data.SalesReportData;
 import com.increff.employee.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;

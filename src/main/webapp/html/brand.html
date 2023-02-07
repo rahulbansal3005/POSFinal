@@ -14,9 +14,12 @@
     <div class="row">
         <div class="col-12">
             <form class="form-inline">
-                <button type="button" class="btn btn-primary" id="add-brand-modal">Add New Brand</button>
+                <button type="button" class="btn btn-primary" id="add-brand-modal">Add Brand</button>
                 &nbsp;
                 <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+                &nbsp;
+                <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+
             </form>
         </div>
     </div>
@@ -55,24 +58,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="brand-form">
+                    <form class="form-group" id="brand-form">
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="brand" id="inputBrand"
-                                       placeholder="enter brand name">
+                                       placeholder="Enter Brand Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="category" id="inputCategory"
-                                       placeholder="enter Category Name">
+                                       placeholder="Enter Category Name">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="add-brand">Add</button>
-                        &nbsp;
-                        <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" id="add-brand">Add</button>
+                        </div>
                     </form>
 
                 </div>
@@ -92,19 +95,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="brand-edit-form">
+                    <form class="form-group" id="brand-edit-form">
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brand" placeholder="enter name">
+                                <input type="text" class="form-control" name="brand" placeholder="Enter Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" placeholder="enter Category">
+                                <input type="text" class="form-control" name="category" placeholder="Enter Category">
                             </div>
                         </div>
+
 
                         <input type="hidden" name="id">
                     </form>

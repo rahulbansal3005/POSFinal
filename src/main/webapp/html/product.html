@@ -14,9 +14,12 @@
     <div class="row">
         <div class="col-12">
             <form class="form-inline">
-                <button type="button" class="btn btn-primary" id="add-product-modal">Add New Product</button>
+                <button type="button" class="btn btn-primary" id="add-product-modal">Add Product</button>
                 &nbsp;
                 <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+                &nbsp;
+                <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+
             </form>
         </div>
     </div>
@@ -32,7 +35,7 @@
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">BarCode</th>
+                    <th scope="col">Barcode</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Category</th>
                     <th scope="col">Name</th>
@@ -59,9 +62,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="product-form">
+                    <form class="form-group" id="product-form">
                         <div class="form-group">
-                            <label for="inputBarCode" class="col-sm-2 col-form-label">BarCode</label>
+                            <label for="inputBarCode" class="col-sm-2 col-form-label">Barcode</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="barcode" id="inputBarCode"
                                        placeholder="Enter BarCode">
@@ -92,12 +95,13 @@
                         <div class="form-group">
                             <label for="inputMrp" class="col-sm-2 col-form-label">MRP</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="Enter MRP">
+                                <input type="text" class="form-control" name="mrp" id="inputMrp"
+                                       placeholder="Enter MRP">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="add-product">Add</button>
-                        &nbsp;
-                        <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" id="add-product">Add</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -115,11 +119,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="product-edit-form">
+                    <form class="form-group" id="product-edit-form">
                         <div class="form-group">
                             <label for="inputBarCode" class="col-sm-2 col-form-label">BarCode</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode" disabled>
+                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode"
+                                       disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -131,7 +136,8 @@
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" placeholder="enter category" disabled>
+                                <input type="text" class="form-control" name="category" placeholder="enter category"
+                                       disabled>
                             </div>
                         </div>
                         <div class="form-group">

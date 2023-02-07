@@ -14,9 +14,12 @@
     <div class="row">
         <div class="col-12">
             <form class="form-inline">
-                <button type="button" class="btn btn-primary" id="add-inventory-modal">Add New Inventory</button>
+                <button type="button" class="btn btn-primary" id="add-inventory-modal">Add Inventory</button>
                 &nbsp;
                 <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+                &nbsp;
+                <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+
             </form>
         </div>
     </div>
@@ -34,7 +37,7 @@
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">BarCode</th>
+                    <th scope="col">Barcode</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -58,9 +61,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="inventory-form">
+                    <form class="form-group" id="inventory-form">
                         <div class="form-group">
-                            <label for="inputBarcode" class="col-sm-2 col-form-label">BarCode</label>
+                            <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="barcode" id="inputBarcode"
                                        placeholder="Enter BarCode">
@@ -73,9 +76,9 @@
                                        placeholder="Enter Quantity">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="add-inventory">Add</button>
-                        &nbsp;
-                        <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" id="add-inventory">Add</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -99,7 +102,8 @@
                         <div class="form-group">
                             <label for="inputBarcode" class="col-sm-2 col-form-label">Bar Code</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode" disabled>
+                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode"
+                                       disabled>
                             </div>
                         </div>
                         <div class="form-group">

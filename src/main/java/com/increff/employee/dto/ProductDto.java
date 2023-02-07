@@ -31,7 +31,7 @@ public class ProductDto {
         normalize(productForm);
         ProductPojo productPojo=productService.getCheck(productForm.getBarcode());
         if(productPojo!=null)
-            throw new ApiException("Barcode already present in the Database");
+            throw new ApiException("Barcode already present");
         productPojo = convertProductFormToProductPojo(productForm);
         productPojo.setBrandCategory(brandService.extractId(productForm));
         productService.add(productPojo);
