@@ -34,7 +34,7 @@ function displayScheduler(data)
             + '<td>' + index++ + '</td>'
             + '<td>' + e.date + '</td>'
             + '<td>' + e.invoicedOrderCount + '</td>'
-            + '<td>' + e.invoicedItemCount + '</td>'
+            + '<td>' + e.invoicedItemcount + '</td>'
             + '<td>' + e.totalRevenue + '</td>'
             + '</tr>';
         $tbody.append(row);
