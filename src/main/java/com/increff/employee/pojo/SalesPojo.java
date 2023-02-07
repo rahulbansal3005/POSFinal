@@ -2,19 +2,18 @@ package com.increff.employee.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-
+//import javax.persistence.Entity;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-@Entity
 @Getter
 @Setter
+@Entity
 public class SalesPojo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @JsonFormat(pattern="dd-MM-yyyy ")
+//    @JsonFormat(pattern="dd-MM-yyyy ")
     @Column(nullable = false)
     private LocalDate date;
     @Column(nullable = false)

@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,14 @@ public class DailySalesService {
 
     @Transactional(rollbackOn = ApiException.class)
     public List<DailySalesData> getAll() {
-        List<SalesPojo> salesPojoList=dailySalesDao.selectAll();
         List<DailySalesData> dailySalesDataList=new ArrayList<>();
-        for(SalesPojo salesPojo:salesPojoList)
+//        List<SalesPojo> salesPojoList=dailySalesDao.selectAll();
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        LocalDate localDate = now.toLocalDate();
+        System.out.println(localDate);
+        List<SalesPojo> salesPojoListOfCurrentDate=dailySalesDao.get(localDate);
+        for(SalesPojo salesPojo:salesPojoListOfCurrentDate)
         {
             DailySalesData dailySalesData=new DailySalesData();
             String dateString = salesPojo.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -33,7 +40,6 @@ public class DailySalesService {
             dailySalesData.setInvoicedOrderCount(salesPojo.getInvoicedOrderCount());
             dailySalesDataList.add(dailySalesData);
         }
-
 
         return dailySalesDataList;
     }
