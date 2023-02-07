@@ -19,7 +19,7 @@ function addInventory(event) {
   if(parsed.barcode=="" || parsed.quantity=="")
     return frontendChecks("Fields are empty");
   if(parsed.quantity<0)
-    return frontendChecks("quantity is negative")
+    return frontendChecks("quantity can not be negative")
 
   var url = getInventoryUrl();
 
@@ -56,7 +56,7 @@ function updateInventory(event) {
   if(parsed.quantity=="")
     return frontendChecks("Fields are empty");
   if(parsed.quantity<0)
-    return frontendChecks("quantity is negative")
+    return frontendChecks("Quantity can not be negative")
 
   $.ajax({
     url: url,

@@ -15,10 +15,31 @@ function getDaySalesList(){
         url: url,
         type: 'GET',
         success: function(data) {
-            console.log(data);
+            // console.log(data);
+            displayScheduler(data);
         },
         error: handleAjaxError
     });
+}
+
+function displayScheduler(data)
+{
+    let index=1;
+    var $tbody = $('#daily-table').find('tbody');
+    $tbody.empty();
+    for(const i in data){
+        const e = data[i];
+        console.log("e from daily report",e);
+        const row = '<tr>'
+            + '<td>' + index++ + '</td>'
+            + '<td>' + e.date + '</td>'
+            + '<td>' + e.invoicedOrderCount + '</td>'
+            + '<td>' + e.invoicedItemCount + '</td>'
+            + '<td>' + e.totalRevenue + '</td>'
+            + '</tr>';
+        $tbody.append(row);
+    }
+    $('thead').show();
 }
 
 function scheduleNow(){
@@ -28,7 +49,7 @@ function scheduleNow(){
         url: url,
         type: 'GET',
         success: function(data) {
-            console.log(data);
+            // console.log(data);
         },
         error: handleAjaxError
     });

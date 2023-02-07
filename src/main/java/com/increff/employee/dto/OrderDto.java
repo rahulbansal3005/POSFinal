@@ -27,8 +27,6 @@ public class OrderDto {
     InventoryService inventoryService;
     @Autowired
     private ProductService productService;
-//    @Autowired
-//    private OrderItemDto orderItemDto;
 
     @Autowired
     private OrderService orderService;
@@ -44,18 +42,20 @@ public class OrderDto {
         }
 
         if (errorMessages.size() != 0) {
+            String res="";
+            int index=1;
             for (String s : errorMessages) {
                 System.out.println(s);
+                res+=index++;
+                res+="). ";
+                res+=s;
+                res+="\r\n";
             }
-            throw new ApiException(errorMessages.toString());
+            throw new ApiException(res);
         }
 
 
         // 2) Create new Order.
-
-//        java.util.Date date=new java.util.Date();
-//        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        String formatDateTime = now.format(format);
         OrderPojo orderPojo = convertOrderFormToOrder();
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now + "OrderDTO  now");
@@ -72,30 +72,25 @@ public class OrderDto {
             int prod_id = productService.extractProd_Id(orderItem.getBarCode());
             inventoryService.reduceInventory(orderItem,prod_id);
         }
-
-
     }
     public void checkInventory(OrderItem orderItem, List<String> errorMessages) throws ApiException {
         ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
         if(productPojo==null)
         {
-            String error="Product does not exist in Product List"+ orderItem.getBarCode();
+            String error="Product does not exist in Product List: "+ orderItem.getBarCode();
             errorMessages.add(error);
-//            throw new ApiException("Product does not exist");
             return;
         }
         InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
         if(inventoryPojo==null)
         {
-            String error = "Product with given BarCode: " + orderItem.getBarCode() + "does not exist in inventory";
+            String error = "Product with given BarCode: " + orderItem.getBarCode() + " does not exist in inventory ";
             errorMessages.add(error);
-//            throw new ApiException("Product does not exist inventory");
             return;
         }
         else if (inventoryPojo.getQuantity()<orderItem.getQuantity()) {
             String error = "Product with given BarCode: " + orderItem.getBarCode() + " does not have sufficient quantity ";
             errorMessages.add(error);
-//            throw new ApiException("Product does not exist in inventory in required quantity");
             return;
         }
     }

@@ -26,24 +26,20 @@ public class DailySalesService {
         for(SalesPojo salesPojo:salesPojoList)
         {
             DailySalesData dailySalesData=new DailySalesData();
-            System.out.println("1");
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            String formattedDateTime = salesPojo.getDate().format(dateTimeFormatter);
-
-            dailySalesData.setDate(formattedDateTime);
-            System.out.println("3");
+            String dateString = salesPojo.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            dailySalesData.setDate(dateString);
             dailySalesData.setTotalRevenue(salesPojo.getTotalRevenue());
             dailySalesData.setInvoicedItemcount(salesPojo.getInvoicedItemsCount());
             dailySalesData.setInvoicedOrderCount(salesPojo.getInvoicedOrderCount());
-            System.out.println(dailySalesData);
             dailySalesDataList.add(dailySalesData);
         }
 
+
         return dailySalesDataList;
     }
-    @Scheduled(cron = "0 0 0 * * *")
-    @Transactional(rollbackOn = ApiException.class)
-    public void scheduler() throws ApiException {
-
-    }
+//    @Scheduled(cron = "0 0 0 * * *")
+//    @Transactional(rollbackOn = ApiException.class)
+//    public void scheduler() throws ApiException {
+//
+//    }
 }

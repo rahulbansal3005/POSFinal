@@ -21,7 +21,7 @@ function addProduct(event) {
   if(parsed.barcode=="" || parsed.name=="" || parsed.mrp=="" || parsed.brand=="" || parsed.category=="")
     return frontendChecks("Fields are empty");
   if(json.mrp<0)
-    return frontendChecks("mrp is negative")
+    return frontendChecks("MRP can not be negative")
   var url = getProductUrl();
 
   $.ajax({
@@ -62,7 +62,7 @@ console.log(json)
   if(parsed.name=="" || parsed.mrp=="")
     return frontendChecks("Fields are empty");
   if(json.mrp<0)
-    return frontendChecks("mrp is negative")
+    return frontendChecks("MRP can not be negative")
 
   $.ajax({
     url: url,
