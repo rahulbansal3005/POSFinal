@@ -61,8 +61,8 @@ console.log(json)
   console.log(parsed);
   if(parsed.name=="" || parsed.mrp=="")
     return frontendChecks("Fields are empty");
-  if(json.mrp<0)
-    return frontendChecks("MRP can not be negative")
+  if(json.mrp<=0)
+    return frontendChecks("MRP can not be negative or zero")
 
   $.ajax({
     url: url,
@@ -168,6 +168,7 @@ function displayProductList(data) {
   for (var i in data) {
     var e = data[i];
     // console.log(e);
+    var mrp=e.mrp;
     var buttonHtml =
       // '<button type="button" class="btn btn-secondary" onclick="deleteProduct(' + e.id + ')">delete</button>';
     // buttonHtml +=
@@ -190,7 +191,7 @@ function displayProductList(data) {
       e.name +
       "</td>" +
       "<td>" +
-      e.mrp +
+      mrp.toFixed(2) +
       "</td>" +
       "<td>" +
       buttonHtml +

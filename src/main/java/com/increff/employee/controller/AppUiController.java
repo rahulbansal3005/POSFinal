@@ -38,8 +38,6 @@ public class AppUiController extends AbstractUiController {
         return mav("inventory.html");
     }
 
-
-    // TODO customer->order
     @RequestMapping(value = "/ui/order")
     public ModelAndView customer() {
         return mav("order.html");

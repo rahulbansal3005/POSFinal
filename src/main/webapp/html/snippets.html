@@ -33,8 +33,11 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
+<!--            <li class="nav-item">-->
+<!--                <a class="btn btn-primary" th:href="@{/site/login}">Login</a>-->
+<!--            </li>-->
             <li class="nav-item">
-                <a class="btn btn-primary" th:href="@{/site/login}">Login</a>
+                <a class="btn btn-primary" th:href="@{/site/signup}">Sign Up</a>
             </li>
         </ul>
 
@@ -79,10 +82,10 @@
                 <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
                    id="reports-link" th:href="@{/ui/report}">Reports</a>
                 <div aria-labelledby="reports-link" class="dropdown-menu shadow">
-                    <a class="dropdown-item" th:href="@{/ui/report/inventoryReport}">Inventory Report</a>
-                    <a class="dropdown-item" th:href="@{/ui/report/brandReport}">Brand Category Report</a>
-                    <a class="dropdown-item" th:href="@{/ui/report/salesReport}">Sales Report</a>
-                    <a class="dropdown-item" th:href="@{/ui/report/dailySalesReport}">Daily Sales Report</a>
+                    <a class="dropdown-item"  th:href="@{/ui/report/inventoryReport}">Inventory Report</a>
+                    <a class="dropdown-item"  th:href="@{/ui/report/brandReport}">Brand Category Report</a>
+                    <a class="dropdown-item"  th:href="@{/ui/report/salesReport}">Sales Report</a>
+                    <a class="dropdown-item"  th:href="@{/ui/report/dailySalesReport}">Daily Sales Report</a>
                 </div>
             </li>
             <li class="nav-item supervisor-only">
@@ -109,7 +112,7 @@
     &nbsp;<script>
     const navLinks = document.querySelectorAll(".nav-item .nav-link");
     const currentUrl = window.location.pathname;
-    console.log("In the active");
+    // console.log("In the active");
     navLinks.forEach(link => {
         if (link.getAttribute("href") === currentUrl) {
             link.classList.add("active");

@@ -2,7 +2,6 @@ package com.increff.employee.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-//import javax.persistence.Entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

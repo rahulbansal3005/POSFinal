@@ -37,18 +37,18 @@ public class LoginController {
 	
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-		UserPojo p = service.get(f.getEmail());
-		boolean authenticated = (p != null && Objects.equals(p.getPassword(), f.getPassword()));
+	public ModelAndView login(HttpServletRequest httpServletRequest, LoginForm loginForm) throws ApiException {
+		UserPojo userPojo = service.get(loginForm.getEmail());
+		boolean authenticated = (userPojo != null && Objects.equals(userPojo.getPassword(), loginForm.getPassword()));
 		if (!authenticated) {
 			info.setMessage("Invalid username or password");
 			return new ModelAndView("redirect:/site/login");
 		}
 
 		// Create authentication object
-		Authentication authentication = convert(p);
+		Authentication authentication = convert(userPojo);
 		// Create new session
-		HttpSession session = req.getSession(true);
+		HttpSession session = httpServletRequest.getSession(true);
 		// Attach Spring SecurityContext to this new session
 		SecurityUtil.createContext(session);
 		// Attach Authentication object to the Security Context
@@ -64,15 +64,15 @@ public class LoginController {
 		return new ModelAndView("redirect:/site/logout");
 	}
 
-	private static Authentication convert(UserPojo p) {
+	private static Authentication convert(UserPojo userPojo) {
 		// Create principal
 		UserPrincipal principal = new UserPrincipal();
-		principal.setEmail(p.getEmail());
-		principal.setId(p.getId());
+		principal.setEmail(userPojo.getEmail());
+		principal.setId(userPojo.getId());
 
 		// Create Authorities
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(p.getRole()));
+		authorities.add(new SimpleGrantedAuthority(userPojo.getRole()));
 		// you can add more roles if required
 
 		// Create Authentication
