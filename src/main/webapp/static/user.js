@@ -10,6 +10,13 @@ function addUser(event){
 	var $form = $("#user-form");
 	var json = toJson($form);
 	var url = getUserUrl();
+	console.log(json);
+
+	var parsed=JSON.parse(json);
+	console.log(parsed);
+
+	if(parsed.email=="" || parsed.quantity=="" || parsed.role=="")
+		return frontendChecks("Fields are empty");
 
 	$.ajax({
 	   url: url,
@@ -52,18 +59,39 @@ function deleteUser(id){
 	});
 }
 
+function displayEditUser(id){
+	var url = getUserUrl() + "/" + id ;
+
+	$.ajax({
+		url: url,
+		type: "GET",
+		success: function (data) {
+			displayUser(data);
+		},
+		error: handleAjaxError,
+	});
+}
+
+function displayUser(data)
+{
+
+}
+
 //UI DISPLAY METHODS
 
 function displayUserList(data){
 	console.log('Printing user data');
 	var $tbody = $('#user-table').find('tbody');
 	$tbody.empty();
+	index=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteUser(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditUser(' + e.id + ')">edit</button>'
+		var buttonHtml =
+			// '<button onclick="deleteUser(' + e.id + ')">delete</button>'
+		// buttonHtml +=
+			' <button type="button" class="btn btn-secondary" onclick="displayEditUser(' + e.id + ')">edit</button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td>' + index++ + '</td>'
 		+ '<td>' + e.email + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';

@@ -1,10 +1,7 @@
 package com.increff.employee.util;
 
 import com.increff.employee.model.Data.*;
-import com.increff.employee.model.Form.BrandForm;
-import com.increff.employee.model.Form.InventoryForm;
-import com.increff.employee.model.Form.ProductForm;
-import com.increff.employee.model.Form.UserForm;
+import com.increff.employee.model.Form.*;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,6 +48,14 @@ public class Helper {
         return userPojo;
     }
 
+    public static UserPojo convertSignupFormToUserPojo(SignupForm signupForm,String role)
+    {
+        UserPojo userPojo=new UserPojo();
+        userPojo.setRole(role);
+        userPojo.setEmail(signupForm.getEmail());
+        userPojo.setPassword(signupForm.getPassword());
+        return userPojo;
+    }
 
 
     public static BrandData convertBrandPojoToBrandData(BrandPojo brandPojo) {

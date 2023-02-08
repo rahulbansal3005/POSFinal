@@ -39,4 +39,9 @@ public class AdminDto {
         }
         return list2;
     }
+
+    public UserData getById() {
+        UserData userData=new UserData();
+        return userData;
+    }
 }

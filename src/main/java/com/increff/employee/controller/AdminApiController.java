@@ -30,7 +30,6 @@ public class AdminApiController {
 	public void addUser(@RequestBody UserForm userForm) throws ApiException {
 		adminDto.add(userForm);
 	}
-
 	@ApiOperation(value = "Deletes a user")
 	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.DELETE)
 	public void deleteUser(@PathVariable int id) {
@@ -42,5 +41,9 @@ public class AdminApiController {
 	public List<UserData> getAllUser() {
 		return adminDto.getAll();
 	}
-
+	@ApiOperation(value = "Get user by id")
+	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.GET)
+	public UserData get() {
+		return adminDto.getById();
+	}
 }

@@ -26,13 +26,15 @@ public class BrandDto {
     private BrandService brandService;
 
     public void add(BrandForm brandForm) throws ApiException {
+//        TODO change validate name.
+//
         Validate.BrandForm(brandForm);
         Normalize.normalize(brandForm);                         // Normalize Forms and not Pojos.
         brandService.getByNameCategory(brandForm.getBrand(),brandForm.getCategory());
         BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
         brandService.add(brandPojo);
     }
-
+//Todo remove delete
     public void delete(Integer brandId) {
         brandService.delete(brandId);
     }
@@ -45,8 +47,8 @@ public class BrandDto {
     public List<BrandData> getAll() {
         List<BrandPojo> brandPojoList = brandService.getAll();
         List<BrandData> brandDataList = new ArrayList<>();
-        for (BrandPojo p : brandPojoList) {
-            brandDataList.add(convertBrandPojoToBrandData(p));
+        for (BrandPojo brandPojo : brandPojoList) {
+            brandDataList.add(convertBrandPojoToBrandData(brandPojo));
         }
         return brandDataList;
     }
@@ -56,8 +58,6 @@ public class BrandDto {
         normalize(brandForm);
 //        TODO check for existing pojo in the database.
         BrandPojo brandPojo =brandService.searchBrandCategory(brandForm);
-//        System.out.println(brandPojoList.size());
-//        System.out.println(brandPojoList);
         if(brandPojo!=null)
             throw new ApiException("Brand-Category already existed");
 

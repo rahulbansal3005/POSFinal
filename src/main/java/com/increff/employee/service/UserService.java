@@ -18,7 +18,7 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 
-	@Transactional
+	@Transactional(rollbackOn = ApiException.class)
 	public void add(UserPojo userPojo) throws ApiException {
 		UserPojo existing = userDao.select(userPojo.getEmail());
 		if (existing != null) {
@@ -32,12 +32,12 @@ public class UserService {
 		return userDao.select(email);
 	}
 
-	@Transactional
+	@Transactional(rollbackOn = ApiException.class)
 	public List<UserPojo> getAll() {
 		return userDao.selectAll();
 	}
 
-	@Transactional
+	@Transactional(rollbackOn = ApiException.class)
 	public void delete(int id) {
 		userDao.delete(id);
 	}

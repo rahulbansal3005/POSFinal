@@ -54,10 +54,10 @@ public class Validate {
 
     public static void BrandForm (BrandForm brandForm) throws ApiException {
 		if (Validate.isEmpty(brandForm.getBrand())) {
-			throw new ApiException("brand name cannot be null or empty");
+			throw new ApiException("Brand name cannot be null or empty");
 		}
 		if (Validate.isEmpty(brandForm.getCategory())) {
-			throw new ApiException("category name cannot be null or empty");
+			throw new ApiException("Category name cannot be null or empty");
 		}
     }
 
@@ -103,6 +103,14 @@ public class Validate {
 
 	}
 
-    public static void validateUserForm(UserForm userForm) {
-    }
+    public static void validateUserForm(UserForm userForm) throws ApiException {
+		if(userForm.getRole()=="")
+			throw new ApiException("Please select a role");
+		if(isEmpty(userForm.getEmail()))
+			throw new ApiException("Email field is empty");
+		if(isEmpty(userForm.getPassword()))
+			throw new ApiException("Password field is empty");
+		if(isEmpty(userForm.getRole()))
+			throw new ApiException("Role field is empty");
+	}
 }

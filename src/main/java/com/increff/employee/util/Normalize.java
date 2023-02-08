@@ -24,6 +24,6 @@ public class Normalize {
 
     public static void normalize(UserForm userForm) {
         userForm.setEmail(userForm.getEmail().toLowerCase().trim());
-        userForm.setRole(userForm.getRole().toLowerCase().trim());
+//        userForm.setRole(userForm.getRole().toLowerCase().trim());
     }
 }

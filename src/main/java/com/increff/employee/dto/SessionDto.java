@@ -21,19 +21,21 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
+import static com.increff.employee.util.Helper.convertSignupFormToUserPojo;
+
 
 @Service
 public class SessionDto {
 
     @Autowired
-    private UserService userService;
+    private UserService sessionService;
 
     @Autowired
     private InfoData infoData;
 
 
     public ModelAndView login(HttpServletRequest httpServletRequest, LoginForm loginForm) throws ApiException {
-        UserPojo userPojo = userService.get(loginForm.getEmail());
+        UserPojo userPojo = sessionService.get(loginForm.getEmail());
         boolean authenticated = (userPojo != null && Objects.equals(userPojo.getPassword(), loginForm.getPassword()));
         if (!authenticated) {
             infoData.setMessage("Invalid username or password");
@@ -57,7 +59,7 @@ public class SessionDto {
         return new ModelAndView("redirect:/site/logout");
     }
 
-    public ModelAndView signup(SignupForm signupForm) {
+    public ModelAndView signup(SignupForm signupForm) throws ApiException {
         Properties prop = new Properties();
         try {
             prop.load(new FileInputStream("emails.properties"));
@@ -66,11 +68,13 @@ public class SessionDto {
             e.printStackTrace();
         }
         String email = signupForm.getEmail();
+        UserPojo userPojo;
         if (prop.containsKey(email)) {
-
+            userPojo = convertSignupFormToUserPojo(signupForm, "supervisor");
         } else {
-
+            userPojo = convertSignupFormToUserPojo(signupForm, "operator");
         }
+        sessionService.add(userPojo);
 
         return new ModelAndView("redirect:/site/login");
     }
