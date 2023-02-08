@@ -8,6 +8,11 @@ function resetForm() {
     element.reset()
 }
 
+// function resetuploadform(){
+//     var element = document.getElementById("brand-edit-form");
+//     element.reset()
+// }
+
 function toggleModal(){
     $('#add-brand-item-modal').modal('toggle');
 
@@ -222,7 +227,7 @@ function uploadRows(fileData) {
                 console.log(response);
                 toastr.error("Error in uploading TSV file, Download Error File");
                 $("#download-errors").prop('disabled', false);
-                resetForm();
+                // resetuploadform();
             }
         }
     });

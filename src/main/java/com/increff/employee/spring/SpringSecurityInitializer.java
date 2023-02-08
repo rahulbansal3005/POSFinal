@@ -1,7 +1,7 @@
-// package com.increff.employee.spring;
+ package com.increff.employee.spring;
 
-// import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+ import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-// public class SpringSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
-//     // no code needed
-// }
+ public class SpringSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
+     // no code needed
+ }

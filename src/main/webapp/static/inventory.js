@@ -16,7 +16,7 @@ function addInventory(event) {
   var parsed=JSON.parse(json);
   console.log(parsed);
 
-  if(parsed.barcode=="" || parsed.quantity=="")
+  if(parsed.barcode==="" || parsed.quantity==="")
     return frontendChecks("Fields are empty");
   if(parsed.quantity<0)
     return frontendChecks("quantity can not be negative")

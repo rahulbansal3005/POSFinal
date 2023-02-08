@@ -7,6 +7,12 @@ function resetForm() {
   var element = document.getElementById("product-form");
   element.reset()
 }
+
+// function resetuploadform(){
+//   var element = document.getElementById("product-edit-form");
+//   element.reset()
+// }
+
 function toggleModal(){
   $('#add-product-item-modal').modal('toggle');
 }
@@ -18,7 +24,7 @@ function addProduct(event) {
   var json = toJson($form);
   var parsed=JSON.parse(json);
   console.log(parsed);
-  if(parsed.barcode=="" || parsed.name=="" || parsed.mrp=="" || parsed.brand=="" || parsed.category=="")
+  if(parsed.barcode==="" || parsed.name==="" || parsed.mrp==="" || parsed.brand==="" || parsed.category==="")
     return frontendChecks("Fields are empty");
   if(json.mrp<0)
     return frontendChecks("MRP can not be negative")
@@ -59,7 +65,7 @@ console.log(json)
 
   var parsed=JSON.parse(json);
   console.log(parsed);
-  if(parsed.name=="" || parsed.mrp=="")
+  if(parsed.name==="" || parsed.mrp==="")
     return frontendChecks("Fields are empty");
   if(json.mrp<=0)
     return frontendChecks("MRP can not be negative or zero")
@@ -106,58 +112,6 @@ function deleteProduct(id) {
   });
 }
 
-// FILE UPLOAD METHODS
-var fileData = [];
-var errorData = [];
-var processCount = 0;
-
-function processData() {
-  var file = $("#productFile")[0].files[0];
-  readFileData(file, readFileDataCallback);
-}
-
-function readFileDataCallback(results) {
-  fileData = results.data;
-  uploadRows();
-}
-
-function uploadRows() {
-  //Update progress
-  updateUploadDialog();
-  //If everything processed then return
-  if (processCount == fileData.length) {
-    return;
-  }
-
-  //Process next row
-  var row = fileData[processCount];
-  processCount++;
-
-  var json = JSON.stringify(row);
-  var url = getProductUrl();
-
-  //Make ajax call
-  $.ajax({
-    url: url,
-    type: "POST",
-    data: json,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    success: function (response) {
-      uploadRows();
-    },
-    error: function (response) {
-      row.error = response.responseText;
-      errorData.push(row);
-      uploadRows();
-    },
-  });
-}
-
-function downloadErrors() {
-  writeFileData(errorData);
-}
 
 //UI DISPLAY METHODS
 
@@ -170,33 +124,33 @@ function displayProductList(data) {
     // console.log(e);
     var mrp=e.mrp;
     var buttonHtml =
-      // '<button type="button" class="btn btn-secondary" onclick="deleteProduct(' + e.id + ')">delete</button>';
-    // buttonHtml +=
-      ' <button type="button" class="btn btn-secondary" onclick="displayEditProduct(' + e.id + ')">edit</button>';
+        // '<button type="button" class="btn btn-secondary" onclick="deleteProduct(' + e.id + ')">delete</button>';
+        // buttonHtml +=
+        ' <button type="button" class="btn btn-secondary" onclick="displayEditProduct(' + e.id + ')">edit</button>';
     var row =
-      "<tr>" +
-      "<td>" +
-      index++ +
-      "</td>" +
-      "<td>" +
-      e.barcode +
-      "</td>" +
-      "<td>" +
-      e.brand +
-      "</td>" +
+        "<tr>" +
+        "<td>" +
+        index++ +
+        "</td>" +
+        "<td>" +
+        e.barcode +
+        "</td>" +
+        "<td>" +
+        e.brand +
+        "</td>" +
         "<td>" +
         e.category +
         "</td>"+
-      "<td>" +
-      e.name +
-      "</td>" +
-      "<td>" +
-      mrp.toFixed(2) +
-      "</td>" +
-      "<td>" +
-      buttonHtml +
-      "</td>" +
-      "</tr>";
+        "<td>" +
+        e.name +
+        "</td>" +
+        "<td>" +
+        mrp.toFixed(2) +
+        "</td>" +
+        "<td>" +
+        buttonHtml +
+        "</td>" +
+        "</tr>";
     $tbody.append(row);
   }
 }
@@ -211,36 +165,6 @@ function displayEditProduct(id) {
     },
     error: handleAjaxError,
   });
-}
-
-function resetUploadDialog() {
-  //Reset file name
-  var $file = $("#productFile");
-  $file.val("");
-  $("#productFileName").html("Choose File");
-  //Reset various counts
-  processCount = 0;
-  fileData = [];
-  errorData = [];
-  //Update counts
-  updateUploadDialog();
-}
-
-function updateUploadDialog() {
-  $("#rowCount").html("" + fileData.length);
-  $("#processCount").html("" + processCount);
-  $("#errorCount").html("" + errorData.length);
-}
-
-function updateFileName() {
-  var $file = $("#productFile");
-  var fileName = $file.val();
-  $("#productFileName").html(fileName);
-}
-
-function displayUploadData() {
-  resetUploadDialog();
-  $("#upload-product-modal").modal("toggle");
 }
 
 function displayProduct(data) {
@@ -305,6 +229,118 @@ const populateCategory = data => {
     var ele = '<option value="' + category + '">' + category + '</option>';
     $selectCategory.append(ele);
   }
+}
+
+
+
+
+
+// FILE UPLOAD METHODS
+var fileData = [];
+var errorData = [];
+var processCount = 0;
+
+function processData() {
+  var file = $("#productFile")[0].files[0];
+  readFileData(file, readFileDataCallback);
+}
+
+function readFileDataCallback(results) {
+  fileData = results.data;
+  uploadRows();
+}
+
+function uploadRows() {
+  //Update progress
+  updateUploadDialog();
+  //If everything processed then return
+  // if (processCount == fileData.length) {
+  //   return;
+  // }
+  //
+  // //Process next row
+  // var row = fileData[processCount];
+  // processCount++;
+
+  var json = JSON.stringify(fileData);
+  var url = getProductUrl()+ "-bulk";
+
+  //Make ajax call
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: json,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // success: function (response) {
+    //   uploadRows();
+    // },
+    // error: function (response) {
+    //   row.error = response.responseText;
+    //   errorData.push(row);
+    //   uploadRows();
+    // },
+    success:function (response){
+      console.log(response);
+      getProductList();
+    },
+    error: function (response){
+      // console.log(response);
+      // for(var i in response)
+      // {
+      //     errorData.push(i);
+      // }
+      if(response.status === 403){
+        // toastr.error("403 Forbidden");
+        frontendChecks("403")
+      }
+      else {
+        var resp = JSON.parse(response.responseText);
+        var jsonObj = JSON.parse(resp.message);
+        console.log(jsonObj);
+        errorData = jsonObj;
+        console.log(response);
+        toastr.error("Error in uploading TSV file, Download Error File");
+        $("#download-errors").prop('disabled', false);
+        // resetuploadform();
+      }
+    }
+  });
+}
+
+function downloadErrors() {
+  writeFileData(errorData);
+}
+
+function resetUploadDialog() {
+  //Reset file name
+  var $file = $("#productFile");
+  $file.val("");
+  $("#productFileName").html("Choose File");
+  //Reset various counts
+  processCount = 0;
+  fileData = [];
+  errorData = [];
+  //Update counts
+  updateUploadDialog();
+}
+
+function updateUploadDialog() {
+  $("#rowCount").html("" + fileData.length);
+  $("#processCount").html("" + processCount);
+  $("#errorCount").html("" + errorData.length);
+}
+
+function updateFileName() {
+  var $file = $("#productFile");
+  var fileName = $file.val();
+  $("#productFileName").html(fileName);
+}
+
+function displayUploadData() {
+  resetUploadDialog();
+  $("#upload-product-modal").modal("toggle");
 }
 
 //INITIALIZATION CODE

@@ -17,6 +17,7 @@ function resetForm() {
 }
 
 
+
 function deleteOrderItem(id) {
     let keys = Object.keys(processedItems);
     let barCode = keys[id];
