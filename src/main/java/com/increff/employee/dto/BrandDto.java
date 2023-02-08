@@ -103,15 +103,10 @@ public class BrandDto {
             brandService.getByNameCategoryForBulk(brandForm.getBrand(),brandForm.getCategory(),array);
 
         }
-//        System.out.println("2");
         if(array.length()!=0)
         {
-//            System.out.println(array);
-//            System.out.println(array.length());
-//            System.out.println(array.toString());
             throw new ApiException(array.toString());
         }
-//        System.out.println("3");
         for(BrandForm brandForm:brandForms)
         {
             add(brandForm);

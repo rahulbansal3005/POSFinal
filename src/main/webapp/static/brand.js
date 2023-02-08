@@ -205,10 +205,24 @@ function uploadRows(fileData) {
             getBrandList();
         },
         error: function (response){
-            console.log(response);
-            for(var i in response)
-            {
-                errorData.push(i);
+            // console.log(response);
+            // for(var i in response)
+            // {
+            //     errorData.push(i);
+            // }
+            if(response.status == 403){
+                // toastr.error("403 Forbidden");
+                frontendChecks("403")
+            }
+            else {
+                var resp = JSON.parse(response.responseText);
+                var jsonObj = JSON.parse(resp.message);
+                console.log(jsonObj);
+                errorData = jsonObj;
+                console.log(response);
+                toastr.error("Error in uploading TSV file, Download Error File");
+                $("#download-errors").prop('disabled', false);
+                resetForm();
             }
         }
     });
