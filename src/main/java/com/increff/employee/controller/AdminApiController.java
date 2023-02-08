@@ -3,6 +3,7 @@ package com.increff.employee.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.increff.employee.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +29,9 @@ public class AdminApiController {
 
 	@ApiOperation(value = "Adds a user")
 	@RequestMapping(path = "/api/admin/user", method = RequestMethod.POST)
-	public void addUser(@RequestBody UserForm form) throws ApiException {
-		UserPojo p = convert(form);
-		service.add(p);
+	public void addUser(@RequestBody UserForm userForm) throws ApiException {
+		UserPojo userPojo = Helper.convertUserFormToUserPojo(userForm);
+		service.add(userPojo);
 	}
 
 	@ApiOperation(value = "Deletes a user")
@@ -44,26 +45,10 @@ public class AdminApiController {
 	public List<UserData> getAllUser() {
 		List<UserPojo> list = service.getAll();
 		List<UserData> list2 = new ArrayList<UserData>();
-		for (UserPojo p : list) {
-			list2.add(convert(p));
+		for (UserPojo userPojo : list) {
+			list2.add(Helper.convertUserPojoToUserData(userPojo));
 		}
 		return list2;
-	}
-
-	private static UserData convert(UserPojo p) {
-		UserData d = new UserData();
-		d.setEmail(p.getEmail());
-		d.setRole(p.getRole());
-		d.setId(p.getId());
-		return d;
-	}
-
-	private static UserPojo convert(UserForm f) {
-		UserPojo p = new UserPojo();
-		p.setEmail(f.getEmail());
-		p.setRole(f.getRole());
-		p.setPassword(f.getPassword());
-		return p;
 	}
 
 }

@@ -31,17 +31,17 @@ import io.swagger.annotations.ApiOperation;
 public class LoginController {
 
 	@Autowired
-	private UserService service;
+	private UserService userService;
 	@Autowired
-	private InfoData info;
+	private InfoData infoData;
 	
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView login(HttpServletRequest httpServletRequest, LoginForm loginForm) throws ApiException {
-		UserPojo userPojo = service.get(loginForm.getEmail());
+		UserPojo userPojo = userService.get(loginForm.getEmail());
 		boolean authenticated = (userPojo != null && Objects.equals(userPojo.getPassword(), loginForm.getPassword()));
 		if (!authenticated) {
-			info.setMessage("Invalid username or password");
+			infoData.setMessage("Invalid username or password");
 			return new ModelAndView("redirect:/site/login");
 		}
 
@@ -80,5 +80,15 @@ public class LoginController {
 				authorities);
 		return token;
 	}
+
+
+	@ApiOperation(value = "Sign up a user")
+	@RequestMapping(path = "/session/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ModelAndView signup(HttpServletRequest httpServletRequest, LoginForm loginForm) throws ApiException {
+
+
+		return new ModelAndView("redirect:/site/login");
+	}
+
 
 }

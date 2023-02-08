@@ -12,7 +12,6 @@ public class AppUiController extends AbstractUiController {
         return mav("home.html");
     }
 
-    //	TODO remove employee
     @RequestMapping(value = "/ui/employee")
     public ModelAndView employee() {
         return mav("employee.html");

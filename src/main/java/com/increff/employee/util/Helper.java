@@ -4,6 +4,7 @@ import com.increff.employee.model.Data.*;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.model.Form.ProductForm;
+import com.increff.employee.model.Form.UserForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
 
@@ -12,6 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
+
+    public static UserData convertUserPojoToUserData(UserPojo userPojo) {
+        UserData userData = new UserData();
+        userData.setEmail(userPojo.getEmail());
+        userData.setRole(userPojo.getRole());
+        userData.setId(userPojo.getId());
+        return userData;
+    }
+
+    public static UserPojo convertUserFormToUserPojo(UserForm userForm) {
+        UserPojo userPojo = new UserPojo();
+        userPojo.setEmail(userForm.getEmail());
+        userPojo.setRole(userForm.getRole());
+        userPojo.setPassword(userForm.getPassword());
+        return userPojo;
+    }
+
+
 
     public static BrandData convertBrandPojoToBrandData(BrandPojo brandPojo) {
         BrandData brandData = new BrandData();
