@@ -24,10 +24,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PDF_Generator {
-
-//    public static void main(String args[]){
-//        pdf_generator();
-//    }
     public void pdf_generator(PdfData d) {
         try {
             JavaToXML javaToXML = new JavaToXML();

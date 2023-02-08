@@ -100,58 +100,6 @@ function deleteBrand(id) {
     });
 }
 
-// FILE UPLOAD METHODS
-var fileData = [];
-var errorData = [];
-var processCount = 0;
-
-function processData() {
-    var file = $("#brandFile")[0].files[0];
-    readFileData(file, readFileDataCallback);
-}
-
-function readFileDataCallback(results) {
-    fileData = results.data;
-    uploadRows();
-}
-
-function uploadRows() {
-    //Update progress
-    updateUploadDialog();
-    //If everything processed then return
-    if (processCount == fileData.length) {
-        return;
-    }
-
-    //Process next row
-    var row = fileData[processCount];
-    processCount++;
-
-    var json = JSON.stringify(row);
-    var url = getBrandUrl();
-
-    //Make ajax call
-    $.ajax({
-        url: url,
-        type: "POST",
-        data: json,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        success: function (response) {
-            uploadRows();
-        },
-        error: function (response) {
-            row.error = response.responseText;
-            errorData.push(row);
-            uploadRows();
-        },
-    });
-}
-
-function downloadErrors() {
-    writeFileData(errorData);
-}
 
 //UI DISPLAY METHODS
 
@@ -163,7 +111,7 @@ function displayBrandList(data) {
         var e = data[i];
         var buttonHtml =
             // '<button type="button" class="btn btn-secondary" onclick="deleteBrand(' + e.id + ')">delete</button>';
-        // buttonHtml +=
+            // buttonHtml +=
             ' <button type="button" class="btn btn-secondary" onclick="displayEditBrand(' + e.id + ')">edit</button>';
         var row =
             "<tr>" +
@@ -196,6 +144,80 @@ function displayEditBrand(id) {
     });
 }
 
+function displayBrand(data) {
+    $("#brand-edit-form input[name=brand]").val(data.brand);
+    $("#brand-edit-form input[name=category]").val(data.category);
+    $("#brand-edit-form input[name=id]").val(data.id);
+    $("#edit-brand-modal").modal("toggle");
+}
+
+// FILE UPLOAD METHODS
+var fileData = [];
+var errorData = [];
+var processCount = 0;
+
+function processData() {
+    var file = $("#brandFile")[0].files[0];
+    readFileData(file, readFileDataCallback);
+}
+
+function readFileDataCallback(results) {
+    fileData = results.data;
+    uploadRows(fileData);
+}
+
+function uploadRows(fileData) {
+    //Update progress
+    updateUploadDialog();
+    // //If everything processed then return
+    // if (processCount == fileData.length) {
+    //     return;
+    // }
+
+    //Process next row
+    // var row = fileData[processCount];
+    // processCount++;
+
+    // console.log(row);
+    var json = JSON.stringify(fileData);
+    var url = getBrandUrl() + "-bulk";
+    // var jsonArray;
+
+    //Make ajax call
+    console.log('inside ajax')
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: json,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        // success: function (response) {
+        //     uploadRows();
+        // },
+        // error: function (response) {
+        //     row.error = response.responseText;
+        //     errorData.push(row);
+        //     uploadRows();
+        // },
+        success:function (response){
+            console.log(response);
+            getBrandList();
+        },
+        error: function (response){
+            console.log(response);
+            for(var i in response)
+            {
+                errorData.push(i);
+            }
+        }
+    });
+}
+
+function downloadErrors() {
+    writeFileData(errorData);
+}
+
 function resetUploadDialog() {
     //Reset file name
     var $file = $("#brandFile");
@@ -224,13 +246,6 @@ function updateFileName() {
 function displayUploadData() {
     resetUploadDialog();
     $("#upload-brand-modal").modal("toggle");
-}
-
-function displayBrand(data) {
-    $("#brand-edit-form input[name=brand]").val(data.brand);
-    $("#brand-edit-form input[name=category]").val(data.category);
-    $("#brand-edit-form input[name=id]").val(data.id);
-    $("#edit-brand-modal").modal("toggle");
 }
 
 //INITIALIZATION CODE

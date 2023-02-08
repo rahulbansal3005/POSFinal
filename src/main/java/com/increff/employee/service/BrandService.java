@@ -5,12 +5,16 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.increff.employee.model.Form.BrandForm;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.BrandDao;
 import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
+
+import static com.increff.employee.util.Helper.createErrorobject;
+
 @Service
 public class BrandService {
 
@@ -133,5 +137,11 @@ public class BrandService {
 
         BrandPojo brandPojo= brandDao.selectonBrandCategory(brandForm.getBrand(),brandForm.getCategory());
         return brandPojo;
+    }
+
+    public void getByNameCategoryForBulk(String brand, String category, JSONArray array) {
+        BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
+        if(brandPojo!=null)
+            createErrorobject(brand,category,array);
     }
 }

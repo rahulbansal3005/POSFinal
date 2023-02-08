@@ -34,10 +34,10 @@ public class OrderDto {
     public void add(OrderItem[] orderForm) throws ApiException {
 //        1) Validate all the Order Items in our inventory.
         List<String> errorMessages = new ArrayList<>();
+        Validate.ContainDuplicates(orderForm, errorMessages);
 
         for (OrderItem orderItem : orderForm) {
             Validate.checkOrderItem(orderItem, errorMessages);
-            Validate.ContainDuplicates(orderForm, errorMessages);
             checkInventory(orderItem, errorMessages);
         }
 

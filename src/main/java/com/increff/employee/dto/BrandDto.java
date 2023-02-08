@@ -1,5 +1,6 @@
 package com.increff.employee.dto;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.increff.employee.model.Data.BrandData;
 import com.increff.employee.model.Form.BrandForm;
@@ -8,7 +9,7 @@ import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
 import com.increff.employee.util.Normalize;
 import com.increff.employee.util.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class BrandDto {
     public void add(BrandForm brandForm) throws ApiException {
 //        TODO change validate name.
 //
-        Validate.BrandForm(brandForm);
+        Validate.ValidateBrandForm(brandForm);
         Normalize.normalize(brandForm);                         // Normalize Forms and not Pojos.
         brandService.getByNameCategory(brandForm.getBrand(),brandForm.getCategory());
         BrandPojo brandPojo = convertBrandFormToBrandPojo(brandForm);
@@ -54,7 +55,7 @@ public class BrandDto {
     }
 
     public void update(Integer brandId,BrandForm brandForm) throws ApiException {
-        Validate.BrandForm(brandForm);
+        Validate.ValidateBrandForm(brandForm);
         normalize(brandForm);
 //        TODO check for existing pojo in the database.
         BrandPojo brandPojo =brandService.searchBrandCategory(brandForm);
@@ -87,5 +88,34 @@ public class BrandDto {
 
         List<String> stringList = new ArrayList<>(set);
         return stringList;
+    }
+
+    public void bulkAdd(BrandForm[] brandForms) throws ApiException {
+//        List<String> errorMessages=new ArrayList<>();
+        JSONArray array = new JSONArray();
+
+        Validate.checkDuplicateBrandform(brandForms,array);
+//        System.out.println("1");
+        for(BrandForm brandForm:brandForms)
+        {
+            Validate.ValidateBrandFormForBulkAdd(brandForm,array);
+            Normalize.NormalizeBrandFormForbulkAdd(brandForm);
+            brandService.getByNameCategoryForBulk(brandForm.getBrand(),brandForm.getCategory(),array);
+
+        }
+//        System.out.println("2");
+        if(array.length()!=0)
+        {
+//            System.out.println(array);
+//            System.out.println(array.length());
+//            System.out.println(array.toString());
+            throw new ApiException(array.toString());
+        }
+//        System.out.println("3");
+        for(BrandForm brandForm:brandForms)
+        {
+            add(brandForm);
+        }
+
     }
 }

@@ -14,7 +14,6 @@ public class PdfData {
 	private String invoiceDate;
 	private String invoiceTime;
 	private List<PdfListData> itemList;
-
 	private Double total;
 
 }

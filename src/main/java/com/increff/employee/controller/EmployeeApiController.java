@@ -33,7 +33,6 @@ public class EmployeeApiController {
 		service.add(p);
 	}
 
-	
 	@ApiOperation(value = "Deletes and employee")
 	@RequestMapping(path = "/api/employee/{id}", method = RequestMethod.DELETE)
 	// /api/1

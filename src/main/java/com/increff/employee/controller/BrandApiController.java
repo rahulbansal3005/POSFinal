@@ -64,11 +64,17 @@ public class BrandApiController {
         return dto.getCategory(brand);
     }
 
-
     @ApiOperation(value = "Updates a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer id, @RequestBody BrandForm brandForm) throws ApiException {
         dto.update(id, brandForm);
+    }
+
+    @ApiOperation(value = "Upload brands-category in bulk")
+    @RequestMapping(path = "/api/brand-bulk", method = RequestMethod.POST)
+    public void addInBulk(@RequestBody BrandForm[] brandForms) throws ApiException {
+        System.out.println("bulk called");
+        dto.bulkAdd(brandForms);
     }
 
 }

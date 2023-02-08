@@ -4,6 +4,8 @@ import com.increff.employee.model.Data.*;
 import com.increff.employee.model.Form.*;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
-
+    public static void createErrorobject(String brand, String category, JSONArray array) {
+        JSONObject obj1 = new JSONObject();
+        obj1.put("brand", brand);
+        obj1.put("category", category);
+        array.put(obj1);
+    }
 
     public static Authentication convertUserPojoToAuthentication(UserPojo userPojo) {
         // Create principal

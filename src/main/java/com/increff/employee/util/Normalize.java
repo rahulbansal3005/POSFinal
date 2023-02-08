@@ -4,9 +4,14 @@ import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.model.Form.UserForm;
-import com.increff.employee.pojo.UserPojo;
 
 public class Normalize {
+
+
+    public static void NormalizeBrandFormForbulkAdd(BrandForm brandForm){
+
+    }
+
     public static void normalize(BrandForm brandForm) {
         brandForm.setBrand(Validate.toLowerCase(brandForm.getBrand()));
         brandForm.setCategory(Validate.toLowerCase(brandForm.getCategory()));

@@ -82,6 +82,59 @@ function deleteEmployee(id) {
   });
 }
 
+//UI DISPLAY METHODS
+
+function displayEmployeeList(data) {
+  var $tbody = $("#employee-table").find("tbody");
+  $tbody.empty();
+  for (var i in data) {
+    var e = data[i];
+    var buttonHtml =
+        '<button onclick="deleteEmployee(' + e.id + ')">delete</button>';
+    buttonHtml +=
+        ' <button onclick="displayEditEmployee(' + e.id + ')">edit</button>';
+    var row =
+        "<tr>" +
+        "<td>" +
+        e.id +
+        "</td>" +
+        "<td>" +
+        e.name +
+        "</td>" +
+        "<td>" +
+        e.age +
+        "</td>" +
+        "<td>" +
+        buttonHtml +
+        "</td>" +
+        "</tr>";
+    $tbody.append(row);
+  }
+}
+
+function displayEditEmployee(id) {
+  var url = getEmployeeUrl() + "/" + id;
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      displayEmployee(data);
+    },
+    error: handleAjaxError,
+  });
+}
+
+function displayEmployee(data) {
+  $("#employee-edit-form input[name=name]").val(data.name);
+  $("#employee-edit-form input[name=age]").val(data.age);
+  $("#employee-edit-form input[name=id]").val(data.id);
+  $("#edit-employee-modal").modal("toggle");
+}
+
+
+
+
+
 // FILE UPLOAD METHODS
 var fileData = [];
 var errorData = [];
@@ -89,11 +142,14 @@ var processCount = 0;
 
 function processData() {
   var file = $("#employeeFile")[0].files[0];
+  console.log(file,"file");
+
   readFileData(file, readFileDataCallback);
 }
 
 function readFileDataCallback(results) {
   fileData = results.data;
+  console.log(fileData,"fileData");
   uploadRows();
 }
 
@@ -135,48 +191,6 @@ function downloadErrors() {
   writeFileData(errorData);
 }
 
-//UI DISPLAY METHODS
-
-function displayEmployeeList(data) {
-  var $tbody = $("#employee-table").find("tbody");
-  $tbody.empty();
-  for (var i in data) {
-    var e = data[i];
-    var buttonHtml =
-      '<button onclick="deleteEmployee(' + e.id + ')">delete</button>';
-    buttonHtml +=
-      ' <button onclick="displayEditEmployee(' + e.id + ')">edit</button>';
-    var row =
-      "<tr>" +
-      "<td>" +
-      e.id +
-      "</td>" +
-      "<td>" +
-      e.name +
-      "</td>" +
-      "<td>" +
-      e.age +
-      "</td>" +
-      "<td>" +
-      buttonHtml +
-      "</td>" +
-      "</tr>";
-    $tbody.append(row);
-  }
-}
-
-function displayEditEmployee(id) {
-  var url = getEmployeeUrl() + "/" + id;
-  $.ajax({
-    url: url,
-    type: "GET",
-    success: function (data) {
-      displayEmployee(data);
-    },
-    error: handleAjaxError,
-  });
-}
-
 function resetUploadDialog() {
   //Reset file name
   var $file = $("#employeeFile");
@@ -205,13 +219,6 @@ function updateFileName() {
 function displayUploadData() {
   resetUploadDialog();
   $("#upload-employee-modal").modal("toggle");
-}
-
-function displayEmployee(data) {
-  $("#employee-edit-form input[name=name]").val(data.name);
-  $("#employee-edit-form input[name=age]").val(data.age);
-  $("#employee-edit-form input[name=id]").val(data.id);
-  $("#edit-employee-modal").modal("toggle");
 }
 
 //INITIALIZATION CODE
