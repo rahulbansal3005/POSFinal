@@ -24,7 +24,7 @@ public class OrderDto {
 
 
     @Autowired
-    InventoryService inventoryService;
+    private InventoryService inventoryService;
     @Autowired
     private ProductService productService;
 

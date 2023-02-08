@@ -4,6 +4,7 @@ import com.increff.employee.model.Data.OrderItem;
 import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.InventoryForm;
 import com.increff.employee.model.Form.ProductForm;
+import com.increff.employee.model.Form.UserForm;
 import com.increff.employee.service.ApiException;
 
 import java.util.HashMap;
@@ -101,4 +102,7 @@ public class Validate {
 		}
 
 	}
+
+    public static void validateUserForm(UserForm userForm) {
+    }
 }
