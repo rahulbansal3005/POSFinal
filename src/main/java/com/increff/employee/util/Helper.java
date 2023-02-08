@@ -7,12 +7,33 @@ import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.model.Form.UserForm;
 import com.increff.employee.pojo.*;
 import com.increff.employee.service.ApiException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
+
+
+    public static Authentication convertUserPojoToAuthentication(UserPojo userPojo) {
+        // Create principal
+        UserPrincipal principal = new UserPrincipal();
+        principal.setEmail(userPojo.getEmail());
+        principal.setId(userPojo.getId());
+
+        // Create Authorities
+        ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(userPojo.getRole()));
+        // you can add more roles if required
+
+        // Create Authentication
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, null,
+                authorities);
+        return token;
+    }
 
     public static UserData convertUserPojoToUserData(UserPojo userPojo) {
         UserData userData = new UserData();
