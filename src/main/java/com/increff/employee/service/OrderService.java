@@ -39,7 +39,7 @@ public class OrderService {
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public void addOrderItems(OrderItem[] orderForm, int orderId) throws ApiException {
+    public void addOrderItems(List<OrderItem> orderForm, int orderId) throws ApiException {
         List<OrderItemPojo> orderItemPojoList= new ArrayList<OrderItemPojo>();
         for(OrderItem orderItem:orderForm)
         {

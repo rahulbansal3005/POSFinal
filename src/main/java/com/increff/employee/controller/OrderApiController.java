@@ -28,7 +28,7 @@ public class OrderApiController {
 
     @ApiOperation(value = "Create one Order")
     @RequestMapping(path = "/api/order", method = RequestMethod.POST)
-    public void add(@RequestBody OrderItem[] orderForm) throws ApiException {
+    public void add(@RequestBody List<OrderItem> orderForm) throws ApiException {
         orderDto.add(orderForm);
     }
 
@@ -42,6 +42,12 @@ public class OrderApiController {
     @RequestMapping(path = "/api/order", method = RequestMethod.GET)
     public List<OrderData> getAll() throws ApiException {
         return orderDto.getAll();
+    }
+
+    @ApiOperation(value = "Adds order items in bulk")
+    @RequestMapping(path = "/api/order-bulk", method = RequestMethod.POST)
+    public void addBulk(@RequestBody List<OrderItem> orderForm) throws ApiException {
+        orderDto.addBulk(orderForm);
     }
 
 }

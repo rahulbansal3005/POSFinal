@@ -10,6 +10,7 @@ import com.increff.employee.service.InventoryService;
 import com.increff.employee.service.OrderService;
 import com.increff.employee.service.ProductService;
 import com.increff.employee.util.Validate;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.increff.employee.util.Helper.*;
+import static com.increff.employee.util.Validate.checkDuplicateOrderItem;
 
 @Service
 public class OrderDto {
@@ -32,21 +34,14 @@ public class OrderDto {
     private OrderService orderService;
 
 //    todo add transctional
-    public void add(OrderItem[] orderForm) throws ApiException {
-
-
-//        todo reduce function size
+    public void add(List<OrderItem> orderForm) throws ApiException {
         List<String> errorMessages = new ArrayList<>();
-
         for (OrderItem orderItem : orderForm) {
             Validate.checkOrderItem(orderItem, errorMessages);
             checkInventory(orderItem, errorMessages);
         }
-
 //        1) Validate all the Order Items in inventory.
         Validate.ContainDuplicates(orderForm, errorMessages);
-
-
         if (errorMessages.size() != 0) {
             String res="";
             int index=1;
@@ -56,8 +51,9 @@ public class OrderDto {
             }
             throw new ApiException(res);
         }
-
-
+        createOrder(orderForm);
+    }
+    private void createOrder(List<OrderItem> orderForm) throws ApiException {
         // 2) Create new Order.
         OrderPojo orderPojo = new OrderPojo();
         LocalDateTime now = LocalDateTime.now();
@@ -69,14 +65,14 @@ public class OrderDto {
         // 3) Add order Items in database.
         orderService.addOrderItems(orderForm, orderPojo.getId());
 
-
         // 4) Reduce Items from inventory
         for (OrderItem orderItem : orderForm) {
-            int prod_id = productService.extractProductId(orderItem.getBarCode());
-//            todo change varible names
-            inventoryService.reduceInventory(orderItem,prod_id);
+            int productId = productService.extractProductId(orderItem.getBarCode());
+//            todo change variable names
+            inventoryService.reduceInventory(orderItem,productId);
         }
     }
+
     private void checkInventory(OrderItem orderItem, List<String> errorMessages) throws ApiException {
         ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
         if(productPojo==null)
@@ -114,5 +110,36 @@ public class OrderDto {
         }
         return list2;
     }
+
+    public void addBulk(List<OrderItem> orderForm) throws ApiException {
+        JSONArray array = new JSONArray();
+        Validate.ValidateOrderFormForBulkAdd(orderForm, array);
+        checkInventoryForBulk(orderForm, array);
+        checkDuplicateOrderItem(orderForm,array);
+
+
+        if (array.length() != 0) {
+            throw new ApiException(array.toString());
+        }
+        createOrder(orderForm);
+    }
+
+    private void checkInventoryForBulk(List<OrderItem> orderItems, JSONArray array){
+        for(OrderItem orderItem:orderItems)
+        {
+            ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
+            if(productPojo==null)
+            {
+                createOrderErrorobject(orderItem,array);
+            }
+
+            InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
+            if(inventoryPojo==null || inventoryPojo.getQuantity()<orderItem.getQuantity())
+            {
+                createOrderErrorobject(orderItem,array);
+            }
+        }
+    }
+
 
 }

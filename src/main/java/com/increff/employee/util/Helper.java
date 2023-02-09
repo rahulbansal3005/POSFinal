@@ -37,15 +37,15 @@ public class Helper {
         array.put(obj1);
 
     }
-    public static void createOrderErrorobject(List<OrderItem> orderItems ,JSONArray array) {
-        for(OrderItem orderItem:orderItems)
-        {
+    public static void createOrderErrorobject(OrderItem orderItem ,JSONArray array) {
+//        for(OrderItem orderItem:orderItems)
+//        {
             JSONObject obj1 = new JSONObject();
             obj1.put("barcode", orderItem.getBarCode());
             obj1.put("quantity", orderItem.getQuantity());
             obj1.put("selling Price", orderItem.getSellingPrice());
             array.put(obj1);
-        }
+//        }
     }
 
     public static Authentication convertUserPojoToAuthentication(UserPojo userPojo) {

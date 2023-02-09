@@ -25,21 +25,22 @@ public class Validate {
     }
 
     public static void checkOrderItem(OrderItem orderItem, List<String> errorMessages) {
-//		if(orderItem.getQuantity()==null)
-//			throw new ApiException("Entered Quantity is not right");
-//		if(orderItem.getSellingPrice()==null)
-//			throw new ApiException("Entered Quantity is not right");
-        if (orderItem.getQuantity() < 0) {
+        if(isEmpty(orderItem.getBarCode()))
+        {
+            String error = "BarCode can not be empty" + orderItem.getBarCode();
+            errorMessages.add(error);
+        }
+        if (orderItem.getQuantity()==null || orderItem.getQuantity() < 0) {
             String error = "Invalid quantity of product with BarCode " + orderItem.getBarCode();
             errorMessages.add(error);
         }
-        if (orderItem.getSellingPrice() < 0) {
+        if (orderItem.getSellingPrice()==null || orderItem.getSellingPrice() < 0) {
             String error = "Invalid Selling Price of product with BarCode " + orderItem.getBarCode();
             errorMessages.add(error);
         }
     }
 
-    public static void ContainDuplicates(OrderItem[] orderForm, List<String> errorMessages) {
+    public static void ContainDuplicates(List<OrderItem> orderForm, List<String> errorMessages) {
         Map<String, Integer> map = new HashMap<>();
         for (OrderItem orderItem : orderForm) {
             if (map.containsKey(orderItem.getBarCode())) {
@@ -178,6 +179,17 @@ public class Validate {
         if(inventoryForm.getQuantity()==null || inventoryForm.getQuantity()<=0)
         {
             createInventoryErrorobject(inventoryForm, array);
+        }
+    }
+
+    public static void ValidateOrderFormForBulkAdd(List<OrderItem> orderForm, JSONArray array) {
+        for(OrderItem orderItem: orderForm)
+        {
+            if(isEmpty(orderItem.getBarCode()) || orderItem.getQuantity()==null || orderItem.getQuantity() < 0
+                    || orderItem.getSellingPrice()==null || orderItem.getSellingPrice() < 0)
+            {
+                createOrderErrorobject(orderItem,array);
+            }
         }
     }
 }
