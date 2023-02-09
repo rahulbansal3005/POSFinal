@@ -1,0 +1,60 @@
+package com.increff.pos.dto;
+
+import com.increff.pos.model.Data.PdfData;
+import com.increff.pos.model.Data.PdfListData;
+import com.increff.pos.pojo.OrderItemPojo;
+import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.service.ApiException;
+import com.increff.pos.service.OrderItemService;
+import com.increff.pos.service.OrderService;
+import com.increff.pos.service.ProductService;
+import com.increff.pos.util.Helper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Service
+public class PdfDto {
+    @Autowired
+    private OrderItemService orderItemService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
+    public PdfData get(int id) throws ApiException {
+        List<OrderItemPojo> orderItemPojoList = orderItemService.getAllByOrderId(id);
+        if(orderItemPojoList.size()==0)
+            throw new ApiException("no order items present in order to place");
+
+        PdfData pdfData = new PdfData();
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now + "OrderDTO  now");
+//        orderPojo.setDate(now);
+        orderService.update(id,now);
+        List<PdfListData> pdfListData = new ArrayList<>();
+        Integer c = 0;
+        Double total = 0.0;
+        for (OrderItemPojo orderItemPojo : orderItemPojoList) {
+            c++;
+            ProductPojo productPojo = productService.get(orderItemPojo.getProductId());
+            total +=Helper.convertOrderItemPojoToPdfData(orderItemPojo,pdfListData,pdfData,c,productPojo);
+        }
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = LocalDateTime.now().format(date);
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = LocalDateTime.now().format(time);
+        pdfData.setInvoiceTime(formattedTime);
+        pdfData.setInvoiceDate(formattedDate);
+        pdfData.setOrderId(id);
+        pdfData.setTotal(total);
+        pdfData.setItemList(pdfListData);
+        return pdfData;
+    }
+}
