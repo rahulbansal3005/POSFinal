@@ -100,6 +100,53 @@ function deleteInventory(id) {
   });
 }
 
+//UI DISPLAY METHODS
+
+function displayInventoryList(data) {
+  var $tbody = $("#inventory-table").find("tbody");
+  $tbody.empty();
+  let index=1;
+  for (var i in data) {
+    var e = data[i];
+    // console.log(e);
+    var buttonHtml =
+        // '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
+        // buttonHtml +=
+        ' <button type="button" class="btn btn-secondary" onclick="displayEditInventory(' + e.id + ')">Edit</button>';
+    var row =
+        "<tr>" +
+        "<td>" +
+        index++ +
+        "</td>" +
+        "<td>" +
+        e.barcode +
+        "</td>" +
+        "<td>" +
+        e.quantity +
+        "</td>" +
+        "<td>" +
+        buttonHtml +
+        "</td>" +
+        "</tr>";
+    $tbody.append(row);
+  }
+}
+
+function displayEditInventory(id) {
+  var url = getInventoryUrl() + "/" + id;
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      displayInventory(data);
+    },
+    error: handleAjaxError,
+  });
+}
+
+
+
+
 // FILE UPLOAD METHODS
 var fileData = [];
 var errorData = [];
@@ -119,16 +166,16 @@ function uploadRows() {
   //Update progress
   updateUploadDialog();
   //If everything processed then return
-  if (processCount == fileData.length) {
-    return;
-  }
+  // if (processCount == fileData.length) {
+  //   return;
+  // }
 
   //Process next row
-  var row = fileData[processCount];
-  processCount++;
+  // var row = fileData[processCount];
+  // processCount++;
 
-  var json = JSON.stringify(row);
-  var url = getInventoryUrl();
+  var json = JSON.stringify(fileData);
+  var url = getInventoryUrl()+ "-bulk";
 
   //Make ajax call
   $.ajax({
@@ -138,63 +185,43 @@ function uploadRows() {
     headers: {
       "Content-Type": "application/json",
     },
-    success: function (response) {
-      uploadRows();
+    // success: function (response) {
+    //   uploadRows();
+    // },
+    // error: function (response) {
+    //   row.error = response.responseText;
+    //   errorData.push(row);
+    //   uploadRows();
+    // },
+    success:function (response){
+      console.log(response);
+      getInventoryList();
     },
-    error: function (response) {
-      row.error = response.responseText;
-      errorData.push(row);
-      uploadRows();
-    },
+    error: function (response){
+      // console.log(response);
+      // for(var i in response)
+      // {
+      //     errorData.push(i);
+      // }
+      if(response.status == 403){
+        // toastr.error("403 Forbidden");
+        frontendChecks("403")
+      }
+      else {
+        var resp = JSON.parse(response.responseText);
+        var jsonObj = JSON.parse(resp.message);
+        console.log(jsonObj);
+        errorData = jsonObj;
+        console.log(response);
+        toastr.error("Error in uploading TSV file, Download Error File");
+        $("#download-errors").prop('disabled', false);
+      }
+    }
   });
 }
 
 function downloadErrors() {
   writeFileData(errorData);
-}
-
-//UI DISPLAY METHODS
-
-function displayInventoryList(data) {
-  var $tbody = $("#inventory-table").find("tbody");
-  $tbody.empty();
-  let index=1;
-  for (var i in data) {
-    var e = data[i];
-    // console.log(e);
-    var buttonHtml =
-      // '<button type="button" class="btn btn-secondary" onclick="deleteInventory(' + e.id + ')">Delete</button>';
-    // buttonHtml +=
-      ' <button type="button" class="btn btn-secondary" onclick="displayEditInventory(' + e.id + ')">Edit</button>';
-    var row =
-      "<tr>" +
-      "<td>" +
-      index++ +
-      "</td>" +
-      "<td>" +
-      e.barcode +
-      "</td>" +
-      "<td>" +
-      e.quantity +
-      "</td>" +
-      "<td>" +
-      buttonHtml +
-      "</td>" +
-      "</tr>";
-    $tbody.append(row);
-  }
-}
-
-function displayEditInventory(id) {
-  var url = getInventoryUrl() + "/" + id;
-  $.ajax({
-    url: url,
-    type: "GET",
-    success: function (data) {
-      displayInventory(data);
-    },
-    error: handleAjaxError,
-  });
 }
 
 function resetUploadDialog() {

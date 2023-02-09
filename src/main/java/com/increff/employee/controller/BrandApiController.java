@@ -73,7 +73,6 @@ public class BrandApiController {
     @ApiOperation(value = "Upload brands-category in bulk")
     @RequestMapping(path = "/api/brand-bulk", method = RequestMethod.POST)
     public void addInBulk(@RequestBody BrandForm[] brandForms) throws ApiException {
-        System.out.println("bulk called");
         dto.bulkAdd(brandForms);
     }
 

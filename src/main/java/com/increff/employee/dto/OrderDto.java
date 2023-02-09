@@ -31,32 +31,35 @@ public class OrderDto {
     @Autowired
     private OrderService orderService;
 
+//    todo add transctional
     public void add(OrderItem[] orderForm) throws ApiException {
-//        1) Validate all the Order Items in our inventory.
+
+
+//        todo reduce function size
         List<String> errorMessages = new ArrayList<>();
-        Validate.ContainDuplicates(orderForm, errorMessages);
 
         for (OrderItem orderItem : orderForm) {
             Validate.checkOrderItem(orderItem, errorMessages);
             checkInventory(orderItem, errorMessages);
         }
 
+//        1) Validate all the Order Items in inventory.
+        Validate.ContainDuplicates(orderForm, errorMessages);
+
+
         if (errorMessages.size() != 0) {
             String res="";
             int index=1;
             for (String s : errorMessages) {
                 System.out.println(s);
-                res+=index++;
-                res+="). ";
-                res+=s;
-                res+="\r\n";
+                res+=index++ + "). " + s + "\r\n";
             }
             throw new ApiException(res);
         }
 
 
         // 2) Create new Order.
-        OrderPojo orderPojo = convertOrderFormToOrder();
+        OrderPojo orderPojo = new OrderPojo();
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now + "OrderDTO  now");
         orderPojo.setDate(now);
@@ -69,11 +72,12 @@ public class OrderDto {
 
         // 4) Reduce Items from inventory
         for (OrderItem orderItem : orderForm) {
-            int prod_id = productService.extractProd_Id(orderItem.getBarCode());
+            int prod_id = productService.extractProductId(orderItem.getBarCode());
+//            todo change varible names
             inventoryService.reduceInventory(orderItem,prod_id);
         }
     }
-    public void checkInventory(OrderItem orderItem, List<String> errorMessages) throws ApiException {
+    private void checkInventory(OrderItem orderItem, List<String> errorMessages) throws ApiException {
         ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
         if(productPojo==null)
         {

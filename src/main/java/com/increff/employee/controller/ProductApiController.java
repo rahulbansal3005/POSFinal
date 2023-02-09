@@ -52,4 +52,10 @@ public class ProductApiController {
     public void update(@PathVariable Integer id, @RequestBody ProductForm productForm) throws ApiException {
         dto.update(id, productForm);
     }
+
+    @ApiOperation(value = "Adds Product in bulk")
+    @RequestMapping(path = "/api/product-bulk", method = RequestMethod.POST)
+    public void addBulk(@RequestBody ProductForm[] productForms) throws ApiException {
+        dto.addBulk(productForms);
+    }
 }

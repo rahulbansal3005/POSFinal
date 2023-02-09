@@ -15,11 +15,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
-    public static void createErrorobject(String brand, String category, JSONArray array) {
+    public static void createBrandErrorobject(String brand, String category, JSONArray array) {
         JSONObject obj1 = new JSONObject();
         obj1.put("brand", brand);
         obj1.put("category", category);
         array.put(obj1);
+    }
+    public static void createProductErrorobject(ProductForm productForm,JSONArray array) {
+        JSONObject obj1 = new JSONObject();
+        obj1.put("barcode", productForm.getBarcode());
+        obj1.put("brand", productForm.getBrand());
+        obj1.put("category", productForm.getCategory());
+        obj1.put("name", productForm.getName());
+        obj1.put("mrp", productForm.getMrp());
+        array.put(obj1);
+    }
+    public static void createInventoryErrorobject(InventoryForm inventoryForm, JSONArray array) {
+        JSONObject obj1 = new JSONObject();
+        obj1.put("barcode", inventoryForm.getBarcode());
+        obj1.put("quantity", inventoryForm.getQuantity());
+        array.put(obj1);
+
+    }
+    public static void createOrderErrorobject(List<OrderItem> orderItems ,JSONArray array) {
+        for(OrderItem orderItem:orderItems)
+        {
+            JSONObject obj1 = new JSONObject();
+            obj1.put("barcode", orderItem.getBarCode());
+            obj1.put("quantity", orderItem.getQuantity());
+            obj1.put("selling Price", orderItem.getSellingPrice());
+            array.put(obj1);
+        }
     }
 
     public static Authentication convertUserPojoToAuthentication(UserPojo userPojo) {
@@ -108,7 +134,6 @@ public class Helper {
 
 
     public static InventoryPojo convertInventoryFormToInventoryPojo(InventoryForm inventoryForm) throws ApiException {
-//        TODO helper cannot use services like productServices.
         InventoryPojo inventoryPojo = new InventoryPojo();
         inventoryPojo.setQuantity(inventoryForm.getQuantity());
         return inventoryPojo;
@@ -134,10 +159,10 @@ public class Helper {
 //        return orderItemPojoList;
 //    }
 
-    public static OrderPojo convertOrderFormToOrder() throws ApiException {
-        OrderPojo orderPojo = new OrderPojo();
-        return orderPojo;
-    }
+//    public static OrderPojo convertOrderFormToOrder() throws ApiException {
+//        OrderPojo orderPojo = new OrderPojo();
+//        return orderPojo;
+//    }
 
     public static OrderData convertOrderPojoToOrderData(OrderPojo orderPojo, List<OrderItem> orderItemList) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -145,7 +170,7 @@ public class Helper {
         OrderData orderData = new OrderData();
         orderData.setId(orderPojo.getId());
         orderData.setDateTime(formattedDateTime);
-        orderData.setC(orderItemList);
+        orderData.setOrderItemList(orderItemList);
         orderData.setStatus(orderPojo.getIsInvoiceGenerated());
         return orderData;
     }

@@ -7,13 +7,12 @@ import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.model.Form.UserForm;
 import com.increff.employee.service.ApiException;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.increff.employee.util.Helper.createErrorobject;
+import static com.increff.employee.util.Helper.*;
 
 public class Validate {
 
@@ -122,14 +121,9 @@ public class Validate {
     }
 
     public static void ValidateBrandFormForBulkAdd(BrandForm brandForm, JSONArray array) {
-        if (Validate.isEmpty(brandForm.getBrand())) {
-            createErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
-//			throw new ApiException("Brand name cannot be null or empty");
+        if (Validate.isEmpty(brandForm.getBrand()) || Validate.isEmpty(brandForm.getCategory())) {
+            createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
 
-        }
-        if (Validate.isEmpty(brandForm.getCategory())) {
-            createErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
-//			throw new ApiException("Category name cannot be null or empty");
         }
     }
 
@@ -139,10 +133,51 @@ public class Validate {
         for (BrandForm brandForm : brandForms) {
             if (map.containsKey(brandForm.getBrand())) {
                 if ((map.get(brandForm.getBrand())).equals(brandForm.getCategory()))
-                    createErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
+                    createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
             } else {
                 map.put(brandForm.getBrand(), brandForm.getCategory());
             }
+        }
+    }
+
+    public static void checkDuplicateProduct(ProductForm[] productForms, JSONArray array) {
+        Map<String,Integer> map = new HashMap<>();
+        for (ProductForm productForm : productForms) {
+            if(map.containsKey(productForm.getBarcode()))
+            {
+                createProductErrorobject(productForm, array);
+            }
+            else{
+                map.put(productForm.getBarcode(), 1);
+            }
+        }
+    }
+    public static void checkDuplicateInventory(List<InventoryForm> inventoryForms, JSONArray array) {
+
+    }
+
+    public static void checkDuplicateOrderItem(List<OrderItem> orderItems, JSONArray array) {
+    }
+
+    public static void ValidateProductFormForBulkAdd(ProductForm productForm, JSONArray array) {
+        if (Validate.isEmpty(productForm.getBrand()) || Validate.isEmpty(productForm.getCategory()) ||
+                Validate.isEmpty(productForm.getBarcode()) || Validate.isEmpty(productForm.getName())) {
+            createProductErrorobject(productForm, array);
+        }
+        if(productForm.getMrp()==null || productForm.getMrp()<=0)
+        {
+            createProductErrorobject(productForm, array);
+        }
+    }
+
+
+    public static void ValidateInventoryFormForBulkAdd(InventoryForm inventoryForm, JSONArray array) {
+        if (Validate.isEmpty(inventoryForm.getBarcode()) ) {
+            createInventoryErrorobject(inventoryForm, array);
+        }
+        if(inventoryForm.getQuantity()==null || inventoryForm.getQuantity()<=0)
+        {
+            createInventoryErrorobject(inventoryForm, array);
         }
     }
 }

@@ -13,7 +13,7 @@ import com.increff.employee.dao.BrandDao;
 import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
 
-import static com.increff.employee.util.Helper.createErrorobject;
+import static com.increff.employee.util.Helper.createBrandErrorobject;
 
 @Service
 public class BrandService {
@@ -142,6 +142,12 @@ public class BrandService {
     public void getByNameCategoryForBulk(String brand, String category, JSONArray array) {
         BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
         if(brandPojo!=null)
-            createErrorobject(brand,category,array);
+            createBrandErrorobject(brand,category,array);
+    }
+
+    public void checkForNameCategoryForBulk(String brand, String category, JSONArray array) {
+        BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
+        if(brandPojo==null)
+            createBrandErrorobject(brand,category,array);
     }
 }

@@ -2,7 +2,6 @@ package com.increff.employee.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,10 +34,6 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void addOrder(OrderPojo p) throws ApiException {
-        // normalize(p);
-        // if (StringUtil.isEmpty(p.getName())) {
-        // throw new ApiException("name cannot be empty");
-        // }
         orderDao.insert(p);
     }
 
@@ -49,21 +44,21 @@ public class OrderService {
         for(OrderItem orderItem:orderForm)
         {
 //            TODO remove extractProdID
+//            todo shift convert functions to dto
+
             OrderItemPojo orderItemPojo= convertOrderItemToOrderItemPojo(orderItem,orderId);
-            orderItemPojo.setProductId(ps.extractProd_Id(orderItem.getBarCode()));
+            orderItemPojo.setProductId(ps.extractProductId(orderItem.getBarCode()));
             orderItemPojoList.add(orderItemPojo);
         }
         add(orderItemPojoList);
     }
 
+
+//    todo rollbackfor
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<OrderItemPojo> orderItemPojoList) throws ApiException {
-        // normalize(p);
-        // if (StringUtil.isEmpty(p.getName())) {
-        // throw new ApiException("name cannot be empty");
-        // }
+
         for (OrderItemPojo orderItemPojo : orderItemPojoList) {
-            System.out.println(orderItemPojo);
             orderItemDao.insert(orderItemPojo);
         }
     }
@@ -163,7 +158,7 @@ public class OrderService {
     }
 
     public void findingError(OrderForm form, HashMap<String, Integer> errors) {
-        for (OrderItem f : form.getC()) {
+        for (OrderItem f : form.getOrderItemList()) {
             String bc = f.getBarCode();
             int quant = f.getQuantity();
             ps.checker(bc, quant, errors);

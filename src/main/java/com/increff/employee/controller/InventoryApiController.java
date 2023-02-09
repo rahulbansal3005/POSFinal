@@ -54,6 +54,12 @@ public class InventoryApiController {
         dto.update(id, inventoryForm);
     }
 
+    @ApiOperation(value = "Adds an inventory")
+    @RequestMapping(path = "/api/inventory-bulk", method = RequestMethod.POST)
+    public void addBulk(@RequestBody List<InventoryForm> inventoryForm) throws ApiException {
+        dto.addBulk(inventoryForm);
+    }
+
 
 
 }

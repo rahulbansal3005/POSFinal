@@ -91,6 +91,8 @@ public class InventoryService {
         return inventoryPojo;
     }
 
+//    todo merge update and reduce inventory.
+
     @Transactional(rollbackOn = ApiException.class)
     public void reduceInventory(OrderItem orderItem, int prod_id)
     {

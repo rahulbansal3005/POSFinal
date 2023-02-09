@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.increff.employee.model.Form.ProductForm;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.ProductDao;
 import com.increff.employee.pojo.ProductPojo;
+
+import static com.increff.employee.util.Helper.createProductErrorobject;
 
 @Service
 public class ProductService {
@@ -52,7 +56,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductPojo getCheck(String barCode) throws ApiException {
+    public ProductPojo getCheck(String barCode) {
         ProductPojo productPojo = productDao.select_barcode(barCode);
         if (productPojo == null) {
             return null;
@@ -75,13 +79,16 @@ public class ProductService {
 
 
     @Transactional
-    public int extractProd_Id(String barCode) throws ApiException {
-        ProductPojo p = productDao.select_barcode(barCode);
-        if (p == null) {
+    public int extractProductId(String barCode) throws ApiException {
+//        todo make select strings CAPITAL
+        ProductPojo productPojo = productDao.select_barcode(barCode);
+        if (productPojo == null) {
             throw new ApiException("Product does not exist in the Product List");
         }
-        return p.getId();
+        return productPojo.getId();
     }
+
+//    todo productpojo p
 
     @Transactional
     public String extractBarCode(Integer prodID) throws ApiException {
@@ -104,5 +111,14 @@ public class ProductService {
             }
         }
     }
-
+    public void getCheckProductsInBulk(ProductForm[] productForms, JSONArray array) {
+        for(ProductForm productForm:productForms)
+        {
+            ProductPojo productPojo=getCheck(productForm.getBarcode());
+            if(productPojo!=null)
+            {
+                createProductErrorobject(productForm,array);
+            }
+        }
+    }
 }

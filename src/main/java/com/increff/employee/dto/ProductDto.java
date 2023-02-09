@@ -1,12 +1,15 @@
 package com.increff.employee.dto;
 
 import com.increff.employee.model.Data.ProductData;
+import com.increff.employee.model.Form.BrandForm;
 import com.increff.employee.model.Form.ProductForm;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
 import com.increff.employee.service.ProductService;
+import com.increff.employee.util.Normalize;
 import com.increff.employee.util.Validate;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,4 +77,28 @@ public class ProductDto {
         productService.update(id, productForm.getName(),productForm.getMrp());
     }
 
+    public void addBulk(ProductForm[] productForms) throws ApiException {
+            JSONArray array = new JSONArray();
+
+//        Check for duplicates in the list.
+            Validate.checkDuplicateProduct(productForms,array);
+//        Check barcodes in DB
+        productService.getCheckProductsInBulk(productForms,array);
+            for(ProductForm productForm:productForms)
+            {
+                Validate.ValidateProductFormForBulkAdd(productForm,array);
+                Normalize.NormalizeProductFormForbulkAdd(productForm);
+//                check brand and category name in db
+                brandService.checkForNameCategoryForBulk(productForm.getBrand(),productForm.getCategory(),array);
+            }
+            if(array.length()!=0)
+            {
+                throw new ApiException(array.toString());
+            }
+            for(ProductForm productForm:productForms)
+            {
+                add(productForm);
+            }
+
+    }
 }

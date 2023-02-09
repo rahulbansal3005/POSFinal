@@ -26,7 +26,10 @@
  				.and().authorizeRequests()//
  				.antMatchers("/api/admin/**").hasAuthority("supervisor")//
 				.antMatchers("/api/brand-bulk").hasAuthority("supervisor")//
- 				.antMatchers("/api/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers("/api/product-bulk").hasAuthority("supervisor")//
+				.antMatchers("/api/inventory-bulk").hasAuthority("supervisor")//
+				.antMatchers("/api/order-bulk").hasAuthority("supervisor")//
+				.antMatchers("/api/**").hasAnyAuthority("supervisor", "operator")//
  				.antMatchers("/ui/admin/**").hasAuthority("supervisor")//
  				.antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
  				// Ignore CSRF and CORS

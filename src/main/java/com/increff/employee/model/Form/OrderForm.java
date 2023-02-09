@@ -9,5 +9,5 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderForm {
-    private List<OrderItem> c;
+    private List<OrderItem> orderItemList;
 }
