@@ -10,29 +10,60 @@
 
 <div class="container">
 
-<h3>Home</h3>
+<!--<h3>Home</h3>-->
 
  <!-- Top row with form-->
-<div class="row">
+<div class="row p-5 d-flex justify-content-center">
 	 <div class="col-2">
-	 	<a th:href="@{/ui/brand}" title="Brands"> <i class="fas fa-users"></i> </a>
-		 <h4>Brands</h4>
+	 	<a class="d-flex justify-content-center p-2" th:href="@{/ui/brand}" title="Brands"> <i class="fas fa-industry"></i></a>
+		 <h4 class="d-flex justify-content-center">Brands</h4>
 	 </div>	
 	 <div class="col-2">
-	 	<a th:href="@{/ui/products}" title="Products"> <i class="fas fa-users"></i> </a>
-		 <h4>Products</h4>
+	 	<a class="d-flex justify-content-center p-2" th:href="@{/ui/products}" title="Products"> <i class="fas fa-box"></i> </a>
+		 <h4 class="d-flex justify-content-center">Products</h4>
 
 	 </div>	
 	 <div class="col-2">
-		<a th:href="@{/ui/inventory}" title="Inventory"> <i class="fas fa-users"></i> </a>
-		<h4>Inventory</h4>
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/inventory}" title="Inventory"> <i class="fas fa-warehouse"></i> </a>
+		<h4 class="d-flex justify-content-center" >Inventory</h4>
 
 	</div>	
 	<div class="col-2">
-		<a th:href="@{/ui/customer}" title="Customer"> <i class="fas fa-users"></i> </a>
-		<h4>Order</h4>
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/order}" title="Order"> <i class="fas fa-shopping-cart"></i> </a>
+		<h4 class="d-flex justify-content-center">Order</h4>
 
-	</div>	
+	</div>
+
+	<div class="col-2">
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/report/inventoryReport}" title="Inventory Report"> <i class="fas fa-clipboard-list fa-3x"></i> </a>
+		<h4 class="d-flex justify-content-center" >Inventory </h4>
+		<h4 class="d-flex justify-content-center" >Report</h4>
+	</div>
+
+	<div class="col-2">
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/report/brandReport}" title="Brand Report"> <i class="fas fa-chart-line"></i> </a>
+		<h4 class="d-flex justify-content-center">Brand</h4>
+		<h4 class="d-flex justify-content-center">Report</h4>
+	</div>
+
+	<div class="col-2">
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/report/salesReport}" title="Sales Report"> <i class="fas fa-file-invoice"></i> </a>
+		<h4 class="d-flex justify-content-center">Sales Report</h4>
+
+	</div>
+
+	<div class="col-2">
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/report/dailySalesReport}" title="Daily Sales Report"> <i class="fas fa-file-alt"></i> </a>
+		<h4 class="d-flex justify-content-center">Daily Sales</h4>
+		<h4 class="d-flex justify-content-center">Report</h4>
+	</div>
+
+
+	<div class="col-2">
+		<a class="d-flex justify-content-center p-2" th:href="@{/ui/admin}" title="Admin"> <i class="fas fa-user-cog"></i></a>
+		<h4 class="d-flex justify-content-center">Admin</h4>
+
+	</div>
 </div> 
 
 
