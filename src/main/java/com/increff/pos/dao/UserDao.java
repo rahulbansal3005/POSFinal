@@ -2,6 +2,8 @@ package com.increff.pos.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -18,10 +20,12 @@ public class UserDao extends AbstractDao {
 	private static String select_email = "select p from UserPojo p where email=:email";
 	private static String select_all = "select p from UserPojo p";
 
+	@PersistenceContext
+	private EntityManager em;
 	
 	@Transactional
 	public void insert(UserPojo p) {
-		em().persist(p);
+		em.persist(p);
 	}
 
 	public int delete(int id) {
