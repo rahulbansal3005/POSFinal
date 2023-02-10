@@ -9,15 +9,15 @@ public class Normalize {
 
 
     public static void NormalizeBrandFormForbulkAdd(BrandForm brandForm){
-        normalize(brandForm);
+        normalizeBrandForm(brandForm);
     }
 
-    public static void normalize(BrandForm brandForm) {
+    public static void normalizeBrandForm(BrandForm brandForm) {
         brandForm.setBrand(Validate.toLowerCase(brandForm.getBrand()));
         brandForm.setCategory(Validate.toLowerCase(brandForm.getCategory()));
     }
 
-    public static void normalize(ProductForm productForm) {
+    public static void normalizeProductForm(ProductForm productForm) {
         productForm.setName(Validate.toLowerCase(productForm.getName()));
         productForm.setCategory(Validate.toLowerCase(productForm.getCategory()));
         productForm.setBrand(Validate.toLowerCase(productForm.getBrand()));
@@ -25,16 +25,16 @@ public class Normalize {
         productForm.setMrp(val);
     }
 
-     public static void normalize(InventoryForm inventoryForm) {
+     public static void normalizeInventoryForm(InventoryForm inventoryForm) {
      inventoryForm.setBarcode(Validate.toLowerCase(inventoryForm.getBarcode()));
      }
 
-    public static void normalize(UserForm userForm) {
+    public static void normalizeUserForm(UserForm userForm) {
         userForm.setEmail(userForm.getEmail().toLowerCase().trim());
 //        userForm.setRole(userForm.getRole().toLowerCase().trim());
     }
 
     public static void NormalizeProductFormForbulkAdd(ProductForm productForm) {
-        normalize(productForm);
+        normalizeProductForm(productForm);
     }
 }

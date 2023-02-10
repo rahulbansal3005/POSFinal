@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.pos.util.Normalize.normalize;
 import static com.increff.pos.util.Helper.convertProductFormToProductPojo;
 import static com.increff.pos.util.Helper.convertProductPojoToProductData;
 import static com.increff.pos.util.Validate.validateproductFormonAdd;
@@ -30,7 +29,7 @@ public class ProductDto {
 
     public void add(ProductForm productForm) throws ApiException {
         validateproductFormonAdd(productForm);
-        normalize(productForm);
+        Normalize.normalizeProductForm(productForm);
         ProductPojo productPojo=productService.getCheck(productForm.getBarcode());
         if(productPojo!=null)
             throw new ApiException("Barcode already present");
@@ -70,7 +69,7 @@ public class ProductDto {
 
     public void update(Integer id, ProductForm productForm) throws ApiException {
         Validate.validateProductFormOnUpdate(productForm);
-        normalize(productForm);
+        Normalize.normalizeProductForm(productForm);
 //        ProductPojo productPojo = convertProductFormToProductPojo(productForm);
 
         productService.update(id, productForm.getName(),productForm.getMrp());

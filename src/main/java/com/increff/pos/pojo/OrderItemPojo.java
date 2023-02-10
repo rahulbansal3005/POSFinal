@@ -16,7 +16,7 @@ public class OrderItemPojo {
     @Id
     @GeneratedValue(generator = "sequence-generator")
     @GenericGenerator(name = "sequence-generator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-            @Parameter(name = "sequence_name", value = "user_sequence"),
+            @Parameter(name = "sequence_name", value = "user_sequence2"),
             @Parameter(name = "initial_value", value = "100001"),
             @Parameter(name = "increment_size", value = "1")
     })

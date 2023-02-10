@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.pos.util.Normalize.normalize;
+import static com.increff.pos.util.Normalize.normalizeUserForm;
 
 @Service
 public class AdminDto {
@@ -22,7 +22,7 @@ public class AdminDto {
     private UserService userService;
     public void add(UserForm userForm) throws ApiException {
         Validate.validateUserForm(userForm);
-        normalize(userForm);
+        normalizeUserForm(userForm);
         UserPojo userPojo = Helper.convertUserFormToUserPojo(userForm);
         userService.add(userPojo);
     }

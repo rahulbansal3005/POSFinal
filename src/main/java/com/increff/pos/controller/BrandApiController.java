@@ -25,7 +25,6 @@ public class BrandApiController {
 
     @Autowired
     private BrandDto dto;
-
     @ApiOperation(value = "Adds a Brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.POST)
     public void add(@RequestBody BrandForm brandForm) throws ApiException {
@@ -72,7 +71,7 @@ public class BrandApiController {
 
     @ApiOperation(value = "Upload brands-category in bulk")
     @RequestMapping(path = "/api/brand-bulk", method = RequestMethod.POST)
-    public void addInBulk(@RequestBody BrandForm[] brandForms) throws ApiException {
+    public void addInBulk(@RequestBody List<BrandForm> brandForms) throws ApiException {
         dto.bulkAdd(brandForms);
     }
 

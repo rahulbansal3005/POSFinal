@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.increff.pos.dao.UserDao;
 import com.increff.pos.pojo.UserPojo;
 
-import static com.increff.pos.util.Normalize.normalize;
-
 @Service
 public class UserService {
 

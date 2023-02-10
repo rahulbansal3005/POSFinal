@@ -129,7 +129,7 @@ public class Validate {
     }
 
 
-    public static void checkDuplicateBrandform(BrandForm[] brandForms, JSONArray array) {
+    public static void checkDuplicateBrandform(List<BrandForm> brandForms, JSONArray array) {
         Map<String, String> map = new HashMap<>();
         for (BrandForm brandForm : brandForms) {
             if (map.containsKey(brandForm.getBrand())) {

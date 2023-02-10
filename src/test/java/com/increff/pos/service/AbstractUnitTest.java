@@ -2,7 +2,9 @@ package com.increff.pos.service;
 
 import javax.transaction.Transactional;
 
+import com.increff.pos.dto.BrandDto;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
