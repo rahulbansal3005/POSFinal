@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -79,6 +80,48 @@ public class BrandDtoTest extends AbstractUnitTest {
         assertEquals(id, brandDataUpdated.getId());
         assertEquals(brandForm1.getBrand(), brandDataUpdated.getBrand());
         assertEquals(brandForm1.getCategory(), brandDataUpdated.getCategory());
+    }
+    @Test
+    public void testBulkAdd() throws ApiException{
+        List<BrandForm> brandForms=new ArrayList<>();
+        for(int i=0;i<5;i++)
+        {
+            BrandForm brandForm = new BrandForm();
+            brandForm.setCategory("shoes"+i);
+            brandForm.setBrand("adidas"+i);
+            brandForms.add(brandForm);
+        }
+        brandDto.bulkAdd(brandForms);
+
+        List<BrandData> brandDataList = brandDto.getAll();
+        assertEquals(5, brandDataList.size());
+
+    }
+
+    @Test
+    public void testGetUniqueBrandsAndCategory() throws ApiException {
+        List<BrandForm> brandForms=new ArrayList<>();
+        for(int i=0;i<5;i++)
+        {
+            BrandForm brandForm = new BrandForm();
+            brandForm.setCategory("shoes"+i);
+            brandForm.setBrand("adidas"+i);
+            brandForms.add(brandForm);
+        }
+        brandDto.bulkAdd(brandForms);
+        List<String> stringList=brandDto.getAllUniqueBrands();
+        assertEquals(5, stringList.size());
+//        for(int i=0;i<5;i++)
+//        {
+//            BrandForm brandForm = new BrandForm();
+//            brandForm.setCategory("shoes"+i);
+//            brandForm.setBrand("adidas");
+//            brandForms.add(brandForm);
+//        }
+//        brandDto.bulkAdd(brandForms);
+//
+        List<String> stringList1=brandDto.getCategory("adidas1");
+        assertEquals(1, stringList1.size());
     }
 
 }
