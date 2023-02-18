@@ -1,19 +1,22 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.model.Data.BrandData;
 import com.increff.pos.model.Data.InventoryData;
 import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.model.Form.InventoryForm;
 import com.increff.pos.model.Form.ProductForm;
+import com.increff.pos.service.AbstractUnitTest;
 import com.increff.pos.service.ApiException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-public class InventoryDtoTest  extends AdminDtoTest{
+public class InventoryDtoTest  extends AbstractUnitTest {
     @Autowired
     private InventoryDto inventoryDto;
 
@@ -33,7 +36,7 @@ public class InventoryDtoTest  extends AdminDtoTest{
             inventoryDto.add(inventoryForm);
         }
         catch(ApiException e) {
-            assertEquals("Product with given barcode does not exist, barcode: a", e.getMessage());
+            assertEquals("Product does not exist in the Product List", e.getMessage());
         }
         BrandForm brandForm = new BrandForm();
         brandForm.setBrand("b");
@@ -51,7 +54,8 @@ public class InventoryDtoTest  extends AdminDtoTest{
 
         InventoryData inventoryData = inventoryDto.getAll().get(0);
         assertEquals("a", inventoryData.getBarcode());
-        assertEquals(Optional.of(49), inventoryData.getQuantity());
+        Integer expected=49;
+        assertEquals(expected, inventoryData.getQuantity());
     }
 
     @Test
@@ -121,8 +125,46 @@ public class InventoryDtoTest  extends AdminDtoTest{
         inventoryDto.update(id, inventoryForm1);
 
         InventoryData inventoryDataUpdated = inventoryDto.getAll().get(0);
-        assertEquals(Optional.of(id), inventoryDataUpdated.getId());
+        Integer expectedid=id;
+        assertEquals(expectedid, inventoryDataUpdated.getId());
         assertEquals(inventoryForm1.getBarcode(), inventoryDataUpdated.getBarcode());
         assertEquals(inventoryForm1.getQuantity(), inventoryDataUpdated.getQuantity());
+    }
+
+
+    @Test
+    public void testBulkAdd() throws ApiException{
+        List<InventoryForm> inventoryForms=new ArrayList<>();
+        for(int i=0;i<5;i++)
+        {
+            InventoryForm inventoryForm = new InventoryForm();
+            inventoryForm.setBarcode("a"+i);
+            inventoryForm.setQuantity(49+i);
+            try{
+                inventoryDto.add(inventoryForm);
+            }
+            catch(ApiException e) {
+                assertEquals("Product does not exist in the Product List", e.getMessage());
+            }
+            BrandForm brandForm = new BrandForm();
+            brandForm.setBrand("b"+i);
+            brandForm.setCategory("c"+i);
+            brandDto.add(brandForm);
+
+            ProductForm productForm = new ProductForm();
+            productForm.setBarcode("a"+i);
+            productForm.setBrand("b"+i);
+            productForm.setCategory("c"+i);
+            productForm.setName("d"+i);
+            productForm.setMrp(1.00);
+            productDto.add(productForm);
+
+            inventoryForms.add(inventoryForm);
+        }
+        inventoryDto.addBulk(inventoryForms);
+
+        List<BrandData> brandDataList = brandDto.getAll();
+        assertEquals(5, brandDataList.size());
+
     }
 }

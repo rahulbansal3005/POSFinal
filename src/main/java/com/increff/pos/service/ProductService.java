@@ -111,7 +111,7 @@ public class ProductService {
             }
         }
     }
-    public void getCheckProductsInBulk(ProductForm[] productForms, JSONArray array) {
+    public void getCheckProductsInBulk(List<ProductForm> productForms, JSONArray array) {
         for(ProductForm productForm:productForms)
         {
             ProductPojo productPojo=getCheck(productForm.getBarcode());

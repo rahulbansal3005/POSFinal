@@ -54,9 +54,6 @@ public class ProductDto {
         List<ProductData> productDataList = new ArrayList<ProductData>();
         for (ProductPojo productPojo : productPojoList) {
             ProductData productData =convertProductPojoToProductData(productPojo);
-//            System.out.println(productData.getBrand_category());
-//            System.out.println(brandService.getBrandName(productData.getBrand_category()));
-//            System.out.println(brandService.getCategoryName(productData.getBrand_category()));
 
 
             productData.setBrand(brandService.getBrandName(productData.getBrand_category()));
@@ -75,7 +72,7 @@ public class ProductDto {
         productService.update(id, productForm.getName(),productForm.getMrp());
     }
 
-    public void addBulk(ProductForm[] productForms) throws ApiException {
+    public void addBulk(List<ProductForm> productForms) throws ApiException {
             JSONArray array = new JSONArray();
 
 //        Check for duplicates in the list.

@@ -141,7 +141,7 @@ public class Validate {
         }
     }
 
-    public static void checkDuplicateProduct(ProductForm[] productForms, JSONArray array) {
+    public static void checkDuplicateProduct(List<ProductForm> productForms, JSONArray array) {
         Map<String,Integer> map = new HashMap<>();
         for (ProductForm productForm : productForms) {
             if(map.containsKey(productForm.getBarcode()))

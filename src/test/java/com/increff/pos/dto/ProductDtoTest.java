@@ -9,6 +9,9 @@ import com.increff.pos.util.Validate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class ProductDtoTest extends AbstractUnitTest {
@@ -86,6 +89,72 @@ public class ProductDtoTest extends AbstractUnitTest {
     @Test
     public void testDelete() throws ApiException {
         productDto.delete(1);
+    }
+
+    @Test
+    public void testBulkAdd() throws ApiException{
+        List<ProductForm> productForms=new ArrayList<>();
+        for(int i=0;i<5;i++)
+        {
+            ProductForm productForm = new ProductForm();
+            productForm.setBarcode("a"+i);
+            productForm.setBrand("b"+i);
+            productForm.setCategory("c"+i);
+            productForm.setName("d"+i);
+            productForm.setMrp(1.0);
+            try {
+                productDto.add(productForm);
+            }
+            catch (ApiException e) {
+                assertEquals("Brand-Category combination does not exist ", e.getMessage());
+            }
+
+            BrandForm brandForm = new BrandForm();
+            brandForm.setBrand("b"+i);
+            brandForm.setCategory("c"+i);
+            brandDto.add(brandForm);
+            productForms.add(productForm);
+        }
+        productDto.addBulk(productForms);
+
+        List<ProductData> productDataList = productDto.getAll();
+        assertEquals(5, productDataList.size());
+
+    }
+
+    @Test
+    public void testUpdate() throws ApiException {
+        BrandForm brandForm = new BrandForm();
+        brandForm.setBrand("b");
+        brandForm.setCategory("c");
+        brandDto.add(brandForm);
+
+        ProductForm productForm = new ProductForm();
+        productForm.setBarcode("a");
+        productForm.setBrand("b");
+        productForm.setCategory("c");
+        productForm.setName("d");
+        productForm.setMrp(1.0);
+        productDto.add(productForm);
+
+        int id = productDto.getAll().get(0).getId();
+
+        ProductData productData = productDto.get(id);
+
+        ProductForm productForm1 = new ProductForm();
+        productForm1.setBarcode("a");
+        productForm1.setBrand("b");
+        productForm1.setCategory("c");
+        productForm1.setName("e");
+        productForm1.setMrp(100.004);
+        productDto.update(id, productForm1);
+
+        ProductData productDataUpdated = productDto.getAll().get(0);
+        assertEquals(id, productDataUpdated.getId());
+        assertEquals(productForm1.getBrand(), productDataUpdated.getBrand());
+        assertEquals(productForm1.getMrp(), productDataUpdated.getMrp(), 0.01);
+        assertEquals(productForm1.getBarcode(), productDataUpdated.getBarcode());
+        assertEquals(productForm1.getName(), productDataUpdated.getName());
     }
 
 }
