@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import static com.increff.pos.dto.TestHelper.addInventory;
 import static org.junit.Assert.assertEquals;
 
 public class InventoryDtoTest  extends AbstractUnitTest {
@@ -29,27 +29,15 @@ public class InventoryDtoTest  extends AbstractUnitTest {
 
     @Test
     public void testAdd() throws ApiException {
-        InventoryForm inventoryForm = new InventoryForm();
-        inventoryForm.setBarcode("a");
-        inventoryForm.setQuantity(49);
+        InventoryForm inventoryForm = addInventory("a",49);
         try{
             inventoryDto.add(inventoryForm);
         }
         catch(ApiException e) {
             assertEquals("Product does not exist in the Product List", e.getMessage());
         }
-        BrandForm brandForm = new BrandForm();
-        brandForm.setBrand("b");
-        brandForm.setCategory("c");
-        brandDto.add(brandForm);
-
-        ProductForm productForm = new ProductForm();
-        productForm.setBarcode("a");
-        productForm.setBrand("b");
-        productForm.setCategory("c");
-        productForm.setName("d");
-        productForm.setMrp(1.00);
-        productDto.add(productForm);
+        brandDto.add(TestHelper.brandForm("b","c"));
+        productDto.add(TestHelper.addProduct("a","b","c","d",1.00));
         inventoryDto.add(inventoryForm);
 
         InventoryData inventoryData = inventoryDto.getAll().get(0);
@@ -65,56 +53,20 @@ public class InventoryDtoTest  extends AbstractUnitTest {
 
     @Test
     public void testGetAll() throws ApiException {
-        BrandForm brandForm = new BrandForm();
-        brandForm.setBrand("b");
-        brandForm.setCategory("c");
-        brandDto.add(brandForm);
-
-        ProductForm productForm = new ProductForm();
-        productForm.setBarcode("a");
-        productForm.setBrand("b");
-        productForm.setCategory("c");
-        productForm.setName("d");
-        productForm.setMrp(1.000);
-        productDto.add(productForm);
-
-        productForm.setBarcode("b");
-        productDto.add(productForm);
-
-        InventoryForm inventoryForm = new InventoryForm();
-        inventoryForm.setBarcode("a");
-        inventoryForm.setQuantity(49);
-        inventoryDto.add(inventoryForm);
-
-        InventoryForm inventoryForm1 = new InventoryForm();
-        inventoryForm1.setBarcode("b");
-        inventoryForm1.setQuantity(99);
-        inventoryDto.add(inventoryForm1);
-
+        brandDto.add(TestHelper.brandForm("b","c"));
+        productDto.add(TestHelper.addProduct("a","b","c","d",1.00));
+        productDto.add(TestHelper.addProduct("b","b","c","d",1.00));
+        inventoryDto.add(addInventory("a",49));
+        inventoryDto.add(addInventory("b",99));
         List<InventoryData> inventoryDataList = inventoryDto.getAll();
         assertEquals(2, inventoryDataList.size());
     }
 
     @Test
     public void testUpdate() throws ApiException {
-        BrandForm brandForm = new BrandForm();
-        brandForm.setBrand("b");
-        brandForm.setCategory("c");
-        brandDto.add(brandForm);
-
-        ProductForm productForm = new ProductForm();
-        productForm.setBarcode("a");
-        productForm.setBrand("b");
-        productForm.setCategory("c");
-        productForm.setName("d");
-        productForm.setMrp(1.0);
-        productDto.add(productForm);
-
-        InventoryForm inventoryForm = new InventoryForm();
-        inventoryForm.setBarcode("a");
-        inventoryForm.setQuantity(49);
-        inventoryDto.add(inventoryForm);
-
+        brandDto.add(TestHelper.brandForm("b","c"));
+        productDto.add(TestHelper.addProduct("a","b","c","d",1.00));
+        inventoryDto.add(addInventory("a",49));
         int id = inventoryDto.getAll().get(0).getId();
 
         InventoryData inventoryData = inventoryDto.get(id);

@@ -8,6 +8,7 @@ import com.increff.pos.service.ApiException;
 import com.increff.pos.service.UserService;
 import com.increff.pos.util.Helper;
 import com.increff.pos.util.SecurityUtil;
+import com.increff.pos.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,12 @@ public class SessionDto {
             e.printStackTrace();
         }
         String email = signupForm.getEmail();
+        String pass=signupForm.getPassword();
+        if(Validate.isEmpty(email) )
+            throw new ApiException("Email field is empty");
+
+        if(Validate.isEmpty(pass))
+            throw new ApiException("Password field is empty");
         UserPojo userPojo;
         if (prop.containsKey(email)) {
             userPojo = convertSignupFormToUserPojo(signupForm, "supervisor");
