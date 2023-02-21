@@ -50,14 +50,14 @@ public class BrandService {
         newbrandPojo.setBrand(brandPojo.getBrand());
     }
 
-    public List<BrandPojo> getCategory(String brand) throws ApiException {
+    public List<BrandPojo> getCategory(String brand) {
         return brandDao.getCategory(brand);
     }
     @Transactional(rollbackOn = ApiException.class)
     public BrandPojo getCheck(Integer id) throws ApiException {
         BrandPojo brandPojo = brandDao.select(id);
         if (brandPojo == null) {
-            throw new ApiException("Brand with given ID does not exit, id: " + id);
+            throw new ApiException("Brand with given ID does not exist, id: " + id);
         }
         return brandPojo;
     }
@@ -108,7 +108,7 @@ public class BrandService {
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> getBrandPojosonCategoryName(String category) throws ApiException {
+    public List<BrandPojo> getBrandPojosOnCategoryName(String category) throws ApiException {
         List<BrandPojo> brandPojoList= brandDao.selectByCategory(category);
         if(brandPojoList.size()==0)
             throw new ApiException("Brand-Category Pair does not exist");
@@ -118,7 +118,7 @@ public class BrandService {
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> getBrandPojosonBrandName(String brand) throws ApiException {
+    public List<BrandPojo> getBrandPojosOnBrandName(String brand) throws ApiException {
         List<BrandPojo> brandPojoList= brandDao.selectByBrand(brand);
         if(brandPojoList.size()==0)
             throw new ApiException("Brand-Category Pair does not exist");
@@ -139,6 +139,7 @@ public class BrandService {
         return brandPojo;
     }
 
+//
     public void getByNameCategoryForBulk(String brand, String category, JSONArray array) {
         BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
         if(brandPojo!=null)

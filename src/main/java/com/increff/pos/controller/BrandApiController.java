@@ -19,6 +19,8 @@ import com.increff.pos.service.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+
+//todo add request mapping
 @Api
 @RestController
 public class BrandApiController {

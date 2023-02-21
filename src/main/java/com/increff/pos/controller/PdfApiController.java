@@ -24,32 +24,17 @@ public class PdfApiController {
 
     @Autowired
     private PdfDto dto;
+
     @ApiOperation(value = "Generates PDF")
     @RequestMapping(path = "/api/pdf/{id}", method = RequestMethod.GET)
-    public void get(@PathVariable int id) throws ApiException {
-        PDF_Generator pdf_generator = new PDF_Generator();
-        PdfData pdfData = dto.get(id);
-        pdf_generator.pdf_generator(pdfData);
+    public void get(@PathVariable int id) throws ApiException, IOException {
+        dto.get(id);
     }
 
     @ApiOperation(value = "generate pdf")
     @RequestMapping(path = "/api/pdf/download/{id}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@PathVariable int id) throws ApiException, IOException {
-
-        Path pdf = Paths.get("./src/main/resources/apache/PdfFile/" + id + "_invoice.pdf");
-
-        byte[] contents = Files.readAllBytes(pdf);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-
-        String filename = "Order" + id + "_invoice.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-        return response;
-
+        return dto.download(id);
     }
 
 }

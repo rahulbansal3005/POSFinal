@@ -18,6 +18,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 
+//todo add requestMapping
+
 @Api
 @RestController
 public class AdminApiController {
@@ -30,6 +32,7 @@ public class AdminApiController {
 	public void addUser(@RequestBody UserForm userForm) throws ApiException {
 		adminDto.add(userForm);
 	}
+//	todo check email in forms
 	@ApiOperation(value = "Deletes a user")
 	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.DELETE)
 	public void deleteUser(@PathVariable int id) {
