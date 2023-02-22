@@ -8,10 +8,6 @@ function resetForm() {
     element.reset()
 }
 
-// function resetuploadform(){
-//     var element = document.getElementById("brand-edit-form");
-//     element.reset()
-// }
 
 function toggleModal(){
     $('#add-brand-item-modal').modal('toggle');
@@ -168,27 +164,54 @@ function processData() {
 
 function readFileDataCallback(results) {
     fileData = results.data;
+    var json = JSON.stringify(fileData);
+    var headers = ["brand", "category"];
+    jsonq = JSON.parse(json);
+    console.log(jsonq[0]);
+    len=Object.keys(jsonq).length;
+    console.log(length);
+    console.log(Object.keys(jsonq[0]));
+
+    for(let i=0;i<len;i++)
+    {
+        if(Object.keys(jsonq[i]).length!=headers.length)
+        {
+            console.log(Object.keys(jsonq[i]).length);
+            frontendChecks("Row is not correct "+ i );
+            return;
+        }
+        let keys=Object.keys(jsonq[i]);
+        console.log(keys);
+        for(const key in keys)
+        {
+            if(jsonq[i][key]=="")
+            {
+                frontendChecks("error in this row ", i);
+            }
+        }
+
+    }
+
+    if(Object.keys(jsonq[0]).length != headers.length){
+        frontendChecks("File column number do not match. Please check the file and try again");
+        return;
+    }
+    for(var i in headers){
+        if(!jsonq[0].hasOwnProperty(headers[i])){
+            frontendChecks('File columns do not match. Please check the file and try again');
+            return;
+        }
+    }
+
+
     uploadRows(fileData);
+
 }
 
 function uploadRows(fileData) {
-    //Update progress
     updateUploadDialog();
-    // //If everything processed then return
-    // if (processCount == fileData.length) {
-    //     return;
-    // }
-
-    //Process next row
-    // var row = fileData[processCount];
-    // processCount++;
-
-    // console.log(row);
     var json = JSON.stringify(fileData);
     var url = getBrandUrl() + "-bulk";
-    // var jsonArray;
-
-    //Make ajax call
     console.log('inside ajax')
     $.ajax({
         url: url,
@@ -210,13 +233,7 @@ function uploadRows(fileData) {
             getBrandList();
         },
         error: function (response){
-            // console.log(response);
-            // for(var i in response)
-            // {
-            //     errorData.push(i);
-            // }
             if(response.status == 403){
-                // toastr.error("403 Forbidden");
                 frontendChecks("403")
             }
             else {

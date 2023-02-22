@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.increff.pos.util.Helper.*;
+import static com.increff.pos.util.Normalize.normalizeInventoryForm;
 
 @Service
 public class InventoryDto {
@@ -31,6 +32,7 @@ public class InventoryDto {
     public void add(InventoryForm inventoryForm) throws ApiException {
 
         Validate.validateInventoryFormonAdd(inventoryForm);
+        normalizeInventoryForm(inventoryForm);
         int prodId = productService.extractProductId(inventoryForm.getBarcode());
         InventoryPojo inventoryPojo = inventoryService.selectOnProdId(prodId);
         if (inventoryPojo != null) {

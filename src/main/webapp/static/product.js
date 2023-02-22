@@ -8,10 +8,6 @@ function resetForm() {
     element.reset()
 }
 
-// function resetuploadform(){
-//   var element = document.getElementById("product-edit-form");
-//   element.reset()
-// }
 
 function toggleModal() {
     $('#add-product-item-modal').modal('toggle');
@@ -26,6 +22,8 @@ function addProduct(event) {
     console.log(parsed);
     if (parsed.barcode === "" || parsed.name === "" || parsed.mrp === "" || parsed.brand === "" || parsed.category === "")
         return frontendChecks("Fields are empty");
+    if(Number.isInteger(parsed.mrp)==false)
+        return frontendChecks("MRP is not an integer");
     if (json.mrp < 0)
         return frontendChecks("MRP can not be negative")
     var url = getProductUrl();
@@ -243,6 +241,44 @@ function processData() {
 
 function readFileDataCallback(results) {
     fileData = results.data;
+    var json = JSON.stringify(fileData);
+    var headers = ["barcode","brand", "category","name","mrp"];
+    jsonq = JSON.parse(json);
+    console.log(jsonq[0]);
+    len=Object.keys(jsonq).length;
+    console.log(length);
+    console.log(Object.keys(jsonq[0]));
+
+    for(let i=0;i<len;i++)
+    {
+        if(Object.keys(jsonq[i]).length!=headers.length)
+        {
+            console.log(Object.keys(jsonq[i]).length);
+            frontendChecks("Row is not correct "+ i );
+            return;
+        }
+        let keys=Object.keys(jsonq[i]);
+        console.log(keys);
+        for(const key in keys)
+        {
+            if(jsonq[i][key]=="")
+            {
+                frontendChecks("error in this row ", i);
+            }
+        }
+
+    }
+
+    if(Object.keys(jsonq[0]).length != headers.length){
+        frontendChecks("File column number do not match. Please check the file and try again");
+        return;
+    }
+    for(var i in headers){
+        if(!jsonq[0].hasOwnProperty(headers[i])){
+            frontendChecks('File columns do not match. Please check the file and try again');
+            return;
+        }
+    }
     uploadRows();
 }
 

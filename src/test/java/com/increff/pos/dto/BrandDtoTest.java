@@ -37,11 +37,11 @@ public class BrandDtoTest extends AbstractUnitTest {
         assertEquals(2, brandDataList.size());
     }
 
-    @Test
-    public void testDelete() throws Exception {
-        brandDto.add(TestHelper.brandForm("brand1","category1"));
-        brandDto.delete(1);
-    }
+//    @Test
+//    public void testDelete() throws Exception {
+//        brandDto.add(TestHelper.brandForm("brand1","category1"));
+//        brandDto.delete(1);
+//    }
 
     @Test
     public void testUpdate() throws ApiException {

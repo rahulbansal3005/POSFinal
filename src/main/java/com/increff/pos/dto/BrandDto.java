@@ -32,9 +32,11 @@ public class BrandDto {
         brandService.add(brandPojo);
     }
 //Todo remove delete
-    public void delete(Integer brandId) {
-        brandService.delete(brandId);
-    }
+
+
+//    public void delete(Integer brandId) {
+//        brandService.delete(brandId);
+//    }
 
     public BrandData get(Integer brandId) throws ApiException {
         BrandPojo brandPojo = brandService.get(brandId);

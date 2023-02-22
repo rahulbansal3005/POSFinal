@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.increff.pos.model.Data.BrandData;
 import com.increff.pos.model.Form.BrandForm;
-//import com.increff.employee.pojo.BrandPojo;
 import com.increff.pos.service.ApiException;
-//import com.increff.employee.service.BrandService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +31,11 @@ public class BrandApiController {
         dto.add(brandForm);
     }
 
-    @ApiOperation(value = "Deletes a Brand")
-    @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Integer id) {
-        dto.delete(id);
-    }
+//    @ApiOperation(value = "Deletes a Brand")
+//    @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
+//    public void delete(@PathVariable Integer id) {
+//        dto.delete(id);
+//    }
 
     @ApiOperation(value = "Gets a Brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
