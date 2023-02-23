@@ -86,10 +86,10 @@ public class ProductDtoTest extends AbstractUnitTest {
         assertEquals(1, productData.getMrp(), 0.01);
     }
 
-    @Test
-    public void testDelete() throws ApiException {
-        productDto.delete(1);
-    }
+//    @Test
+//    public void testDelete() throws ApiException {
+//        productDto.delete(1);
+//    }
 
     @Test
     public void testBulkAdd() throws ApiException{

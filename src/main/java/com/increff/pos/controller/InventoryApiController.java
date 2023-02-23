@@ -30,11 +30,11 @@ public class InventoryApiController {
         dto.add(inventoryForm);
     }
 
-    @ApiOperation(value = "Deletes an inventory")
-    @RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Integer id) {
-        dto.delete(id);
-    }
+//    @ApiOperation(value = "Deletes an inventory")
+//    @RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.DELETE)
+//    public void delete(@PathVariable Integer id) {
+//        dto.delete(id);
+//    }
 
     @ApiOperation(value = "Gets an inventory by ID")
     @RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.GET)

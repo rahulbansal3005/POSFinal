@@ -46,10 +46,10 @@ public class InventoryDtoTest  extends AbstractUnitTest {
         assertEquals(expected, inventoryData.getQuantity());
     }
 
-    @Test
-    public void testDelete() throws ApiException {
-        inventoryDto.delete(1);
-    }
+//    @Test
+//    public void testDelete() throws ApiException {
+//        inventoryDto.delete(1);
+//    }
 
     @Test
     public void testGetAll() throws ApiException {

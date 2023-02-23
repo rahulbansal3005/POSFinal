@@ -1,19 +1,27 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.dao.BrandDao;
+import com.increff.pos.dao.ProductDao;
 import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.model.Form.InventoryForm;
 import com.increff.pos.model.Form.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.service.ApiException;
+import com.increff.pos.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class TestHelper {
     @Autowired
     private BrandDto brandDto;
-
+    @Autowired
+    private static ProductDao productDao;
     @Autowired
     private static BrandDao brandDao;
 
+    @Autowired
+    private static BrandService brandService;
 
     public static BrandForm brandForm(String brand, String category) {
         BrandForm brandForm = new BrandForm();
@@ -42,11 +50,22 @@ public class TestHelper {
     }
 
 
-    public static Integer addBrandToPojo(String brand, String category) {
+    public static BrandPojo addBrandToPojo(String brand, String category) throws ApiException,NullPointerException {
         BrandPojo pojo = new BrandPojo();
         pojo.setBrand(brand);
         pojo.setCategory(category);
-        brandDao.insert(pojo);
-        return pojo.getId();
+//        brandDao.insert(pojo);
+
+        return pojo;
+//        brandService.add(pojo);
+//        return pojo.getId();
+    }
+    public static ProductPojo returnProductPojo(String barcode, String name, Double mrp, Integer bid) {
+        ProductPojo productPojo=new ProductPojo();
+        productPojo.setBarcode(barcode);
+        productPojo.setName(name);
+        productPojo.setMrp(mrp);
+        productPojo.setBrandCategory(bid);
+        return productPojo;
     }
 }

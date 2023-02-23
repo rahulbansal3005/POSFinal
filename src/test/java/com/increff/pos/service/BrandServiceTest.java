@@ -25,11 +25,11 @@ public class BrandServiceTest extends AbstractUnitTest{
     }
 
 
-    @Test
-    public void testDelete() throws ApiException {
-        //
-        brandService.delete(1);
-    }
+//    @Test
+//    public void testDelete() throws ApiException {
+//        //
+//        brandService.delete(1);
+//    }
 
     @Test
     public void testGet() throws ApiException {
@@ -135,27 +135,27 @@ public class BrandServiceTest extends AbstractUnitTest{
         BrandPojo brandPojo2 = brandService.searchBrandCategory(TestHelper.brandForm("puma", "pant"));
     }
 
-    @Test
-    public void testSelectByBrand() throws ApiException {
-        try {
-            List<BrandPojo> brandPojoList=brandService.getBrandPojosOnBrandName("puma");
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Brand-Category Pair does not exist", e.getMessage());
-        }
-    }
+//    @Test
+//    public void testSelectByBrand() throws ApiException {
+//        try {
+//            List<BrandPojo> brandPojoList=brandService.getBrandPojosOnBrandName("puma");
+//        }
+//        catch (ApiException e)
+//        {
+//            assertEquals("Brand-Category Pair does not exist", e.getMessage());
+//        }
+//    }
 
-    @Test
-    public void testSelectByCategory() throws ApiException {
-        try {
-            List<BrandPojo> brandPojoList=brandService.getBrandPojosOnCategoryName("shirt");
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Brand-Category Pair does not exist", e.getMessage());
-        }
-    }
+//    @Test
+//    public void testSelectByCategory() throws ApiException {
+//        try {
+//            List<BrandPojo> brandPojoList=brandService.getBrandPojosOnCategoryName("shirt");
+//        }
+//        catch (ApiException e)
+//        {
+//            assertEquals("Brand-Category Pair does not exist", e.getMessage());
+//        }
+//    }
 
     @Test
     public void testSelectById() throws ApiException {

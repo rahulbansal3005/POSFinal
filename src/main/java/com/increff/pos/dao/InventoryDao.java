@@ -29,11 +29,11 @@ public class InventoryDao extends AbstractDao {
         em.persist(inventoryPojo);
     }
 
-    public int delete(Integer id) {
-        Query query = em.createQuery(delete_id);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    public int delete(Integer id) {
+//        Query query = em.createQuery(delete_id);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
 
     public InventoryPojo select(Integer id) {
         TypedQuery<InventoryPojo> query = getQuery(select_id, InventoryPojo.class);
@@ -46,8 +46,8 @@ public class InventoryDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public void update(InventoryPojo inventoryPojo) {
-    }
+//    public void update(InventoryPojo inventoryPojo) {
+//    }
 
 
 //    public List<InventoryPojo> selectOnProdId(int productId)

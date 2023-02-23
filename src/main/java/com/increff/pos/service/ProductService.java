@@ -29,10 +29,10 @@ public class ProductService {
         productDao.insert(productPojo);
     }
 
-    @Transactional
-    public void delete(Integer id) {
-        productDao.delete(id);
-    }
+//    @Transactional
+//    public void delete(Integer id) {
+//        productDao.delete(id);
+//    }
 
     @Transactional(rollbackOn = ApiException.class)
     public ProductPojo get(Integer id) throws ApiException {
@@ -48,8 +48,6 @@ public class ProductService {
     @Transactional(rollbackOn = ApiException.class)
     public void update(Integer id, String name, Double mrp) throws ApiException {
         ProductPojo newproductPojo = getCheck(id);
-//        newproductPojo.setBarcode(productPojo.getBarcode());
-//        newproductPojo.setBrandCategory(productPojo.getBrandCategory());
         newproductPojo.setName(name);
         newproductPojo.setMrp(mrp);
         productDao.update(newproductPojo);
@@ -99,18 +97,18 @@ public class ProductService {
         return p.getBarcode();
     }
 
-    @Transactional
-    public void checker(String barcode, Integer quant, HashMap<String, Integer> errors) {
-        ProductPojo p = productDao.select_barcode(barcode);
-        if (p == null) {
-            errors.put(barcode, -1);
-        } else {
-            Boolean v = inventoryService.checker(p.getId(), quant);
-            if (v) {
-                errors.put(barcode, quant);
-            }
-        }
-    }
+//    @Transactional
+//    public void checker(String barcode, Integer quant, HashMap<String, Integer> errors) {
+//        ProductPojo p = productDao.select_barcode(barcode);
+//        if (p == null) {
+//            errors.put(barcode, -1);
+//        } else {
+//            Boolean v = inventoryService.checker(p.getId(), quant);
+//            if (v) {
+//                errors.put(barcode, quant);
+//            }
+//        }
+//    }
     public void getCheckProductsInBulk(List<ProductForm> productForms, JSONArray array) {
         for(ProductForm productForm:productForms)
         {

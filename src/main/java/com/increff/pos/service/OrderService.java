@@ -157,15 +157,15 @@ public class OrderService {
         return p;
     }
 
-    public void findingError(OrderForm form, HashMap<String, Integer> errors) {
-        for (OrderItem f : form.getOrderItemList()) {
-            String bc = f.getBarCode();
-            int quant = f.getQuantity();
-            ps.checker(bc, quant, errors);
-
-        }
-
-    }
+//    public void findingError(OrderForm form, HashMap<String, Integer> errors) {
+//        for (OrderItem f : form.getOrderItemList()) {
+//            String bc = f.getBarCode();
+//            int quant = f.getQuantity();
+//            ps.checker(bc, quant, errors);
+//
+//        }
+//
+//    }
     @Transactional(rollbackOn = ApiException.class)
     public void update(int id,LocalDateTime time) throws ApiException {
         OrderPojo ex = getCheckonId(id);

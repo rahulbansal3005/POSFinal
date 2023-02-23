@@ -37,9 +37,9 @@ public class ProductDto {
         productPojo.setBrandCategory(brandService.extractId(productForm));
         productService.add(productPojo);
     }
-    public void delete( Integer id) {
-        productService.delete(id);
-    }
+//    public void delete( Integer id) {
+//        productService.delete(id);
+//    }
 
     public ProductData get(Integer id) throws ApiException {
         ProductPojo productPojo = productService.get(id);

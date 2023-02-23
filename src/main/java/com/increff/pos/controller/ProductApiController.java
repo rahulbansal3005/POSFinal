@@ -30,11 +30,11 @@ public class ProductApiController {
         dto.add(productForm);
     }
 
-    @ApiOperation(value = "Deletes a product")
-    @RequestMapping(path = "/api/product/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Integer id) {
-        dto.delete(id);
-    }
+//    @ApiOperation(value = "Deletes a product")
+//    @RequestMapping(path = "/api/product/{id}", method = RequestMethod.DELETE)
+//    public void delete(@PathVariable Integer id) {
+//        dto.delete(id);
+//    }
 
     @ApiOperation(value = "Gets a product by ID")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.GET)

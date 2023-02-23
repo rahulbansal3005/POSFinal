@@ -27,10 +27,10 @@ public class BrandService {
         brandDao.insert(brandPojo);
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    public void delete(Integer id) {
-        brandDao.delete(id);
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public void delete(Integer id) {
+//        brandDao.delete(id);
+//    }
 
     @Transactional(rollbackOn = ApiException.class)
     public BrandPojo get(Integer id) throws ApiException {
@@ -107,23 +107,23 @@ public class BrandService {
     }
 
 
-    @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> getBrandPojosOnCategoryName(String category) throws ApiException {
-        List<BrandPojo> brandPojoList= brandDao.selectByCategory(category);
-        if(brandPojoList.size()==0)
-            throw new ApiException("Brand-Category Pair does not exist");
-        return brandPojoList;
+//    @Transactional(rollbackOn = ApiException.class)
+//    public List<BrandPojo> getBrandPojosOnCategoryName(String category) throws ApiException {
+//        List<BrandPojo> brandPojoList= brandDao.selectByCategory(category);
+//        if(brandPojoList.size()==0)
+//            throw new ApiException("Brand-Category Pair does not exist");
+//        return brandPojoList;
+//
+//    }
 
-    }
 
-
-    @Transactional(rollbackOn = ApiException.class)
-    public List<BrandPojo> getBrandPojosOnBrandName(String brand) throws ApiException {
-        List<BrandPojo> brandPojoList= brandDao.selectByBrand(brand);
-        if(brandPojoList.size()==0)
-            throw new ApiException("Brand-Category Pair does not exist");
-        return brandPojoList;
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public List<BrandPojo> getBrandPojosOnBrandName(String brand) throws ApiException {
+//        List<BrandPojo> brandPojoList= brandDao.selectByBrand(brand);
+//        if(brandPojoList.size()==0)
+//            throw new ApiException("Brand-Category Pair does not exist");
+//        return brandPojoList;
+//    }
     @Transactional(rollbackOn = ApiException.class)
     public void getByNameCategory(String brand, String category) throws ApiException {
 

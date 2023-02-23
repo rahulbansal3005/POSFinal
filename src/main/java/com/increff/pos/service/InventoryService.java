@@ -28,10 +28,10 @@ public class InventoryService {
         inventoryDao.insert(inventoryPojo);
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    public void delete(Integer id) {
-        inventoryDao.delete(id);
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public void delete(Integer id) {
+//        inventoryDao.delete(id);
+//    }
 
     @Transactional(rollbackOn = ApiException.class)
     public InventoryPojo get(int id) throws ApiException {
@@ -45,11 +45,8 @@ public class InventoryService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void update(Integer id, int quantity) throws ApiException {
-        // normalize(p);
         InventoryPojo newInventoryPojo = getCheck(id);
-//        newInventoryPojo.setProductId(inventoryPojo.getProductId());
         newInventoryPojo.setQuantity(quantity);
-//        inventoryDao.update(newInventoryPojo);
     }
 
     @Transactional(rollbackOn = ApiException.class)

@@ -29,11 +29,6 @@ public class BrandContollerTest extends AbstractUnitTest {
         BrandPojo brandPojo = brandDao.selectAll().get(0);
         assertEquals("puma", brandPojo.getBrand());
         assertEquals("shoes", brandPojo.getCategory());
-
-
-
-
-//        brandApiController.add(TestHelper.brandForm("puma","shoes"));
         try{
             brandApiController.add(TestHelper.brandForm("puma","shoes"));
         }
@@ -41,8 +36,6 @@ public class BrandContollerTest extends AbstractUnitTest {
         {
             assertEquals("Brand-Category already existed",e.getMessage());
         }
-
-
         try{
             brandApiController.add(TestHelper.brandForm("","shoes"));
         }
@@ -50,7 +43,6 @@ public class BrandContollerTest extends AbstractUnitTest {
         {
             assertEquals("Brand name cannot be null or empty",e.getMessage());
         }
-
         try{
             brandApiController.add(TestHelper.brandForm("puma",""));
         }
@@ -58,7 +50,6 @@ public class BrandContollerTest extends AbstractUnitTest {
         {
             assertEquals("Category name cannot be null or empty",e.getMessage());
         }
-
     }
 
     @Test
@@ -70,26 +61,13 @@ public class BrandContollerTest extends AbstractUnitTest {
 
     }
 
-
-//    @Test
-//    public void testDelete() throws ApiException {
-//        brandApiController.add(TestHelper.brandForm("puma","shoes"));
-//        brandApiController.add(TestHelper.brandForm("puma","shirt"));
-//        brandApiController.add(TestHelper.brandForm("reebok","shoes"));
-//        brandApiController.add(TestHelper.brandForm("adidas","tshirt"));
-//
-//
-//        brandApiController.delete(1);
-//
-//    }
-
-
     @Test
     public void testGet() throws ApiException {
 
         for(int i=0;i<10;i++)
         {
-            brandApiController.add(TestHelper.brandForm("brand"+i, "cat"+i));
+//            brandApiController.add(TestHelper.brandForm("brand"+i, "cat"+i));
+                brandDao.insert(TestHelper.addBrandToPojo("brand"+i,"cat"+i));
         }
 
         try{
@@ -97,7 +75,7 @@ public class BrandContollerTest extends AbstractUnitTest {
         }
         catch (ApiException e)
         {
-            assertEquals("Brand with given ID does not exist, id: ",e.getMessage() );
+            assertEquals("Brand with given ID does not exist, id: 10",e.getMessage() );
         }
 
 //        BrandData brandData=brandApiController.get(1);
@@ -124,6 +102,13 @@ public class BrandContollerTest extends AbstractUnitTest {
         {
             brandApiController.add(TestHelper.brandForm("brand"+i, "cat"));
         }
+        List<String> res=brandApiController.getAllUniqueBrands();
+        assertEquals(10,res.size());
+
+        res=brandApiController.getCategory("brand1");
+        assertEquals(2,res.size());
+
+
 
     }
 
