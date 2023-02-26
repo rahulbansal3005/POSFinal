@@ -6,6 +6,7 @@ import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.model.Form.InventoryForm;
 import com.increff.pos.model.Form.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.ApiException;
 import com.increff.pos.service.BrandService;
@@ -67,5 +68,14 @@ public class TestHelper {
         productPojo.setMrp(mrp);
         productPojo.setBrandCategory(bid);
         return productPojo;
+    }
+
+
+    public static InventoryPojo returnInventoryPojo(Integer pid,Integer quantity)
+    {
+        InventoryPojo inventoryPojo=new InventoryPojo();
+        inventoryPojo.setQuantity(quantity);
+        inventoryPojo.setProductId(pid);
+        return inventoryPojo;
     }
 }

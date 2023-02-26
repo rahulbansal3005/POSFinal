@@ -20,19 +20,20 @@ import java.nio.file.Paths;
 
 @Api
 @RestController
+@RequestMapping(value = "/api")
 public class PdfApiController {
 
     @Autowired
     private PdfDto dto;
 
     @ApiOperation(value = "Generates PDF")
-    @RequestMapping(path = "/api/pdf/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/pdf/{id}", method = RequestMethod.GET)
     public void get(@PathVariable int id) throws ApiException, IOException {
         dto.get(id);
     }
 
     @ApiOperation(value = "generate pdf")
-    @RequestMapping(path = "/api/pdf/download/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/pdf/download/{id}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@PathVariable int id) throws ApiException, IOException {
         return dto.download(id);
     }

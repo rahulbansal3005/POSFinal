@@ -30,12 +30,12 @@ public class OrderDao extends AbstractDao {
     }
 
 
-    @Transactional
-    public int delete(int id) {
-        Query query = em.createQuery(delete_id);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    @Transactional
+//    public int delete(int id) {
+//        Query query = em.createQuery(delete_id);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
 
     public OrderPojo select(int id) {
         TypedQuery<OrderPojo> query = getQuery(select_id, OrderPojo.class);
@@ -43,19 +43,19 @@ public class OrderDao extends AbstractDao {
         return getSingle(query);
     }
 
-    public OrderPojo select_barcode(String barCode) {
-        TypedQuery<OrderPojo> query = getQuery(findBarCode, OrderPojo.class);
-        query.setParameter("barcode", barCode);
-        return getSingle(query);
-    }
+//    public OrderPojo select_barcode(String barCode) {
+//        TypedQuery<OrderPojo> query = getQuery(findBarCode, OrderPojo.class);
+//        query.setParameter("barcode", barCode);
+//        return getSingle(query);
+//    }
     @Transactional
     public List<OrderPojo> selectAll() {
         TypedQuery<OrderPojo> query = getQuery(select_all, OrderPojo.class);
         return query.getResultList();
     }
 
-    public void update(OrderPojo p) {
-    }
+//    public void update(OrderPojo p) {
+//    }
 
     public List<OrderPojo> selectAllOrdersInDateRange(LocalDateTime sdate, LocalDateTime edate) {
         TypedQuery<OrderPojo> query = getQuery(get_by_time, OrderPojo.class);

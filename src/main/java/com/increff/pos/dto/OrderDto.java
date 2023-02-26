@@ -3,6 +3,7 @@ package com.increff.pos.dto;
 import com.increff.pos.model.Data.OrderData;
 import com.increff.pos.model.Data.OrderItem;
 import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.ApiException;
@@ -14,6 +15,7 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -29,11 +31,11 @@ public class OrderDto {
     private InventoryService inventoryService;
     @Autowired
     private ProductService productService;
-
     @Autowired
     private OrderService orderService;
 
-//    todo add transctional
+
+    @Transactional(rollbackOn = ApiException.class)
     public void add(List<OrderItem> orderForm) throws ApiException {
         List<String> errorMessages = new ArrayList<>();
         for (OrderItem orderItem : orderForm) {
@@ -62,13 +64,23 @@ public class OrderDto {
         orderPojo.setIsInvoiceGenerated(false);
         orderService.addOrder(orderPojo);
 
+
         // 3) Add order Items in database.
-        orderService.addOrderItems(orderForm, orderPojo.getId());
+//        orderService.addOrderItems(orderForm, orderPojo.getId());
+        List<OrderItemPojo> orderItemPojoList= new ArrayList<OrderItemPojo>();
+        Integer orderId=orderPojo.getId();
+        for(OrderItem orderItem:orderForm)
+        {
+            OrderItemPojo orderItemPojo= convertOrderItemToOrderItemPojo(orderItem,orderId);
+            orderItemPojo.setProductId(productService.extractProductId(orderItem.getBarCode()));
+            orderItemPojoList.add(orderItemPojo);
+        }
+        orderService.add(orderItemPojoList);
+
 
         // 4) Reduce Items from inventory
         for (OrderItem orderItem : orderForm) {
             int productId = productService.extractProductId(orderItem.getBarCode());
-//            todo change variable names
             inventoryService.reduceInventory(orderItem,productId);
         }
     }

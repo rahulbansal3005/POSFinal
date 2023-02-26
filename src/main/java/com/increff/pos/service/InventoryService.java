@@ -58,24 +58,24 @@ public class InventoryService {
         return inventoryPojo;
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    public Boolean checker(Integer id, Integer quant) {
-        InventoryPojo inventoryPojo = inventoryDao.select(id);
-        if (inventoryPojo.getQuantity() < quant) {
-            return true;
-        }
-        return false;
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public Boolean checker(Integer id, Integer quant) {
+//        InventoryPojo inventoryPojo = inventoryDao.select(id);
+//        if (inventoryPojo.getQuantity() < quant) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
-    @Transactional(rollbackOn = ApiException.class)
-    public boolean checkQuantity(Integer id, Integer quant) {
-        InventoryPojo inventoryPojo = inventoryDao.select(id);
-        if (inventoryPojo.getQuantity()> quant) {
-            return true;
-        }
-        return false;
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public boolean checkQuantity(Integer id, Integer quant) {
+//        InventoryPojo inventoryPojo = inventoryDao.select(id);
+//        if (inventoryPojo.getQuantity()> quant) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
 
@@ -88,7 +88,6 @@ public class InventoryService {
         return inventoryPojo;
     }
 
-//    todo merge update and reduce inventory.
 
     @Transactional(rollbackOn = ApiException.class)
     public void reduceInventory(OrderItem orderItem, int prod_id)
@@ -103,6 +102,5 @@ public class InventoryService {
         InventoryPojo inventoryPojo=getCheck(id);
         int quant=inventoryPojo.getQuantity();
         inventoryPojo.setQuantity(quantity+quant);
-        return;
     }
 }

@@ -19,13 +19,14 @@ import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
+@RequestMapping(value = "/api")
 public class InventoryApiController {
 
     @Autowired
     InventoryDto dto;
 
     @ApiOperation(value = "Adds an inventory")
-    @RequestMapping(path = "/api/inventory", method = RequestMethod.POST)
+    @RequestMapping(path = "/inventory", method = RequestMethod.POST)
     public void add(@RequestBody InventoryForm inventoryForm) throws ApiException {
         dto.add(inventoryForm);
     }
@@ -37,25 +38,25 @@ public class InventoryApiController {
 //    }
 
     @ApiOperation(value = "Gets an inventory by ID")
-    @RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
     public InventoryData get(@PathVariable Integer id) throws ApiException {
         return dto.get(id);
     }
 
     @ApiOperation(value = "Gets list of all the items in the inventory")
-    @RequestMapping(path = "/api/inventory", method = RequestMethod.GET)
+    @RequestMapping(path = "/inventory", method = RequestMethod.GET)
     public List<InventoryData> getAll() throws ApiException {
         return dto.getAll();
     }
 
     @ApiOperation(value = "Updates an inventory")
-    @RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer id, @RequestBody InventoryForm inventoryForm) throws ApiException {
         dto.update(id, inventoryForm);
     }
 
     @ApiOperation(value = "Adds an inventory")
-    @RequestMapping(path = "/api/inventory-bulk", method = RequestMethod.POST)
+    @RequestMapping(path = "/inventory-bulk", method = RequestMethod.POST)
     public void addBulk(@RequestBody List<InventoryForm> inventoryForm) throws ApiException {
         dto.addBulk(inventoryForm);
     }

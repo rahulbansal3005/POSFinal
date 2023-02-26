@@ -79,11 +79,32 @@ public class ReportDto {
     }
 
     public List<SalesReportData> getDateWiseSalesReport(SalesReportForm salesReportForm) throws ApiException {
+//        System.out.println(salesReportForm.getStartDate() + "   "+ salesReportForm.getEndDate());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = salesReportForm.getStartDate();
+        String endDate = salesReportForm.getEndDate();
+
+        if (startDate == null || startDate.isEmpty()) {
+            throw new ApiException("Start Date is empty");
+
+        }
+
+        if (endDate == null || endDate.isEmpty()) {
+            throw new ApiException("End Date is empty");
+        }
+
+
+
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String startDate = salesReportForm.getStartDate() + " 00:00:00";
-        String endDate = salesReportForm.getEndDate() + " 23:59:59";
+        startDate = salesReportForm.getStartDate() + " 00:00:00";
+        endDate = salesReportForm.getEndDate() + " 23:59:59";
         LocalDateTime sdate = LocalDateTime.parse(startDate, dateTimeFormatter);
         LocalDateTime edate = LocalDateTime.parse(endDate, dateTimeFormatter);
+        int diff=edate.compareTo(sdate);
+        if(diff>30)
+        {
+            throw new ApiException("Dates a");
+        }
         List<OrderPojo> orderPojos = orderService.getOrdersInDateRange(sdate, edate);
         return reportService.get(orderPojos, salesReportForm.getBrand(), salesReportForm.getCategory());
     }

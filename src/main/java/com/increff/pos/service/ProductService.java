@@ -78,7 +78,6 @@ public class ProductService {
 
     @Transactional
     public int extractProductId(String barCode) throws ApiException {
-//        todo make select strings CAPITAL
         ProductPojo productPojo = productDao.select_barcode(barCode);
         if (productPojo == null) {
             throw new ApiException("Product does not exist in the Product List");
@@ -86,15 +85,14 @@ public class ProductService {
         return productPojo.getId();
     }
 
-//    todo productpojo p
 
     @Transactional
     public String extractBarCode(Integer prodID) throws ApiException {
-        ProductPojo p = productDao.select(prodID);
-        if (p == null) {
+        ProductPojo productPojo = productDao.select(prodID);
+        if (productPojo == null) {
             throw new ApiException("Product does not exist with the given Product ID ");
         }
-        return p.getBarcode();
+        return productPojo.getBarcode();
     }
 
 //    @Transactional

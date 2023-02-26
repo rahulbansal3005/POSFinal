@@ -33,7 +33,7 @@ public class InventoryControllerTest extends AbstractUnitTest {
     private InventoryDao inventoryDao;
 
 
-    private void addItems() throws ApiException {
+    public void addItems() throws ApiException {
         for(int i=0;i<10;i++)
         {
             BrandPojo brandPojo= TestHelper.addBrandToPojo("brand"+i,"cat"+i);
@@ -44,11 +44,10 @@ public class InventoryControllerTest extends AbstractUnitTest {
             productDao.insert(productPojo);
 
             inventoryApiController.add(TestHelper.addInventory("bar"+i,236+i));
-//            InventoryPojo inventoryPojo=inventoryDao.selectAll().get(0);
         }
     }
     @Test
-    public void  testAdd() throws ApiException {
+    public void  testAdd() throws Exception {
             addItems();
             InventoryPojo inventoryPojo=inventoryDao.selectAll().get(0);
 

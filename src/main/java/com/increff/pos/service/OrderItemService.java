@@ -14,13 +14,13 @@ public class OrderItemService {
     private OrderItemDao orderItemDao;
 
 
-    @Transactional(rollbackOn = ApiException.class)
-    public void add(List<OrderItemPojo> orderItemPojoList) throws ApiException {
-        for(OrderItemPojo orderItemPojo:orderItemPojoList)
-        {
-            orderItemDao.insert(orderItemPojo);
-        }
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    public void add(List<OrderItemPojo> orderItemPojoList) throws ApiException {
+//        for(OrderItemPojo orderItemPojo:orderItemPojoList)
+//        {
+//            orderItemDao.insert(orderItemPojo);
+//        }
+//    }
 
 
     public List<OrderItemPojo> getAllByOrderId(int orderId) {

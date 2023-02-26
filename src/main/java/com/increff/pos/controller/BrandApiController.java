@@ -18,15 +18,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 
-//todo add request mapping
 @Api
 @RestController
+@RequestMapping(value = "/api")
 public class BrandApiController {
 
     @Autowired
     private BrandDto dto;
     @ApiOperation(value = "Adds a Brand")
-    @RequestMapping(path = "/api/brand", method = RequestMethod.POST)
+    @RequestMapping(path = "/brand", method = RequestMethod.POST)
     public void add(@RequestBody BrandForm brandForm) throws ApiException {
         dto.add(brandForm);
     }
@@ -38,39 +38,39 @@ public class BrandApiController {
 //    }
 
     @ApiOperation(value = "Gets a Brand by ID")
-    @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/brand/{id}", method = RequestMethod.GET)
     public BrandData get(@PathVariable Integer id) throws ApiException {
         return dto.get(id);
     }
 
     @ApiOperation(value = "Gets list of all Brand")
-    @RequestMapping(path = "/api/brand", method = RequestMethod.GET)
+    @RequestMapping(path = "/brand", method = RequestMethod.GET)
     public List<BrandData> getAll() {
         return dto.getAll();
     }
 
 
     @ApiOperation(value = "Gets list of unique brands")
-    @RequestMapping(path = "/api/brand/brandNames", method = RequestMethod.GET)
+    @RequestMapping(path = "/brand/brandNames", method = RequestMethod.GET)
     public List<String> getAllUniqueBrands() throws ApiException {
 
         return dto.getAllUniqueBrands();
     }
 
     @ApiOperation(value = "Gets brand category list")
-    @RequestMapping(path = "/api/brand/categ", method = RequestMethod.POST)
+    @RequestMapping(path = "/brand/categ", method = RequestMethod.POST)
     public List<String> getCategory(@RequestBody String brand) throws ApiException {
         return dto.getCategory(brand);
     }
 
     @ApiOperation(value = "Updates a brand")
-    @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/brand/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer id, @RequestBody BrandForm brandForm) throws ApiException {
         dto.update(id, brandForm);
     }
 
     @ApiOperation(value = "Upload brands-category in bulk")
-    @RequestMapping(path = "/api/brand-bulk", method = RequestMethod.POST)
+    @RequestMapping(path = "/brand-bulk", method = RequestMethod.POST)
     public void addInBulk(@RequestBody List<BrandForm> brandForms) throws ApiException {
         dto.bulkAdd(brandForms);
     }

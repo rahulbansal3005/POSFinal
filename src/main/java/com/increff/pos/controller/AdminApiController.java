@@ -18,35 +18,35 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 
-//todo add requestMapping
-
 @Api
 @RestController
+@RequestMapping(value = "/api")
 public class AdminApiController {
 
 	@Autowired
 	private AdminDto adminDto;
 
 	@ApiOperation(value = "Adds a user")
-	@RequestMapping(path = "/api/admin/user", method = RequestMethod.POST)
+	@RequestMapping(path = "/admin/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody UserForm userForm) throws ApiException {
 		adminDto.add(userForm);
 	}
-//	todo check email in forms
-	@ApiOperation(value = "Deletes a user")
-	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.DELETE)
-	public void deleteUser(@PathVariable int id) {
-		adminDto.delete(id);
-	}
+//	@ApiOperation(value = "Deletes a user")
+//	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.DELETE)
+//	public void deleteUser(@PathVariable int id) {
+//		adminDto.delete(id);
+//	}
 
 	@ApiOperation(value = "Gets list of all users")
-	@RequestMapping(path = "/api/admin/user", method = RequestMethod.GET)
+	@RequestMapping(path = "/admin/user", method = RequestMethod.GET)
 	public List<UserData> getAllUser() {
 		return adminDto.getAll();
 	}
-	@ApiOperation(value = "Get user by id")
-	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.GET)
-	public UserData get() {
-		return adminDto.getById();
-	}
+
+
+//	@ApiOperation(value = "Get user by id")
+//	@RequestMapping(path = "/api/admin/user/{id}", method = RequestMethod.GET)
+//	public UserData get() {
+//		return adminDto.getById();
+//	}
 }

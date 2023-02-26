@@ -20,32 +20,32 @@ import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
-
+@RequestMapping(value = "/api")
 public class OrderApiController {
 
     @Autowired
     private OrderDto orderDto;
 
     @ApiOperation(value = "Create one Order")
-    @RequestMapping(path = "/api/order", method = RequestMethod.POST)
+    @RequestMapping(path = "/order", method = RequestMethod.POST)
     public void add(@RequestBody List<OrderItem> orderForm) throws ApiException {
         orderDto.add(orderForm);
     }
 
     @ApiOperation(value = "Gets an Order by ID")
-    @RequestMapping(path = "/api/order/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/order/{id}", method = RequestMethod.GET)
     public OrderData getOrder(@PathVariable int id) throws ApiException {
         return orderDto.getOrder(id);
     }
 
     @ApiOperation(value = "Gets list of all the Orders")
-    @RequestMapping(path = "/api/order", method = RequestMethod.GET)
+    @RequestMapping(path = "/order", method = RequestMethod.GET)
     public List<OrderData> getAll() throws ApiException {
         return orderDto.getAll();
     }
 
     @ApiOperation(value = "Adds order items in bulk")
-    @RequestMapping(path = "/api/order-bulk", method = RequestMethod.POST)
+    @RequestMapping(path = "/order-bulk", method = RequestMethod.POST)
     public void addBulk(@RequestBody List<OrderItem> orderForm) throws ApiException {
         orderDto.addBulk(orderForm);
     }

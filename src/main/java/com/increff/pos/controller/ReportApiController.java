@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api")
 public class ReportApiController {
-//todo add date filter in sles report
 
     //    BRAND REPORT'S CODE
     @Autowired
@@ -41,8 +40,7 @@ public class ReportApiController {
     @ApiOperation(value = "Gets Inventory Report")
     @RequestMapping(value = "/inventory-report", method = RequestMethod.POST)
     public List<InventoryReportData> searchInventoryReport(@RequestBody BrandForm brandForm) throws ApiException {
-        List<InventoryReportData> data = reportDto.getInventoryReport(brandForm);
-        return data;
+        return reportDto.getInventoryReport(brandForm);
     }
 //----------------------------------------------------------------------------------------
 
