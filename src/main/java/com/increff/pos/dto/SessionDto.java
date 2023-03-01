@@ -21,6 +21,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.increff.pos.util.Helper.convertSignupFormToUserPojo;
 
@@ -61,6 +63,15 @@ public class SessionDto {
     }
 
     public ModelAndView signup(SignupForm signupForm) throws ApiException {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(signupForm.getEmail());
+        if(matcher.matches()==false){
+            throw new ApiException("Enter valid email");
+        }
         Properties prop = new Properties();
         try {
             prop.load(new FileInputStream("emails.properties"));

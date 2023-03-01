@@ -22,8 +22,6 @@ function addProduct(event) {
     console.log(parsed);
     if (parsed.barcode === "" || parsed.name === "" || parsed.mrp === "" || parsed.brand === "" || parsed.category === "")
         return frontendChecks("Fields are empty");
-    if(Number.isInteger(parsed.mrp)==false)
-        return frontendChecks("MRP is not an integer");
     if (json.mrp < 0)
         return frontendChecks("MRP can not be negative")
     var url = getProductUrl();

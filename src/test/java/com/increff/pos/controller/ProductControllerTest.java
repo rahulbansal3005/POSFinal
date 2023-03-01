@@ -2,7 +2,7 @@ package com.increff.pos.controller;
 
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.dao.ProductDao;
-import com.increff.pos.dto.TestHelper;
+import com.increff.pos.service.TestHelper;
 import com.increff.pos.model.Data.ProductData;
 import com.increff.pos.model.Form.ProductForm;
 import com.increff.pos.pojo.BrandPojo;

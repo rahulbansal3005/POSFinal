@@ -86,6 +86,7 @@ function displayUserList(data){
 	index=1;
 	for(var i in data){
 		var e = data[i];
+		console.log(e);
 		var buttonHtml =
 			// '<button onclick="deleteUser(' + e.id + ')">delete</button>'
 		// buttonHtml +=
@@ -93,7 +94,7 @@ function displayUserList(data){
 		var row = '<tr>'
 		+ '<td>' + index++ + '</td>'
 		+ '<td>' + e.email + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td>' + e.role + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}

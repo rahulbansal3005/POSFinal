@@ -113,7 +113,7 @@ function displayOrder(id) {
         success: function (response) {
             console.log("RESPONSE", response);
             $("#view-order-id").text(id);
-            response['c'].forEach(element => {
+            response['orderItemList'].forEach(element => {
                 console.log("element", element);
                 var row = '<tr>' +
                     '<td>' + element.barCode + '</td>' +

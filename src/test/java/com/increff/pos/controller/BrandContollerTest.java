@@ -1,7 +1,7 @@
 package com.increff.pos.controller;
 
 import com.increff.pos.dao.BrandDao;
-import com.increff.pos.dto.TestHelper;
+import com.increff.pos.service.TestHelper;
 import com.increff.pos.model.Data.BrandData;
 import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.pojo.BrandPojo;

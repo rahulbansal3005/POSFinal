@@ -1,6 +1,5 @@
 package com.increff.pos.service;
 
-import com.increff.pos.dto.TestHelper;
 import com.increff.pos.pojo.BrandPojo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

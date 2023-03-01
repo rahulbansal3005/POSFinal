@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Component
@@ -91,6 +92,18 @@ public class ReportDto {
 
         if (endDate == null || endDate.isEmpty()) {
             throw new ApiException("End Date is empty");
+        }
+        LocalDate startLocalDate;
+        LocalDate endLocalDate;
+        try {
+            startLocalDate = LocalDate.parse(startDate, dateFormatter);
+            endLocalDate = LocalDate.parse(endDate, dateFormatter);
+        } catch (DateTimeParseException e) {
+            throw new ApiException("Invalid date format. Please use yyyy-MM-dd format");
+        }
+
+        if (!startLocalDate.isBefore(endLocalDate)) {
+            throw new ApiException("Start Date should be before End Date");
         }
 
 

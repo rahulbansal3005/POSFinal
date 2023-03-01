@@ -1,7 +1,8 @@
-package com.increff.pos.dto;
+package com.increff.pos.service;
 
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.dao.ProductDao;
+import com.increff.pos.dto.BrandDto;
 import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.model.Form.InventoryForm;
 import com.increff.pos.model.Form.ProductForm;

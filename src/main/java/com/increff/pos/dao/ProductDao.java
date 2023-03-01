@@ -14,12 +14,12 @@ import com.increff.pos.pojo.ProductPojo;
 @Repository
 public class ProductDao extends AbstractDao {
 
-    private static String DELETE_ID = "delete from ProductPojo p where id=:id";
-    private static String SELECT_ID = "select p from ProductPojo p where id=:id";
-    private static String SELECT_ALL = "select p from ProductPojo p ";
-    private static String FINDBARCODE = "select p from ProductPojo p where barcode=:barcode";
+    private static final String DELETE_ID = "delete from ProductPojo p where id=:id";
+    private static final String SELECT_ID = "select p from ProductPojo p where id=:id";
+    private static final String SELECT_ALL = "select p from ProductPojo p ";
+    private static final String FINDBARCODE = "select p from ProductPojo p where barcode=:barcode";
     // private static String findBarCodeFromId = "select p from ProductPojo where";
-    private static String SELECT_PRODUCTS_BY_BRAND_ID = "select p from ProductPojo p where brandCategory=:brandCategory";
+    private static final String SELECT_PRODUCTS_BY_BRAND_ID = "select p from ProductPojo p where brandCategory=:brandCategory";
     @PersistenceContext
     private EntityManager em;
 

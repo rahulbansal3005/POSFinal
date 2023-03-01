@@ -59,14 +59,12 @@ public class OrderDto {
         // 2) Create new Order.
         OrderPojo orderPojo = new OrderPojo();
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(now + "OrderDTO  now");
         orderPojo.setDate(now);
         orderPojo.setIsInvoiceGenerated(false);
         orderService.addOrder(orderPojo);
 
 
         // 3) Add order Items in database.
-//        orderService.addOrderItems(orderForm, orderPojo.getId());
         List<OrderItemPojo> orderItemPojoList= new ArrayList<OrderItemPojo>();
         Integer orderId=orderPojo.getId();
         for(OrderItem orderItem:orderForm)
@@ -90,6 +88,12 @@ public class OrderDto {
         if(productPojo==null)
         {
             String error="Product does not exist in Product List: "+ orderItem.getBarCode();
+            errorMessages.add(error);
+            return;
+        }
+        if(productPojo.getMrp()<orderItem.getSellingPrice())
+        {
+            String error="Selling Price is higher than MRP: "+ orderItem.getBarCode();
             errorMessages.add(error);
             return;
         }

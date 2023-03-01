@@ -3,7 +3,7 @@ package com.increff.pos.controller;
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.dao.InventoryDao;
 import com.increff.pos.dao.ProductDao;
-import com.increff.pos.dto.TestHelper;
+import com.increff.pos.service.TestHelper;
 import com.increff.pos.model.Data.InventoryData;
 import com.increff.pos.model.Form.InventoryForm;
 import com.increff.pos.pojo.BrandPojo;

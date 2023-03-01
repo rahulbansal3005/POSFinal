@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,8 @@ public class Helper {
         obj1.put("category", category);
         array.put(obj1);
     }
-    public static void createProductErrorobject(ProductForm productForm,JSONArray array) {
+
+    public static void createProductErrorobject(ProductForm productForm, JSONArray array) {
         JSONObject obj1 = new JSONObject();
         obj1.put("barcode", productForm.getBarcode());
         obj1.put("brand", productForm.getBrand());
@@ -30,6 +32,7 @@ public class Helper {
         obj1.put("mrp", productForm.getMrp());
         array.put(obj1);
     }
+
     public static void createInventoryErrorobject(InventoryForm inventoryForm, JSONArray array) {
         JSONObject obj1 = new JSONObject();
         obj1.put("barcode", inventoryForm.getBarcode());
@@ -37,14 +40,15 @@ public class Helper {
         array.put(obj1);
 
     }
-    public static void createOrderErrorobject(OrderItem orderItem ,JSONArray array) {
+
+    public static void createOrderErrorobject(OrderItem orderItem, JSONArray array) {
 //        for(OrderItem orderItem:orderItems)
 //        {
-            JSONObject obj1 = new JSONObject();
-            obj1.put("barcode", orderItem.getBarCode());
-            obj1.put("quantity", orderItem.getQuantity());
-            obj1.put("selling Price", orderItem.getSellingPrice());
-            array.put(obj1);
+        JSONObject obj1 = new JSONObject();
+        obj1.put("barcode", orderItem.getBarCode());
+        obj1.put("quantity", orderItem.getQuantity());
+        obj1.put("selling Price", orderItem.getSellingPrice());
+        array.put(obj1);
 //        }
     }
 
@@ -81,9 +85,8 @@ public class Helper {
         return userPojo;
     }
 
-    public static UserPojo convertSignupFormToUserPojo(SignupForm signupForm,String role)
-    {
-        UserPojo userPojo=new UserPojo();
+    public static UserPojo convertSignupFormToUserPojo(SignupForm signupForm, String role) {
+        UserPojo userPojo = new UserPojo();
         userPojo.setRole(role);
         userPojo.setEmail(signupForm.getEmail());
         userPojo.setPassword(signupForm.getPassword());
@@ -120,7 +123,7 @@ public class Helper {
         ProductPojo productPojo = new ProductPojo();
         productPojo.setBarcode(productForm.getBarcode());
         productPojo.setName(productForm.getName());
-        productPojo.setMrp(productForm.getMrp());
+        productPojo.setMrp(solve(productForm.getMrp()));
         return productPojo;
     }
 
@@ -143,7 +146,7 @@ public class Helper {
         OrderItemPojo orderItemPojo = new OrderItemPojo();
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setQuantity(orderItem.getQuantity());
-        orderItemPojo.setSellingPrice(orderItem.getSellingPrice());
+        orderItemPojo.setSellingPrice(solve(orderItem.getSellingPrice()));
         return orderItemPojo;
     }
 //    public static List<OrderItemPojo> convertOrderFormToOrderItemPojoList(OrderForm orderForm, int orderId) throws ApiException {
@@ -193,6 +196,13 @@ public class Helper {
         pdfListData.setAmount(v);
         list.add(pdfListData);
         return v;
+    }
+
+    public static Double solve(Double number) {
+        double truncatedNumber = Math.floor(number * 100) / 100;
+        DecimalFormat df = new DecimalFormat("#.##");
+        double roundedNumber = Double.parseDouble(df.format(truncatedNumber));
+        return roundedNumber;
     }
 
 //    public static BrandForm convertSalesReportFormtoBrandForm(SalesReportForm salesReportForm) {

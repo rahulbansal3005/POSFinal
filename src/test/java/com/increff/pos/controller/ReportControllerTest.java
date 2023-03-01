@@ -3,7 +3,7 @@ package com.increff.pos.controller;
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.dao.InventoryDao;
 import com.increff.pos.dao.ProductDao;
-import com.increff.pos.dto.TestHelper;
+import com.increff.pos.service.TestHelper;
 import com.increff.pos.model.Data.InventoryReportData;
 import com.increff.pos.model.Form.BrandForm;
 import com.increff.pos.pojo.BrandPojo;
@@ -14,7 +14,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReportControllerTest extends AbstractUnitTest {

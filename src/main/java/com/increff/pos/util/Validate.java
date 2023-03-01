@@ -129,7 +129,11 @@ public class Validate {
     }
 
 
-    public static void checkDuplicateBrandform(List<BrandForm> brandForms, JSONArray array) {
+    public static void checkDuplicateBrandform(List<BrandForm> brandForms, JSONArray array) throws ApiException {
+        if(brandForms.size()>5000)
+        {
+            throw new ApiException("File size is larger than 5000");
+        }
         Map<String, String> map = new HashMap<>();
         for (BrandForm brandForm : brandForms) {
             if (map.containsKey(brandForm.getBrand())) {

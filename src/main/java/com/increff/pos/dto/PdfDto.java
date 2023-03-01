@@ -1,6 +1,7 @@
 package com.increff.pos.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.increff.pos.client.InvoiceClient;
 import com.increff.pos.model.Data.PdfData;
 import com.increff.pos.model.Data.PdfListData;
 import com.increff.pos.pojo.OrderItemPojo;
@@ -37,6 +38,8 @@ public class PdfDto {
     private OrderService orderService;
 
     @Autowired
+    private InvoiceClient invoiceClient;
+    @Autowired
     private ProductService productService;
     public void get(int id) throws IOException, ApiException {
         List<OrderItemPojo> orderItemPojoList = orderItemService.getAllByOrderId(id);
@@ -64,21 +67,8 @@ public class PdfDto {
         pdfData.setTotal(total);
         pdfData.setItemList(pdfListData);
 
+        invoiceClient.sendRequestToInvoice(pdfData,id);
 
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8000/invoice/api/pdf";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String payload = objectMapper.writeValueAsString(pdfData);
-        HttpEntity<String> request = new HttpEntity<>(payload, headers);
-        String response = restTemplate.postForObject(url, request, String.class);
-
-        String filePath = "D:/Repos/POS/invoices\\order_"+id+".pdf";
-        byte[] decodedBytes = Base64.getDecoder().decode(response);
-        FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-        fileOutputStream.write(decodedBytes);
-        fileOutputStream.close();
     }
 
     public ResponseEntity<byte[]> download(int id) throws ApiException, IOException {

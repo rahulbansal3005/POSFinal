@@ -35,10 +35,10 @@ public class UserService {
 		return userDao.selectAll();
 	}
 
-	@Transactional(rollbackOn = ApiException.class)
-	public void delete(int id) {
-		userDao.delete(id);
-	}
+//	@Transactional(rollbackOn = ApiException.class)
+//	public void delete(int id) {
+//		userDao.delete(id);
+//	}
 
 
 }

@@ -27,9 +27,9 @@ public class AdminDto {
         userService.add(userPojo);
     }
 
-    public void delete(int id) {
-        userService.delete(id);
-    }
+//    public void delete(int id) {
+//        userService.delete(id);
+//    }
 
     public List<UserData> getAll() {
         List<UserPojo> list = userService.getAll();
@@ -40,8 +40,8 @@ public class AdminDto {
         return list2;
     }
 
-    public UserData getById() {
-        UserData userData=new UserData();
-        return userData;
-    }
+//    public UserData getById() {
+//        UserData userData=new UserData();
+//        return userData;
+//    }
 }

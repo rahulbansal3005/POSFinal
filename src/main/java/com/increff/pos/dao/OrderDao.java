@@ -16,11 +16,11 @@ import com.increff.pos.pojo.OrderPojo;
 @Repository
 public class OrderDao extends AbstractDao {
 
-    private static String delete_id = "delete from OrderPojo p where id=:id";
-    private static String select_id = "select p from OrderPojo p where id=:id";
-    private static String select_all = "select p from OrderPojo p ";
-    private static String findBarCode = "select p from OrderPojo p where barcode=:barcode";
-    private static String get_by_time = "select p from OrderPojo p where p.date>=:start and p.date<=:end";
+    private static final String DELETE_ID = "delete from OrderPojo p where id=:id";
+    private static final String SELECT_ID = "select p from OrderPojo p where id=:id";
+    private static final String SELECT_ALL = "select p from OrderPojo p ";
+    private static final String FINDBARCODE = "select p from OrderPojo p where barcode=:barcode";
+    private static final String GET_BY_TIME = "select p from OrderPojo p where p.date>=:start and p.date<=:end";
     @PersistenceContext
     private EntityManager em;
 
@@ -38,7 +38,7 @@ public class OrderDao extends AbstractDao {
 //    }
 
     public OrderPojo select(int id) {
-        TypedQuery<OrderPojo> query = getQuery(select_id, OrderPojo.class);
+        TypedQuery<OrderPojo> query = getQuery(SELECT_ID, OrderPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
@@ -50,7 +50,7 @@ public class OrderDao extends AbstractDao {
 //    }
     @Transactional
     public List<OrderPojo> selectAll() {
-        TypedQuery<OrderPojo> query = getQuery(select_all, OrderPojo.class);
+        TypedQuery<OrderPojo> query = getQuery(SELECT_ALL, OrderPojo.class);
         return query.getResultList();
     }
 
@@ -58,7 +58,7 @@ public class OrderDao extends AbstractDao {
 //    }
 
     public List<OrderPojo> selectAllOrdersInDateRange(LocalDateTime sdate, LocalDateTime edate) {
-        TypedQuery<OrderPojo> query = getQuery(get_by_time, OrderPojo.class);
+        TypedQuery<OrderPojo> query = getQuery(GET_BY_TIME, OrderPojo.class);
         query.setParameter("start", sdate);
         query.setParameter("end", edate);
         return query.getResultList();

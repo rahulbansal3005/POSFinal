@@ -17,12 +17,12 @@ import com.increff.pos.pojo.OrderItemPojo;
 @Repository
 public class OrderItemDao extends AbstractDao {
 
-    private static String delete_id = "delete from OrderItemPojo p where id=:id";
-    private static String select_id = "select p from OrderItemPojo p where id=:id";
+    private static final String DELETE_ID = "delete from OrderItemPojo p where id=:id";
+    private static final String SELECT_ID = "select p from OrderItemPojo p where id=:id";
 
-    private static String select_all = "select p from OrderItemPojo p ";
-    private static String findBarCode = "select p from OrderItemPojo p where barcode=:barcode";
-    private static String findAllOrderItems = "select p from OrderItemPojo p where orderId=:orderId";
+    private static final String SELECT_ALL = "select p from OrderItemPojo p ";
+    private static final String FINDBARCODE = "select p from OrderItemPojo p where barcode=:barcode";
+    private static final String FINDALLORDERITEMS = "select p from OrderItemPojo p where orderId=:orderId";
 
     @PersistenceContext
     private EntityManager em;
@@ -33,30 +33,30 @@ public class OrderItemDao extends AbstractDao {
     }
 
     public int delete(int id) {
-        Query query = em.createQuery(delete_id);
+        Query query = em.createQuery(DELETE_ID);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
 
     public OrderItemPojo select(int id) {
-        TypedQuery<OrderItemPojo> query = getQuery(select_id, OrderItemPojo.class);
+        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ID, OrderItemPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
 
     public OrderItemPojo select_barcode(String barCode) {
-        TypedQuery<OrderItemPojo> query = getQuery(findBarCode, OrderItemPojo.class);
+        TypedQuery<OrderItemPojo> query = getQuery(FINDBARCODE, OrderItemPojo.class);
         query.setParameter("barcode", barCode);
         return getSingle(query);
     }
 
     public List<OrderItemPojo> selectAll() {
-        TypedQuery<OrderItemPojo> query = getQuery(select_all, OrderItemPojo.class);
+        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ALL, OrderItemPojo.class);
         return query.getResultList();
     }
 
     public List<OrderItemPojo> getAllOrderItemsbyOrderId(int orderId) {
-        TypedQuery<OrderItemPojo> query = getQuery(findAllOrderItems, OrderItemPojo.class);
+        TypedQuery<OrderItemPojo> query = getQuery(FINDALLORDERITEMS, OrderItemPojo.class);
         query.setParameter("orderId", orderId);
         return query.getResultList();
     }
@@ -65,7 +65,7 @@ public class OrderItemDao extends AbstractDao {
     }
 
     public List<OrderItemPojo> selectAllonOrderId(int orderId) {
-        TypedQuery<OrderItemPojo> query = getQuery(findAllOrderItems, OrderItemPojo.class);
+        TypedQuery<OrderItemPojo> query = getQuery(FINDALLORDERITEMS, OrderItemPojo.class);
         query.setParameter("orderId", orderId);
         return query.getResultList();
     }
