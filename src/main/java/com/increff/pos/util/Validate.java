@@ -123,7 +123,7 @@ public class Validate {
 
     public static void ValidateBrandFormForBulkAdd(BrandForm brandForm, JSONArray array) {
         if (Validate.isEmpty(brandForm.getBrand()) || Validate.isEmpty(brandForm.getCategory())) {
-            createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
+            createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array, "fields are empty");
 
         }
     }
@@ -138,7 +138,7 @@ public class Validate {
         for (BrandForm brandForm : brandForms) {
             if (map.containsKey(brandForm.getBrand())) {
                 if ((map.get(brandForm.getBrand())).equals(brandForm.getCategory()))
-                    createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array);
+                    createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array,"brand-category is duplicate");
             } else {
                 map.put(brandForm.getBrand(), brandForm.getCategory());
             }
@@ -150,7 +150,7 @@ public class Validate {
         for (ProductForm productForm : productForms) {
             if(map.containsKey(productForm.getBarcode()))
             {
-                createProductErrorobject(productForm, array);
+                createProductErrorobject(productForm, array,"product barcode already exist");
             }
             else{
                 map.put(productForm.getBarcode(), 1);
@@ -167,22 +167,22 @@ public class Validate {
     public static void ValidateProductFormForBulkAdd(ProductForm productForm, JSONArray array) {
         if (Validate.isEmpty(productForm.getBrand()) || Validate.isEmpty(productForm.getCategory()) ||
                 Validate.isEmpty(productForm.getBarcode()) || Validate.isEmpty(productForm.getName())) {
-            createProductErrorobject(productForm, array);
+            createProductErrorobject(productForm, array,"Some or All fields are empty");
         }
         if(productForm.getMrp()==null || productForm.getMrp()<=0)
         {
-            createProductErrorobject(productForm, array);
+            createProductErrorobject(productForm, array,"MRP is either Null or not correct");
         }
     }
 
 
     public static void ValidateInventoryFormForBulkAdd(InventoryForm inventoryForm, JSONArray array) {
         if (Validate.isEmpty(inventoryForm.getBarcode()) ) {
-            createInventoryErrorobject(inventoryForm, array);
+            createInventoryErrorobject(inventoryForm, array,"Enter barcode correctly");
         }
         if(inventoryForm.getQuantity()==null || inventoryForm.getQuantity()<=0)
         {
-            createInventoryErrorobject(inventoryForm, array);
+            createInventoryErrorobject(inventoryForm, array, "Enter qunatity correctly");
         }
     }
 

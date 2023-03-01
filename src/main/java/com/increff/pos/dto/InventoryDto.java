@@ -83,7 +83,7 @@ public class InventoryDto {
             ProductPojo productPojo=productService.getCheck(inventoryForm.getBarcode());
             if(productPojo==null)
             {
-                createInventoryErrorobject(inventoryForm,array);
+                createInventoryErrorobject(inventoryForm,array,"no product exist with this barcode");
             }
         }
         if (array.length() != 0) {

@@ -16,27 +16,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Helper {
-    public static void createBrandErrorobject(String brand, String category, JSONArray array) {
+    public static void createBrandErrorobject(String brand, String category, JSONArray array,String message) {
         JSONObject obj1 = new JSONObject();
         obj1.put("brand", brand);
         obj1.put("category", category);
+        obj1.put("message", message);
         array.put(obj1);
     }
 
-    public static void createProductErrorobject(ProductForm productForm, JSONArray array) {
+    public static void createProductErrorobject(ProductForm productForm, JSONArray array,String message) {
         JSONObject obj1 = new JSONObject();
         obj1.put("barcode", productForm.getBarcode());
         obj1.put("brand", productForm.getBrand());
         obj1.put("category", productForm.getCategory());
         obj1.put("name", productForm.getName());
         obj1.put("mrp", productForm.getMrp());
+        obj1.put("message", message);
         array.put(obj1);
     }
 
-    public static void createInventoryErrorobject(InventoryForm inventoryForm, JSONArray array) {
+    public static void createInventoryErrorobject(InventoryForm inventoryForm, JSONArray array,String message) {
         JSONObject obj1 = new JSONObject();
         obj1.put("barcode", inventoryForm.getBarcode());
         obj1.put("quantity", inventoryForm.getQuantity());
+        obj1.put("message", message);
         array.put(obj1);
 
     }

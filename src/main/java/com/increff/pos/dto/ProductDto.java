@@ -84,7 +84,7 @@ public class ProductDto {
                 Validate.ValidateProductFormForBulkAdd(productForm,array);
                 Normalize.NormalizeProductFormForbulkAdd(productForm);
 //                check brand and category name in db
-                brandService.checkForNameCategoryForBulk(productForm.getBrand(),productForm.getCategory(),array);
+                brandService.checkForNameCategoryForBulk(productForm,array);
             }
             if(array.length()!=0)
             {

@@ -14,6 +14,7 @@ import com.increff.pos.model.Form.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
 
 import static com.increff.pos.util.Helper.createBrandErrorobject;
+import static com.increff.pos.util.Helper.createProductErrorobject;
 
 @Service
 public class BrandService {
@@ -143,12 +144,12 @@ public class BrandService {
     public void getByNameCategoryForBulk(String brand, String category, JSONArray array) {
         BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
         if(brandPojo!=null)
-            createBrandErrorobject(brand,category,array);
+            createBrandErrorobject(brand,category,array,"brand-category pair already exist");
     }
 
-    public void checkForNameCategoryForBulk(String brand, String category, JSONArray array) {
-        BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
+    public void checkForNameCategoryForBulk(ProductForm productForm, JSONArray array) {
+        BrandPojo brandPojo=brandDao.selectonBrandCategory(productForm.getBrand(), productForm.getCategory());
         if(brandPojo==null)
-            createBrandErrorobject(brand,category,array);
+            createProductErrorobject(productForm,array,"brand-category does not exist");
     }
 }

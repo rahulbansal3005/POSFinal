@@ -113,7 +113,7 @@ public class ProductService {
             ProductPojo productPojo=getCheck(productForm.getBarcode());
             if(productPojo!=null)
             {
-                createProductErrorobject(productForm,array);
+                createProductErrorobject(productForm,array,"product already exist");
             }
         }
     }

@@ -40,6 +40,10 @@ public class ReportDto {
     @Autowired
     private ProductDao productDao;
 
+    private static final String PATTERN_TIME ="yyyy-MM-dd HH:mm:ss";
+    private static final String START_TIME=" 00:00:00";
+    private static final String END_TIME=" 23:59:59";
+    private static final String PATTERN_DATE="yyyy-MM-dd";
 
     public List<BrandForm> getBrandReport(BrandForm brandForm) throws ApiException {
         List<BrandPojo> brandPojoList = brandService.searchBrandCategoryData(brandForm);
@@ -81,7 +85,7 @@ public class ReportDto {
 
     public List<SalesReportData> getDateWiseSalesReport(SalesReportForm salesReportForm) throws ApiException {
 //        System.out.println(salesReportForm.getStartDate() + "   "+ salesReportForm.getEndDate());
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(PATTERN_DATE);
         String startDate = salesReportForm.getStartDate();
         String endDate = salesReportForm.getEndDate();
 
@@ -108,16 +112,12 @@ public class ReportDto {
 
 
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        startDate = salesReportForm.getStartDate() + " 00:00:00";
-        endDate = salesReportForm.getEndDate() + " 23:59:59";
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_TIME);
+        startDate = salesReportForm.getStartDate() + START_TIME;
+        endDate = salesReportForm.getEndDate() + END_TIME;
         LocalDateTime sdate = LocalDateTime.parse(startDate, dateTimeFormatter);
         LocalDateTime edate = LocalDateTime.parse(endDate, dateTimeFormatter);
-        int diff=edate.compareTo(sdate);
-        if(diff>30)
-        {
-            throw new ApiException("Dates a");
-        }
+
         List<OrderPojo> orderPojos = orderService.getOrdersInDateRange(sdate, edate);
         return reportService.get(orderPojos, salesReportForm.getBrand(), salesReportForm.getCategory());
     }
