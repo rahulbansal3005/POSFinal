@@ -74,6 +74,8 @@ public class InventoryDto {
     }
 
     public void addBulk(List<InventoryForm> inventoryForms) throws ApiException {
+        if(inventoryForms.size()>5000)
+            throw new ApiException("File size is larger than 5000");
         JSONArray array = new JSONArray();
         for (InventoryForm inventoryForm : inventoryForms) {
 

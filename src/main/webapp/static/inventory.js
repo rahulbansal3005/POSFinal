@@ -9,20 +9,32 @@ function resetForm() {
 function toggleModal(){
   $('#add-inventory-item-modal').modal('toggle');
 }
+
+function isInteger(str) {
+  // Regular expression to match an integer
+  var integerPattern = /^-?\d+$/;
+  // Test if the string matches the integer pattern
+  return integerPattern.test(str);
+}
 function addInventory(event) {
   var $form = $("#inventory-form");
   var json = toJson($form);
   console.log(json)
   var parsed=JSON.parse(json);
-  console.log(parsed);
+  // console.log(parsed);
+
 
   if(parsed.barcode==="" || parsed.quantity==="")
-    return frontendChecks("Fields are empty");
-  if(Number.isInteger(parsed.quantity)==false)
+    return frontendChecks("Invalid Input");
+
+  if(isInteger(parsed.quantity)===false)
     return frontendChecks("Quantity is not an integer");
 
   if(parsed.quantity<0)
     return frontendChecks("Quantity can not be negative")
+
+  if(parsed.quantity.length>10)
+    return frontendChecks("Invalid Quantity");
 
   var url = getInventoryUrl();
 
@@ -56,10 +68,18 @@ function updateInventory(event) {
 
   var parsed=JSON.parse(json);
   console.log(parsed);
-  if(parsed.quantity=="")
+  if(parsed.quantity==="")
     return frontendChecks("Fields are empty");
+
+  if(isInteger(parsed.quantity)===false)
+    return frontendChecks("Quantity is not an integer");
   if(parsed.quantity<0)
     return frontendChecks("Quantity can not be negative")
+
+  let parts = parsed.quantity.split(".");
+  let length = parts[0].length;
+  if(length>10)
+    return frontendChecks("Invalid Quantity");
 
   $.ajax({
     url: url,
@@ -237,6 +257,8 @@ function uploadRows() {
     success:function (response){
       console.log(response);
       getInventoryList();
+      SuccessMessage("SuccessFully added");
+
     },
     error: function (response){
       // console.log(response);
@@ -252,7 +274,23 @@ function uploadRows() {
         var resp = JSON.parse(response.responseText);
         var jsonObj = JSON.parse(resp.message);
         console.log(jsonObj);
-        errorData = jsonObj;
+        // errorData = jsonObj;
+
+        const arr=[];
+        for(let obj in jsonObj)
+        {
+          // console.log(obj)
+          // console.log(jsonObj[obj]);
+          const temp={};
+          temp['barcode']=jsonObj[obj].barcode;
+          temp['quantity']=jsonObj[obj].quantity;
+          temp['message']=jsonObj[obj].message;
+
+          arr.push(temp);
+        }
+        console.log(arr);
+        errorData = arr;
+
         console.log(response);
         toastr.error("Error in uploading TSV file, Download Error File");
         $("#download-errors").prop('disabled', false);

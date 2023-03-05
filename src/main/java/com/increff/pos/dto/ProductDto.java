@@ -73,6 +73,9 @@ public class ProductDto {
     }
 
     public void addBulk(List<ProductForm> productForms) throws ApiException {
+        if(productForms.size()>5000)
+            throw new ApiException("File is larger than 5000");
+
             JSONArray array = new JSONArray();
 
 //        Check for duplicates in the list.

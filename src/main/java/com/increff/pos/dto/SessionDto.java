@@ -63,6 +63,9 @@ public class SessionDto {
     }
 
     public ModelAndView signup(SignupForm signupForm) throws ApiException {
+        String email = signupForm.getEmail();
+        if(Validate.isEmpty(email) )
+            throw new ApiException("Email field is empty");
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -73,16 +76,14 @@ public class SessionDto {
             throw new ApiException("Enter valid email");
         }
         Properties prop = new Properties();
-        try {
-            prop.load(new FileInputStream("emails.properties"));
-        } catch (IOException e) {
-            System.out.println("Failed to load properties file.");
-            e.printStackTrace();
-        }
-        String email = signupForm.getEmail();
+//        try {
+//            prop.load(new FileInputStream("emails.properties"));
+//        } catch (IOException e) {
+//            System.out.println("Failed to load properties file.");
+//            e.printStackTrace();
+//        }
         String pass=signupForm.getPassword();
-        if(Validate.isEmpty(email) )
-            throw new ApiException("Email field is empty");
+
 
         if(Validate.isEmpty(pass))
             throw new ApiException("Password field is empty");

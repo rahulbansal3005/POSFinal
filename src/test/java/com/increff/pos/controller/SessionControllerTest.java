@@ -35,39 +35,44 @@ public class SessionControllerTest extends AbstractUnitTest {
 
 
     @Test
-    public void testsignup2(){
+    public void testsignup2() throws ApiException {
+        SignupForm signupForm=new SignupForm();
+        signupForm.setEmail("abcd@gmil.com");
+        signupForm.setPassword("123erwtgds");
+
+        SignupForm signupForm2=new SignupForm();
+        signupForm2.setEmail("abcd@gmil.com");
+        signupForm2.setPassword("123erwtgds");
+
+        sessionController.signup(signupForm);
+        try{
+            sessionController.signup(signupForm2);
+        } catch (ApiException e) {
+            assertEquals("User with given email already exists",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testsignup3(){
+        SignupForm signupForm=new SignupForm();
+        signupForm.setPassword("123erwtssg");
+
+        try{
+            sessionController.signup(signupForm);
+        } catch (ApiException e) {
+            assertEquals("Email field is empty",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testsignup4(){
         SignupForm signupForm=new SignupForm();
         signupForm.setEmail("abc@gmil.com");
 
         try{
             sessionController.signup(signupForm);
         } catch (ApiException e) {
-        }
-    }
-
-//    @Test
-//    public void testsignup3(){
-//        SignupForm signupForm=new SignupForm();
-//        signupForm.setPassword("123erwtg");
-//
-//        try{
-//            sessionController.signup(signupForm);
-//        } catch (ApiException e) {
-//
-//        }
-//    }
-
-    @Test
-    public void testsignup4(){
-        SignupForm signupForm=new SignupForm();
-        signupForm.setEmail("abc@gmil.com");
-        signupForm.setPassword("123erwtg");
-
-        try{
-            ModelAndView modelAndView=sessionController.signup(signupForm);
-            assertEquals("redirect:/site/login",modelAndView.getViewName());
-        } catch (ApiException e) {
-            throw new RuntimeException(e);
+            assertEquals("Password field is empty",e.getMessage());
         }
     }
 

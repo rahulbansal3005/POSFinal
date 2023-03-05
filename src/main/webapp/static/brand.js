@@ -231,16 +231,31 @@ function uploadRows(fileData) {
         success:function (response){
             console.log(response);
             getBrandList();
+            SuccessMessage("SuccessFully added");
+
         },
         error: function (response){
-            if(response.status == 403){
+            if(response.status === 403){
                 frontendChecks("403")
             }
             else {
                 var resp = JSON.parse(response.responseText);
                 var jsonObj = JSON.parse(resp.message);
                 console.log(jsonObj);
-                errorData = jsonObj;
+                const arr=[];
+                for(let obj in jsonObj)
+                {
+                    // console.log(obj)
+                    // console.log(jsonObj[obj]);
+                    const temp={};
+                    temp['brand']=jsonObj[obj].brand;
+                    temp['category']=jsonObj[obj].category;
+                    temp['message']=jsonObj[obj].message;
+
+                    arr.push(temp);
+                }
+                console.log(arr);
+                errorData = arr;
                 console.log(response);
                 toastr.error("Error in uploading TSV file, Download Error File");
                 $("#download-errors").prop('disabled', false);

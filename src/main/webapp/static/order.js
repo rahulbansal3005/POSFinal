@@ -47,18 +47,42 @@ function displayOrderItemList(data) {
 
 }
 
+function isInteger(str) {
+    // Regular expression to match an integer
+    var integerPattern = /^-?\d+$/;
+    // Test if the string matches the integer pattern
+    return integerPattern.test(str);
+}
 function addOrderItem(event) {
     var $form = $("#order-item-form");
-    var json = JSON.parse(toJson($form));
+    var json = (toJson($form));
+    json = JSON.parse(json);
     console.log(json,"json");
-    if(json.barCode=="" || json.quantity=="" || json.sellingPrice=="")
+    if(json.barCode==="" || json.quantity==="" || json.sellingPrice==="")
         return frontendChecks("Fields are empty");
+    if(isInteger(json.quantity)===false)
+        return frontendChecks("Quantity is not an integer");
     if(json.quantity<0)
         return frontendChecks("quantity is negative")
     if(json.sellingPrice<0)
         return frontendChecks("Selling Price is negative");
+    //
+    // if(parsed.mrp<=0)
+    //     return frontendChecks("MRP can not be negative")
 
+    let str = json.quantity;
+    let parts = str.split(".");
+    let length = parts[0].length;
+
+    if(length>10)
+        return frontendChecks("Invalid Quantity");
     // console.log(json);
+    str=json.sellingPrice
+    parts = str.split(".");
+    length = parts[0].length;
+    if(length>10)
+        return frontendChecks("Invalid Selling Price");
+
     if (processedItems[json.barCode]) {
         if (processedItems[json.barCode].sellingPrice !== json.sellingPrice) {
             alert("Error: MRP mismatch for item with Barcode: " + json.barCode);
@@ -211,6 +235,8 @@ function GenerateInvoice(id) {
             // var url2 = getInvoiceUrl()+"/download/"+id;
             // window.location.href = url;
             getOrderList();
+            download(id);
+            SuccessMessage("Invoice generated Successfully");
         },
 
         error: handleAjaxError

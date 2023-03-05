@@ -32,28 +32,28 @@ public class OrderItemDao extends AbstractDao {
         em.persist(orderItemPojo);
     }
 
-    public int delete(int id) {
-        Query query = em.createQuery(DELETE_ID);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    public int delete(int id) {
+//        Query query = em.createQuery(DELETE_ID);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
 
-    public OrderItemPojo select(int id) {
-        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ID, OrderItemPojo.class);
-        query.setParameter("id", id);
-        return getSingle(query);
-    }
+//    public OrderItemPojo select(int id) {
+//        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ID, OrderItemPojo.class);
+//        query.setParameter("id", id);
+//        return getSingle(query);
+//    }
 
-    public OrderItemPojo select_barcode(String barCode) {
-        TypedQuery<OrderItemPojo> query = getQuery(FINDBARCODE, OrderItemPojo.class);
-        query.setParameter("barcode", barCode);
-        return getSingle(query);
-    }
+//    public OrderItemPojo select_barcode(String barCode) {
+//        TypedQuery<OrderItemPojo> query = getQuery(FINDBARCODE, OrderItemPojo.class);
+//        query.setParameter("barcode", barCode);
+//        return getSingle(query);
+//    }
 
-    public List<OrderItemPojo> selectAll() {
-        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ALL, OrderItemPojo.class);
-        return query.getResultList();
-    }
+//    public List<OrderItemPojo> selectAll() {
+//        TypedQuery<OrderItemPojo> query = getQuery(SELECT_ALL, OrderItemPojo.class);
+//        return query.getResultList();
+//    }
 
     public List<OrderItemPojo> getAllOrderItemsbyOrderId(int orderId) {
         TypedQuery<OrderItemPojo> query = getQuery(FINDALLORDERITEMS, OrderItemPojo.class);
@@ -61,8 +61,8 @@ public class OrderItemDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public void update(OrderItemPojo p) {
-    }
+//    public void update(OrderItemPojo p) {
+//    }
 
     public List<OrderItemPojo> selectAllonOrderId(int orderId) {
         TypedQuery<OrderItemPojo> query = getQuery(FINDALLORDERITEMS, OrderItemPojo.class);

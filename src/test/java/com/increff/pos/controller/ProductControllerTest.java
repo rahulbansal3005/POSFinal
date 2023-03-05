@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ProductControllerTest extends AbstractUnitTest {
     @Autowired
@@ -45,39 +46,9 @@ public class ProductControllerTest extends AbstractUnitTest {
         {
             assertEquals("Barcode already present",e.getMessage());
         }
-
-        try{
-            productApiController.add(TestHelper.addProduct("","brand1","cat1","name1",89.565));
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Barcode cannot be empty or null",e.getMessage());
-        }
-
-        try{
-            productApiController.add(TestHelper.addProduct("bar1","","cat1","name1",89.565));
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Brand cannot be empty or null",e.getMessage());
-        }
-
-        try{
-            productApiController.add(TestHelper.addProduct("bar1","brand1","","name1",89.565));
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Category cannot be null or empty",e.getMessage());
-        }
-
-        try{
-            productApiController.add(TestHelper.addProduct("bar1","brand1","cat1","",89.565));
-        }
-        catch (ApiException e)
-        {
-            assertEquals("Name cannot be empty or null",e.getMessage());
-        }
-
+    }
+    @Test
+    public void testAdd2(){
         try{
             productApiController.add(TestHelper.addProduct("bar1","brand1","cat1","name1",-89.565));
         }
@@ -87,6 +58,47 @@ public class ProductControllerTest extends AbstractUnitTest {
         }
     }
 
+    @Test
+    public void testAdd3(){
+        try{
+            productApiController.add(TestHelper.addProduct("bar1","brand1","cat1","",89.565));
+        }
+        catch (ApiException e)
+        {
+            assertEquals("Name cannot be empty or null",e.getMessage());
+        }
+    }
+    @Test
+    public void testAdd4(){
+        try{
+            productApiController.add(TestHelper.addProduct("bar1","brand1","","name1",89.565));
+        }
+        catch (ApiException e)
+        {
+            assertEquals("Category cannot be null or empty",e.getMessage());
+        }
+    }
+    @Test
+    public void testAdd5(){
+        try{
+            productApiController.add(TestHelper.addProduct("bar1","","cat1","name1",89.565));
+        }
+        catch (ApiException e)
+        {
+            assertEquals("Brand cannot be empty or null",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAdd6(){
+        try{
+            productApiController.add(TestHelper.addProduct("","brand1","cat1","name1",89.565));
+        }
+        catch (ApiException e)
+        {
+            assertEquals("Barcode cannot be empty or null",e.getMessage());
+        }
+    }
     @Test
     public void testGet() throws ApiException,NullPointerException {
         for(int i=0;i<10;i++)
@@ -107,19 +119,43 @@ public class ProductControllerTest extends AbstractUnitTest {
         {
             assertEquals("Product with given ID does not exist, id: 0",e.getMessage());
         }
+    }
 
-//        try{
-//            ProductData productData=productApiController.get(10);
-//            assertEquals("name8",productData.getName());
-//        }
-//        catch (ApiException e)
-//        {
-//            assertEquals("Product with given ID does not exist, id: 9",e.getMessage());
-//        }
 
+    @Test
+    public void testGet2() throws ApiException {
+        for(int i=0;i<10;i++)
+        {
+            BrandPojo brandPojo=TestHelper.addBrandToPojo("brand"+i,"cat"+i);
+            brandDao.insert(brandPojo);
+            Integer id=brandPojo.getId();
+
+            ProductPojo productPojo=TestHelper.returnProductPojo("bar"+i,"name"+i,89.52,id);
+            productDao.insert(productPojo);
+        }
+        try{
+            ProductData productData=productApiController.get(1);
+            assertEquals("name0",productData.getName());
+        }
+        catch (ApiException e)
+        {
+            assertEquals("Product with given ID does not exist, id: 1",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetAll() throws ApiException {
+        for(int i=0;i<10;i++)
+        {
+            BrandPojo brandPojo=TestHelper.addBrandToPojo("brand"+i,"cat"+i);
+            brandDao.insert(brandPojo);
+            Integer id=brandPojo.getId();
+
+            ProductPojo productPojo=TestHelper.returnProductPojo("bar"+i,"name"+i,89.52,id);
+            productDao.insert(productPojo);
+        }
         List<ProductData> productDataList=productApiController.getAll();
         assertEquals(10,productDataList.size());
-
     }
 
     @Test
@@ -167,6 +203,48 @@ public class ProductControllerTest extends AbstractUnitTest {
         }
 
         productApiController.addBulk(productFormList);
+    }
+
+    @Test
+    public void testBulk2() throws ApiException {
+        List<ProductForm> productFormList=new ArrayList<>();
+        for(int i=0;i<6000;i++)
+        {
+            BrandPojo brandPojo=TestHelper.addBrandToPojo("brand"+i,"cat"+i);
+            brandDao.insert(brandPojo);
+            Integer id=brandPojo.getId();
+            productFormList.add(TestHelper.addProduct("bar"+i,"brand"+i,"cat"+i,"name"+i,89.3+i));
+        }
+        try{
+            productApiController.addBulk(productFormList);
+
+        }
+        catch (ApiException e)
+        {
+            assertEquals("File is larger than 5000",e.getMessage());
+        }
+    }
+
+    @Test
+    public void testBulk3() throws ApiException {
+        List<ProductForm> productFormList=new ArrayList<>();
+        for(int i=0;i<10;i++)
+        {
+            BrandPojo brandPojo=TestHelper.addBrandToPojo("brand"+i,"cat"+i);
+            brandDao.insert(brandPojo);
+            Integer id=brandPojo.getId();
+            productFormList.add(TestHelper.addProduct("bar"+i,"brand"+i,"cat"+i,"name"+i,89.3+i));
+        }
+
+        productFormList.add(TestHelper.addProduct("bar0","brand0","cat0","name0",89.3));
+        productFormList.add(TestHelper.addProduct("bar1","brand1","cat1","name1",89.3));
+
+        try{
+            productApiController.addBulk(productFormList);
+        }
+        catch (ApiException e){
+            assertNotEquals(0,e.getMessage().length());
+        }
     }
 
 }

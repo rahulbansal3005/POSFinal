@@ -20,12 +20,12 @@ import static com.increff.pos.util.Normalize.normalizeUserForm;
 public class AdminDto {
     @Autowired
     private UserService userService;
-    public void add(UserForm userForm) throws ApiException {
-        Validate.validateUserForm(userForm);
-        normalizeUserForm(userForm);
-        UserPojo userPojo = Helper.convertUserFormToUserPojo(userForm);
-        userService.add(userPojo);
-    }
+//    public void add(UserForm userForm) throws ApiException {
+//        Validate.validateUserForm(userForm);
+//        normalizeUserForm(userForm);
+//        UserPojo userPojo = Helper.convertUserFormToUserPojo(userForm);
+//        userService.add(userPojo);
+//    }
 
 //    public void delete(int id) {
 //        userService.delete(id);

@@ -22,8 +22,17 @@ function addProduct(event) {
     console.log(parsed);
     if (parsed.barcode === "" || parsed.name === "" || parsed.mrp === "" || parsed.brand === "" || parsed.category === "")
         return frontendChecks("Fields are empty");
-    if (json.mrp < 0)
-        return frontendChecks("MRP can not be negative")
+    // if (json.mrp < 0)
+    //     return frontendChecks("MRP can not be negative")
+    if(parsed.mrp<=0)
+        return frontendChecks("MRP can not be negative or Zero")
+
+    let str = parsed.mrp;
+    let parts = str.split(".");
+    let length = parts[0].length;
+
+    if(length>10)
+        return frontendChecks("Invalid MRP");
     var url = getProductUrl();
 
     $.ajax({
@@ -45,7 +54,12 @@ function addProduct(event) {
 
     return false;
 }
-
+function isInteger(str) {
+    // Regular expression to match an integer
+    var integerPattern = /^-?\d+$/;
+    // Test if the string matches the integer pattern
+    return integerPattern.test(str);
+}
 function updateProduct(event) {
     $("#edit-product-modal").modal("toggle");
     //Get the ID
@@ -63,8 +77,18 @@ function updateProduct(event) {
     console.log(parsed);
     if (parsed.name === "" || parsed.mrp === "")
         return frontendChecks("Fields are empty");
-    if (json.mrp <= 0)
-        return frontendChecks("MRP can not be negative or zero")
+    if(parsed.mrp<=0)
+        return frontendChecks("MRP can not be negative or Zero")
+
+    let str = parsed.mrp;
+    let parts = str.split(".");
+    let length = parts[0].length;
+
+    if(length>10)
+        return frontendChecks("Invalid MRP");
+
+    // if (json.mrp <= 0)
+    //     return frontendChecks("MRP can not be negative or zero")
 
     $.ajax({
         url: url,
@@ -314,6 +338,8 @@ function uploadRows() {
         success: function (response) {
             console.log(response);
             getProductList();
+            SuccessMessage("SuccessFully added");
+
         },
         error: function (response) {
             // console.log(response);
@@ -328,7 +354,25 @@ function uploadRows() {
                 var resp = JSON.parse(response.responseText);
                 var jsonObj = JSON.parse(resp.message);
                 console.log(jsonObj);
-                errorData = jsonObj;
+                // errorData = jsonObj;
+
+                const arr=[];
+                for(let obj in jsonObj)
+                {
+                    // console.log(obj)
+                    // console.log(jsonObj[obj]);
+                    const temp={};
+                    temp['barcode']=jsonObj[obj].barcode;
+                    temp['brand']=jsonObj[obj].brand;
+                    temp['category']=jsonObj[obj].category;
+                    temp['name']=jsonObj[obj].name;
+                    temp['mrp']=jsonObj[obj].mrp;
+                    temp['message']=jsonObj[obj].message;
+
+                    arr.push(temp);
+                }
+                console.log(arr);
+                errorData = arr;
                 console.log(response);
                 toastr.error("Error in uploading TSV file, Download Error File");
                 $("#download-errors").prop('disabled', false);
