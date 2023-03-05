@@ -141,15 +141,15 @@ public class BrandService {
     }
 
 //
-    public void getByNameCategoryForBulk(String brand, String category, JSONArray array) {
+    public void getByNameCategoryForBulk(String brand, String category, JSONArray array,int index) {
         BrandPojo brandPojo=brandDao.selectonBrandCategory(brand, category);
         if(brandPojo!=null)
-            createBrandErrorobject(brand,category,array,"brand-category pair already exist");
+            createBrandErrorobject(brand,category,array,"brand-category pair already exist row number: "+ index);
     }
 
-    public void checkForNameCategoryForBulk(ProductForm productForm, JSONArray array) {
+    public void checkForNameCategoryForBulk(ProductForm productForm, JSONArray array, int index) {
         BrandPojo brandPojo=brandDao.selectonBrandCategory(productForm.getBrand(), productForm.getCategory());
         if(brandPojo==null)
-            createProductErrorobject(productForm,array,"brand-category does not exist");
+            createProductErrorobject(productForm,array,"brand-category does not exist with row number: "+index);
     }
 }

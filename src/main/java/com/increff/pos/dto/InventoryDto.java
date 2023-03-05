@@ -77,16 +77,18 @@ public class InventoryDto {
         if(inventoryForms.size()>5000)
             throw new ApiException("File size is larger than 5000");
         JSONArray array = new JSONArray();
+        int index=1;
         for (InventoryForm inventoryForm : inventoryForms) {
 
             //        check for empty form
-            Validate.ValidateInventoryFormForBulkAdd(inventoryForm,array);
+            Validate.ValidateInventoryFormForBulkAdd(inventoryForm,array,index);
 
             ProductPojo productPojo=productService.getCheck(inventoryForm.getBarcode());
             if(productPojo==null)
             {
-                createInventoryErrorobject(inventoryForm,array,"no product exist with this barcode");
+                createInventoryErrorobject(inventoryForm,array,"no product exist with this barcode with row number: "+index);
             }
+            index++;
         }
         if (array.length() != 0) {
             throw new ApiException(array.toString());

@@ -121,9 +121,9 @@ public class Validate {
             throw new ApiException("Role field is empty");
     }
 
-    public static void ValidateBrandFormForBulkAdd(BrandForm brandForm, JSONArray array) {
+    public static void ValidateBrandFormForBulkAdd(BrandForm brandForm, JSONArray array, int index) {
         if (Validate.isEmpty(brandForm.getBrand()) || Validate.isEmpty(brandForm.getCategory())) {
-            createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array, "fields are empty");
+            createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array, "fields are empty with row number: "+index);
 
         }
     }
@@ -135,26 +135,30 @@ public class Validate {
             throw new ApiException("File size is larger than 5000");
         }
         Map<String, String> map = new HashMap<>();
+        int index=1;
         for (BrandForm brandForm : brandForms) {
             if (map.containsKey(brandForm.getBrand())) {
                 if ((map.get(brandForm.getBrand())).equals(brandForm.getCategory()))
-                    createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array,"brand-category is duplicate");
+                    createBrandErrorobject(brandForm.getBrand(), brandForm.getCategory(), array,"brand-category is duplicate with row number: "+index);
             } else {
                 map.put(brandForm.getBrand(), brandForm.getCategory());
             }
+            index++;
         }
     }
 
     public static void checkDuplicateProduct(List<ProductForm> productForms, JSONArray array) {
         Map<String,Integer> map = new HashMap<>();
+        int index=1;
         for (ProductForm productForm : productForms) {
             if(map.containsKey(productForm.getBarcode()))
             {
-                createProductErrorobject(productForm, array,"product barcode already exist");
+                createProductErrorobject(productForm, array,"product barcode already exist with row number: "+index);
             }
             else{
                 map.put(productForm.getBarcode(), 1);
             }
+            index++;
         }
     }
     public static void checkDuplicateInventory(List<InventoryForm> inventoryForms, JSONArray array) {
@@ -164,25 +168,25 @@ public class Validate {
     public static void checkDuplicateOrderItem(List<OrderItem> orderItems, JSONArray array) {
     }
 
-    public static void ValidateProductFormForBulkAdd(ProductForm productForm, JSONArray array) {
+    public static void ValidateProductFormForBulkAdd(ProductForm productForm, JSONArray array, int index) {
         if (Validate.isEmpty(productForm.getBrand()) || Validate.isEmpty(productForm.getCategory()) ||
                 Validate.isEmpty(productForm.getBarcode()) || Validate.isEmpty(productForm.getName())) {
-            createProductErrorobject(productForm, array,"Some or All fields are empty");
+            createProductErrorobject(productForm, array,"Some or All fields are empty with row number; "+index);
         }
         if(productForm.getMrp()==null || productForm.getMrp()<=0)
         {
-            createProductErrorobject(productForm, array,"MRP is either Null or not correct");
+            createProductErrorobject(productForm, array,"MRP is either Null or not correct with row number: "+index);
         }
     }
 
 
-    public static void ValidateInventoryFormForBulkAdd(InventoryForm inventoryForm, JSONArray array) {
+    public static void ValidateInventoryFormForBulkAdd(InventoryForm inventoryForm, JSONArray array,int index) {
         if (Validate.isEmpty(inventoryForm.getBarcode()) ) {
-            createInventoryErrorobject(inventoryForm, array,"Enter barcode correctly");
+            createInventoryErrorobject(inventoryForm, array,"Enter barcode correctly with row number: "+index);
         }
         if(inventoryForm.getQuantity()==null || inventoryForm.getQuantity()<=0)
         {
-            createInventoryErrorobject(inventoryForm, array, "Enter qunatity correctly");
+            createInventoryErrorobject(inventoryForm, array, "Enter quantity correctly with row number: "+index);
         }
     }
 

@@ -108,13 +108,15 @@ public class ProductService {
 //        }
 //    }
     public void getCheckProductsInBulk(List<ProductForm> productForms, JSONArray array) {
+        int index=1;
         for(ProductForm productForm:productForms)
         {
             ProductPojo productPojo=getCheck(productForm.getBarcode());
             if(productPojo!=null)
             {
-                createProductErrorobject(productForm,array,"product already exist");
+                createProductErrorobject(productForm,array,"product already exist with row number: "+index);
             }
+            index++;
         }
     }
 }

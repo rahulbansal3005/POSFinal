@@ -90,11 +90,13 @@ public class BrandDto {
     public void bulkAdd(List<BrandForm> brandForms) throws ApiException {
         JSONArray array = new JSONArray();
         Validate.checkDuplicateBrandform(brandForms,array);
+        int index=1;
         for(BrandForm brandForm:brandForms)
         {
-            Validate.ValidateBrandFormForBulkAdd(brandForm,array);
+            Validate.ValidateBrandFormForBulkAdd(brandForm,array,index);
             Normalize.NormalizeBrandFormForbulkAdd(brandForm);
-            brandService.getByNameCategoryForBulk(brandForm.getBrand(),brandForm.getCategory(),array);
+            brandService.getByNameCategoryForBulk(brandForm.getBrand(),brandForm.getCategory(),array,index);
+            index++;
         }
         if(array.length()!=0)
         {

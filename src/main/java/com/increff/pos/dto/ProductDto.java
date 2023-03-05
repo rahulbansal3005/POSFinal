@@ -30,8 +30,8 @@ public class ProductDto {
     public void add(ProductForm productForm) throws ApiException {
         validateproductFormonAdd(productForm);
         Normalize.normalizeProductForm(productForm);
-        ProductPojo productPojo=productService.getCheck(productForm.getBarcode());
-        if(productPojo!=null)
+        ProductPojo productPojo = productService.getCheck(productForm.getBarcode());
+        if (productPojo != null)
             throw new ApiException("Barcode already present");
         productPojo = convertProductFormToProductPojo(productForm);
         productPojo.setBrandCategory(brandService.extractId(productForm));
@@ -43,7 +43,7 @@ public class ProductDto {
 
     public ProductData get(Integer id) throws ApiException {
         ProductPojo productPojo = productService.get(id);
-        ProductData productData= convertProductPojoToProductData(productPojo);
+        ProductData productData = convertProductPojoToProductData(productPojo);
         productData.setBrand(brandService.getBrandName(productData.getBrand_category()));
         productData.setCategory(brandService.getCategoryName(productData.getBrand_category()));
         return productData;
@@ -53,7 +53,7 @@ public class ProductDto {
         List<ProductPojo> productPojoList = productService.getAll();
         List<ProductData> productDataList = new ArrayList<ProductData>();
         for (ProductPojo productPojo : productPojoList) {
-            ProductData productData =convertProductPojoToProductData(productPojo);
+            ProductData productData = convertProductPojoToProductData(productPojo);
 
 
             productData.setBrand(brandService.getBrandName(productData.getBrand_category()));
@@ -69,34 +69,32 @@ public class ProductDto {
         Normalize.normalizeProductForm(productForm);
 //        ProductPojo productPojo = convertProductFormToProductPojo(productForm);
 
-        productService.update(id, productForm.getName(),productForm.getMrp());
+        productService.update(id, productForm.getName(), productForm.getMrp());
     }
 
     public void addBulk(List<ProductForm> productForms) throws ApiException {
-        if(productForms.size()>5000)
+        if (productForms.size() > 5000)
             throw new ApiException("File is larger than 5000");
 
-            JSONArray array = new JSONArray();
+        JSONArray array = new JSONArray();
 
 //        Check for duplicates in the list.
-            Validate.checkDuplicateProduct(productForms,array);
+        Validate.checkDuplicateProduct(productForms, array);
 //        Check barcodes in DB
-        productService.getCheckProductsInBulk(productForms,array);
-            for(ProductForm productForm:productForms)
-            {
-                Validate.ValidateProductFormForBulkAdd(productForm,array);
-                Normalize.NormalizeProductFormForbulkAdd(productForm);
+        productService.getCheckProductsInBulk(productForms, array);
+        int index=1;
+        for (ProductForm productForm : productForms) {
+            Validate.ValidateProductFormForBulkAdd(productForm, array,index);
+            Normalize.NormalizeProductFormForbulkAdd(productForm);
 //                check brand and category name in db
-                brandService.checkForNameCategoryForBulk(productForm,array);
-            }
-            if(array.length()!=0)
-            {
-                throw new ApiException(array.toString());
-            }
-            for(ProductForm productForm:productForms)
-            {
-                add(productForm);
-            }
+            brandService.checkForNameCategoryForBulk(productForm, array,index);
+        }
+        if (array.length() != 0) {
+            throw new ApiException(array.toString());
+        }
+        for (ProductForm productForm : productForms) {
+            add(productForm);
+        }
 
     }
 }
