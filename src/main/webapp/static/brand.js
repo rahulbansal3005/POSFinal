@@ -113,7 +113,7 @@ function displayBrandList(data) {
         var buttonHtml =
             // '<button type="button" class="btn btn-secondary" onclick="deleteBrand(' + e.id + ')">delete</button>';
             // buttonHtml +=
-            ' <button type="button" class="btn btn-secondary" onclick="displayEditBrand(' + e.id + ')">edit</button>';
+            ' <button type="button" class="btn btn-secondary" onclick="displayEditBrand(' + e.id + ')">Edit</button>';
         var row =
             "<tr>" +
             "<td>" +

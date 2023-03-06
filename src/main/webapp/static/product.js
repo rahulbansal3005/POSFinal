@@ -273,7 +273,7 @@ function readFileDataCallback(results) {
 
     for(let i=0;i<len;i++)
     {
-        if(Object.keys(jsonq[i]).length!=headers.length)
+        if(Object.keys(jsonq[i]).length!==headers.length)
         {
             console.log(Object.keys(jsonq[i]).length);
             frontendChecks("Row is not correct "+ i );
@@ -283,7 +283,7 @@ function readFileDataCallback(results) {
         console.log(keys);
         for(const key in keys)
         {
-            if(jsonq[i][key]=="")
+            if(jsonq[i][key]==="")
             {
                 frontendChecks("error in this row ", i);
             }
@@ -291,7 +291,7 @@ function readFileDataCallback(results) {
 
     }
 
-    if(Object.keys(jsonq[0]).length != headers.length){
+    if(Object.keys(jsonq[0]).length !== headers.length){
         frontendChecks("File column number do not match. Please check the file and try again");
         return;
     }

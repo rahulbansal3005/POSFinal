@@ -115,8 +115,6 @@ public class ReportControllerTest extends AbstractUnitTest {
     @Test
     public void testSalesReport(){
 
-
-
     }
 
     @Test

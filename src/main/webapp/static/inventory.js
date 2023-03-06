@@ -57,7 +57,7 @@ function addInventory(event) {
 }
 
 function updateInventory(event) {
-  $("#edit-inventory-modal").modal("toggle");
+  // $("#edit-inventory-modal").modal("toggle");
   var id = $("#inventory-edit-form input[name=id]").val();
   var url = getInventoryUrl() + "/" + id;
 
@@ -91,6 +91,7 @@ function updateInventory(event) {
     success: function (response) {
       SuccessMessage('Updated successfully');
       getInventoryList();
+      $("#edit-inventory-modal").modal("toggle");
     },
     error: handleAjaxError,
   });
