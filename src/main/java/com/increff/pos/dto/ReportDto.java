@@ -129,12 +129,12 @@ public class ReportDto {
     public void createReport() {
         SalesPojo salesPojo=new SalesPojo();
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(now);
+//        System.out.println(now);
         LocalDate localDate = now.toLocalDate();
         LocalDateTime start=now.with(LocalTime.MIN);
         LocalDateTime end=now.with(LocalTime.MAX);
-        System.out.println(start);
-        System.out.println(end);
+//        System.out.println(start);
+//        System.out.println(end);
         List<OrderPojo> orderPojos=orderService.getOrdersInDateRange(start,end);
         int invoiceCount=0;
         double totalRevenue=0;

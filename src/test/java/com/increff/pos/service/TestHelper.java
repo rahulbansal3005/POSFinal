@@ -50,6 +50,13 @@ public class TestHelper {
         inventoryForm.setQuantity(quantity);
         return inventoryForm;
     }
+    public static InventoryPojo addInventoryPojo(Integer quantity, int pid)
+    {
+        InventoryPojo inventoryPojo = new InventoryPojo();
+        inventoryPojo.setProductId(pid);
+        inventoryPojo.setQuantity(quantity);
+        return inventoryPojo;
+    }
 
 
     public static BrandPojo addBrandToPojo(String brand, String category) throws ApiException,NullPointerException {

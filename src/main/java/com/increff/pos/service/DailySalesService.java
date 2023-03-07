@@ -25,9 +25,9 @@ public class DailySalesService {
         List<DailySalesData> dailySalesDataList=new ArrayList<>();
 //        List<SalesPojo> salesPojoList=dailySalesDao.selectAll();
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(now);
+//        System.out.println(now);
         LocalDate localDate = now.toLocalDate();
-        System.out.println(localDate);
+//        System.out.println(localDate);
         List<SalesPojo> salesPojoListOfCurrentDate=dailySalesDao.get(localDate);
         for(SalesPojo salesPojo:salesPojoListOfCurrentDate)
         {

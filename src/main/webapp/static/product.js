@@ -146,7 +146,7 @@ function displayProductList(data) {
         var buttonHtml =
             // '<button type="button" class="btn btn-secondary" onclick="deleteProduct(' + e.id + ')">delete</button>';
             // buttonHtml +=
-            ' <button type="button" class="btn btn-secondary" onclick="displayEditProduct(' + e.id + ')">edit</button>';
+            ' <button type="button" class="btn btn-secondary" onclick="displayEditProduct(' + e.id + ')">Edit</button>';
         var row =
             "<tr>" +
             "<td>" +
@@ -199,56 +199,93 @@ function displayProduct(data) {
 }
 
 
+
+
 //Fill dropdown Options
 const getBrandUrl = (brand = "", category = "") => {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
     return baseUrl + "/api/brand?brand=" + brand + "&category=" + category;
 }
+
+let brandCategoryData = [];
+brandSet = new Set();
+categorySet = new Set();
+
 const fillOptions = () => {
-    var url = getBrandUrl();
+    let url = getBrandUrl();
 
     $.ajax({
         url: url,
         type: 'GET',
         success: function (response) {
+            brandCategoryData = response;
             // console.log(response);
-            populateBrand(response);
-            populateCategory(response);
+            for(let i in response){
+                brandSet.add(response[i].brand);
+                categorySet.add(response[i].category);
+            }
+            populateDropDowns(brandSet,categorySet);
         },
         error: handleAjaxError
     });
 }
 
-const populateBrand = data => {
-    let $selectBrand = $("#inputBrand");
+function populateDropDowns(brandSet,categorySet) {
+    $('#inputBrand').empty()
+    $('#inputCategory').empty()
+    $('#inputBrand').append('<option selected="" value="">Select Brand</option>')
+    $('#inputCategory').append('<option selected="" value="">Select Category</option>')
+    brandSet.forEach(function(brand){
+        let brandOptionHTML = '<option value="'+ brand +'">'+ brand+'</option>'
+        $('#inputBrand').append(brandOptionHTML)
+    })
+    categorySet.forEach(function(category){
+        let categoryOptionHTML = '<option value="'+ category +'">'+ category+'</option>'
+        $('#inputCategory').append(categoryOptionHTML)
+    })
+}
 
-    let brands = new Set();
-    for (var i in data) {
-        var e = data[i];
-        // console.log(e);
-        brands.add(e.brand);
+
+let flag="";
+function brandChanged(event){
+    if(flag==="" || flag==="brand"){
+        flag="brand";
+        let brand = event.target.value;
+        if(brand===""){
+            populateDropDowns(brandSet,categorySet);
+            flag="";
+            return;
+        }
+        $('#inputCategory').empty();
+        $('#inputCategory').append('<option selected="" value="">Select Category</option>');
+        for(let i in brandCategoryData){
+            if(brandCategoryData[i].brand===brand){
+                let categoryOptionHTML = '<option value="'+ brandCategoryData[i].category +'">'+ brandCategoryData[i].category+'</option>';
+                $('#inputCategory').append(categoryOptionHTML);
+            }
+        }
     }
-
-    for (let brand of brands.values()) {
-        var ele = '<option value="' + brand + '">' + brand + '</option>';
-        $selectBrand.append(ele);
+}
+function categoryChanged(event){
+    if(flag==="" || flag==="category"){
+        flag= "category";
+        let category = event.target.value;
+        if(category===""){
+            populateDropDowns(brandSet,categorySet);
+            flag="";
+            return;
+        }
+        $('#inputBrand').empty();
+        $('#inputBrand').append('<option selected="" value="">Select Brand</option>');
+        for(let i in brandCategoryData){
+            if(brandCategoryData[i].category===category){
+                let brandOptionHTML = '<option value="'+ brandCategoryData[i].brand +'">'+ brandCategoryData[i].brand+'</option>';
+                $('#inputBrand').append(brandOptionHTML);
+            }
+        }
     }
 }
 
-const populateCategory = data => {
-    let $selectCategory = $("#inputCategory");
-
-    let categories = new Set();
-    for (var i in data) {
-        var e = data[i];
-        categories.add(e.category);
-    }
-
-    for (let category of categories.values()) {
-        var ele = '<option value="' + category + '">' + category + '</option>';
-        $selectCategory.append(ele);
-    }
-}
 
 
 // FILE UPLOAD METHODS
@@ -426,9 +463,12 @@ function init() {
     $("#process-data").click(processData);
     $("#download-errors").click(downloadErrors);
     $("#productFile").on("change", updateFileName);
-    fillOptions();
+    $('#inputBrand').change(brandChanged);
+    $('#inputCategory').change(categoryChanged);
+    // fillOptions();
 
 }
 
 $(document).ready(init);
 $(document).ready(getProductList);
+$(document).ready(fillOptions);

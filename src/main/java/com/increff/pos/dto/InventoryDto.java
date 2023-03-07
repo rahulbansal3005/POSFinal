@@ -9,6 +9,8 @@ import com.increff.pos.service.ApiException;
 import com.increff.pos.service.InventoryService;
 import com.increff.pos.service.ProductService;
 import com.increff.pos.util.Validate;
+//import java.util.regex.matches;
+
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class InventoryDto {
 
         Validate.validateInventoryFormonAdd(inventoryForm);
         normalizeInventoryForm(inventoryForm);
+//        if (inventoryForm.getQuantity().matches("\\d+\\.\\d+")) {
+//
+//        }
         int prodId = productService.extractProductId(inventoryForm.getBarcode());
         InventoryPojo inventoryPojo = inventoryService.selectOnProdId(prodId);
         if (inventoryPojo != null) {
