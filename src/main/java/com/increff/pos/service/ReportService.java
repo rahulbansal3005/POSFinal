@@ -6,7 +6,13 @@ import com.increff.pos.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 
@@ -49,22 +55,16 @@ public class ReportService {
         for (Map.Entry<Integer, SalesReportData> e : map.entrySet()) {
             if (brand == "" && category == "") {
                 output.add(e.getValue());
-            }
-            else if (brand=="" && category!="") {
-                if(category.equals(e.getValue().getCategory()))
-                {
+            } else if (brand == "" && category != "") {
+                if (category.equals(e.getValue().getCategory())) {
                     output.add(e.getValue());
                 }
-            }
-            else if (brand!="" && category=="") {
-                if(brand.equals(e.getValue().getBrand()))
-                {
+            } else if (brand != "" && category == "") {
+                if (brand.equals(e.getValue().getBrand())) {
                     output.add(e.getValue());
                 }
-            }
-            else{
-                if(brand.equals(e.getValue().getBrand()) && category.equals(e.getValue().getCategory()))
-                {
+            } else {
+                if (brand.equals(e.getValue().getBrand()) && category.equals(e.getValue().getCategory())) {
                     output.add(e.getValue());
                 }
             }
@@ -72,27 +72,28 @@ public class ReportService {
         return output;
     }
 
+    @Transactional(rollbackOn = ApiException.class)
     public void addScheduler(SalesPojo salesPojo) {
         dailySalesDao.insert(salesPojo);
     }
-//    public List<Integer> getOrderIdList(List<OrderPojo> orderPojo, String startdate, String enddate) throws ParseException, ApiException {
-//        List<Integer> orderIds = new ArrayList<Integer>();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        for (OrderPojo orderPojo1 : orderPojo) {
-//            // Split datetime with space and get first element of array as date
-//            String receivedDate = sdf.format(orderPojo1.getDate());
-//            // Compares date with startdate and enddate
-//            if ((sdf.parse(startdate).before(sdf.parse(receivedDate))
-//                    || sdf.parse(startdate).equals(sdf.parse(receivedDate)))
-//                    && (sdf.parse(receivedDate).before(sdf.parse(enddate))
-//                    || sdf.parse(receivedDate).equals(sdf.parse(enddate)))) {
-//                // Add id to array
-//                orderIds.add(orderPojo1.getId());
-//            }
-//        }
-//        if (orderIds.size() == 0) {
-//            throw new ApiException("There are no orders for given dates");
-//        }
-//        return orderIds;
-//    }
+
+    public SalesPojo findSalesPojo(LocalDate date) {
+        return dailySalesDao.get(date);
+    }
+
+    @Transactional(rollbackOn = ApiException.class)
+    public void updateSalesPojo(double totalRevenue, int totalInvoiceItems, LocalDateTime now, int invoiceCount) {
+//        System.out.println(totalRevenue);
+//        System.out.println(totalInvoiceItems);
+//        System.out.println(invoiceCount);
+
+        LocalDate localDate = now.toLocalDate();
+        SalesPojo salesPojo1 = findSalesPojo(localDate);
+
+        salesPojo1.setInvoicedItemsCount(totalInvoiceItems);
+        salesPojo1.setTotalRevenue(totalRevenue);
+        salesPojo1.setLastRun(now);
+        salesPojo1.setInvoicedOrderCount(invoiceCount);
+
+    }
 }

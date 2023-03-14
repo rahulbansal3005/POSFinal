@@ -27,9 +27,17 @@ public class DailySalesDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public List<SalesPojo> get(LocalDate today){
+    public SalesPojo get(LocalDate today){
+        TypedQuery<SalesPojo> query = getQuery(GET_TODAYS, SalesPojo.class);
+        query.setParameter("today", today);
+        return getSingle(query);
+    }
+
+
+    public List<SalesPojo> getALL(LocalDate today){
         TypedQuery<SalesPojo> query = getQuery(GET_TODAYS, SalesPojo.class);
         query.setParameter("today", today);
         return query.getResultList();
     }
 }
+

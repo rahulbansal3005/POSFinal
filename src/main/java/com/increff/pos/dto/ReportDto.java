@@ -17,10 +17,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ReportDto {
+    private static final String PATTERN_TIME = "yyyy-MM-dd HH:mm:ss";
+    private static final String START_TIME = " 00:00:00";
+    private static final String END_TIME = " 23:59:59";
+    private static final String PATTERN_DATE = "yyyy-MM-dd";
     @Autowired
     private InventoryService inventoryService;
     @Autowired
@@ -33,17 +38,10 @@ public class ReportDto {
     private OrderItemService orderItemService;
     @Autowired
     private DailySalesService dailySalesService;
-
     @Autowired
     private ReportService reportService;
-
     @Autowired
     private ProductDao productDao;
-
-    private static final String PATTERN_TIME ="yyyy-MM-dd HH:mm:ss";
-    private static final String START_TIME=" 00:00:00";
-    private static final String END_TIME=" 23:59:59";
-    private static final String PATTERN_DATE="yyyy-MM-dd";
 
     public List<BrandForm> getBrandReport(BrandForm brandForm) throws ApiException {
         List<BrandPojo> brandPojoList = brandService.searchBrandCategoryData(brandForm);
@@ -61,16 +59,15 @@ public class ReportDto {
             List<ProductPojo> productPojoList = productService.getProductByBrandCategoryId(brandPojo.getId());
             if (productPojoList.size() != 0) {
                 Integer quantity = 0;
-                boolean flag=false;
+                boolean flag = false;
                 for (ProductPojo productPojo : productPojoList) {
                     InventoryPojo inventoryPojo = inventoryService.selectOnProdId(productPojo.getId());
                     if (inventoryPojo != null) {
                         quantity += inventoryPojo.getQuantity();
-                       flag=true;
+                        flag = true;
                     }
                 }
-                if(flag)
-                {
+                if (flag) {
                     InventoryReportData inventoryReportData = new InventoryReportData();
                     inventoryReportData.setQuantity(quantity);
                     inventoryReportData.setBrand(brandPojo.getBrand());
@@ -111,7 +108,6 @@ public class ReportDto {
         }
 
 
-
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_TIME);
         startDate = salesReportForm.getStartDate() + START_TIME;
         endDate = salesReportForm.getEndDate() + END_TIME;
@@ -127,33 +123,38 @@ public class ReportDto {
     }
 
     public void createReport() {
-        SalesPojo salesPojo=new SalesPojo();
         LocalDateTime now = LocalDateTime.now();
-//        System.out.println(now);
         LocalDate localDate = now.toLocalDate();
-        LocalDateTime start=now.with(LocalTime.MIN);
-        LocalDateTime end=now.with(LocalTime.MAX);
-//        System.out.println(start);
-//        System.out.println(end);
-        List<OrderPojo> orderPojos=orderService.getOrdersInDateRange(start,end);
-        int invoiceCount=0;
-        double totalRevenue=0;
-        int totalInvoiceItems=0;
+        SalesPojo salesPojo1 = reportService.findSalesPojo(localDate);
+        LocalDateTime end = now.with(LocalTime.MAX);
+        LocalDateTime start = now.with(LocalTime.MIN);
+        List<OrderPojo> orderPojos = orderService.getOrdersInDateRange(start, end);
+        int invoiceCount = 0;
+        double totalRevenue = 0;
+        int totalInvoiceItems = 0;
         for (OrderPojo orderPojo : orderPojos) {
-            if(orderPojo.getIsInvoiceGenerated())
+            if (orderPojo.getIsInvoiceGenerated())
                 invoiceCount++;
             List<OrderItemPojo> oip = orderItemService.getByOrderId(orderPojo.getId());
             for (OrderItemPojo orderItemPojo : oip) {
-
                 totalInvoiceItems++;
-                totalRevenue+=(orderItemPojo.getQuantity()*orderItemPojo.getSellingPrice());
+                totalRevenue += (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice());
             }
         }
-        salesPojo.setInvoicedItemsCount(totalInvoiceItems);
-        salesPojo.setTotalRevenue(totalRevenue);
-        salesPojo.setLastRun(now);
-        salesPojo.setInvoicedOrderCount(invoiceCount);
-        salesPojo.setDate(localDate);
-        reportService.addScheduler(salesPojo);
+
+
+
+        if (salesPojo1 == null) {
+            SalesPojo salesPojo = new SalesPojo();
+            salesPojo.setInvoicedItemsCount(totalInvoiceItems);
+            salesPojo.setTotalRevenue(totalRevenue);
+            salesPojo.setLastRun(now);
+            salesPojo.setInvoicedOrderCount(invoiceCount);
+            salesPojo.setDate(localDate);
+            reportService.addScheduler(salesPojo);
+        } else {
+            reportService.updateSalesPojo(totalRevenue, totalInvoiceItems, now, invoiceCount);
+        }
+
     }
 }

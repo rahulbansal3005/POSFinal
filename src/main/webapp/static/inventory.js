@@ -45,7 +45,7 @@ function addInventory(event) {
     headers: {
       "Content-Type": "application/json",
     },
-    success: function (response) {
+    success: function () {
       $('#add-inventory-item-modal').modal('toggle');
       resetForm();
       SuccessMessage("Successfully added");
@@ -89,6 +89,7 @@ function updateInventory(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      resetForm();
       SuccessMessage('Updated successfully');
       getInventoryList();
       $("#edit-inventory-modal").modal("toggle");
@@ -193,10 +194,10 @@ function readFileDataCallback(results) {
 
   for(let i=0;i<len;i++)
   {
-    if(Object.keys(jsonq[i]).length!=headers.length)
+    if(Object.keys(jsonq[i]).length!==headers.length)
     {
       console.log(Object.keys(jsonq[i]).length);
-      frontendChecks("Row is not correct "+ i );
+      frontendChecks("Row "+i +" is not correct" );
       return;
     }
     let keys=Object.keys(jsonq[i]);
@@ -337,7 +338,7 @@ function displayUploadData() {
 function displayInventory(data) {
   console.log(data);
   $("#inventory-edit-form input[name=barcode]").val(data.barcode);
-  $("#inventory-edit-form input[name=category]").val(data.category);
+  $("#inventory-edit-form input[name=quantity]").val(data.quantity);
   $("#inventory-edit-form input[name=id]").val(data.id);
   $("#edit-inventory-modal").modal("toggle");
 }

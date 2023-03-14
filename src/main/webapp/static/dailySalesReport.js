@@ -49,7 +49,7 @@ function scheduleNow(){
         url: url,
         type: 'GET',
         success: function(data) {
-            // console.log(data);
+            getDaySalesList();
         },
         error: handleAjaxError
     });

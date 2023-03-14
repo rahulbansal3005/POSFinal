@@ -28,7 +28,7 @@ public class DailySalesService {
 //        System.out.println(now);
         LocalDate localDate = now.toLocalDate();
 //        System.out.println(localDate);
-        List<SalesPojo> salesPojoListOfCurrentDate=dailySalesDao.get(localDate);
+        List<SalesPojo> salesPojoListOfCurrentDate=dailySalesDao.getALL(localDate);
         for(SalesPojo salesPojo:salesPojoListOfCurrentDate)
         {
             DailySalesData dailySalesData=new DailySalesData();
