@@ -15,7 +15,7 @@ function addUser(event){
 	var parsed=JSON.parse(json);
 	console.log(parsed);
 
-	if(parsed.email=="" || parsed.quantity=="" || parsed.role=="")
+	if(parsed.email==="" || parsed.quantity==="" || parsed.role==="")
 		return frontendChecks("Fields are empty");
 
 	$.ajax({

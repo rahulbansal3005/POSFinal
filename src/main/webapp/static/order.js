@@ -62,8 +62,8 @@ function addOrderItem(event) {
         return frontendChecks("Fields are empty");
     if(isInteger(json.quantity)===false)
         return frontendChecks("Quantity is not an integer");
-    if(json.quantity<0)
-        return frontendChecks("quantity is negative")
+    if(json.quantity<=0)
+        return frontendChecks("Quantity is negative or zero")
     if(json.sellingPrice<0)
         return frontendChecks("Selling Price is negative");
     //
@@ -209,14 +209,14 @@ function displayOrderList(data) {
         // console.log("E", e);
         var buttonHtml = ' <button type="button" class="btn btn-secondary" onclick="displayOrder(' + e.id + ')">View Order</button>'
         // console.log("isInvoiceGenerated",isInvoiceGenerated);
-        if (e.status == true) {
+        if (e.status === true) {
             buttonHtml += ' <button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')" disabled> Generate invoice</button>'
             buttonHtml += ' <button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" >Download Invoice</button>'
         } else {
             buttonHtml += ' <button type="button" class="btn btn-success" id="generateInvoice" onclick="GenerateInvoice(' + e.id + ')"> Generate invoice</button>'
             buttonHtml += ' <button type="button" class="btn btn-info" id="download" onclick="download(' + e.id + ')" disabled>Download Invoice</button>'
         }
-        var date = new Date(e.updated)
+        // var date = new Date(e.updated)
         var row = '<tr>'
             + '<td>' + index++ + '</td>'
             + '<td>' + e.dateTime + '</td>'
@@ -227,6 +227,7 @@ function displayOrderList(data) {
 }
 
 function GenerateInvoice(id) {
+    var status=false;
     var url = getInvoiceUrl() + "/" + id;
     $.ajax({
         url: url,
@@ -234,9 +235,10 @@ function GenerateInvoice(id) {
         success: function () {
             // var url2 = getInvoiceUrl()+"/download/"+id;
             // window.location.href = url;
-            getOrderList();
+            // status=true;
             download(id);
             SuccessMessage("Invoice generated Successfully");
+            getOrderList();
         },
 
         error: handleAjaxError

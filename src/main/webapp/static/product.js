@@ -24,14 +24,14 @@ function addProduct(event) {
         return frontendChecks("Fields are empty");
     // if (json.mrp < 0)
     //     return frontendChecks("MRP can not be negative")
-    if(parsed.mrp<=0)
+    if (parsed.mrp <= 0)
         return frontendChecks("MRP can not be negative or Zero")
 
     let str = parsed.mrp;
     let parts = str.split(".");
     let length = parts[0].length;
 
-    if(length>10)
+    if (length > 10)
         return frontendChecks("Invalid MRP");
     var url = getProductUrl();
 
@@ -54,12 +54,14 @@ function addProduct(event) {
 
     return false;
 }
+
 function isInteger(str) {
     // Regular expression to match an integer
     var integerPattern = /^-?\d+$/;
     // Test if the string matches the integer pattern
     return integerPattern.test(str);
 }
+
 function updateProduct(event) {
     $("#edit-product-modal").modal("toggle");
     //Get the ID
@@ -77,14 +79,14 @@ function updateProduct(event) {
     console.log(parsed);
     if (parsed.name === "" || parsed.mrp === "")
         return frontendChecks("Fields are empty");
-    if(parsed.mrp<=0)
+    if (parsed.mrp <= 0)
         return frontendChecks("MRP can not be negative or Zero")
 
     let str = parsed.mrp;
     let parts = str.split(".");
     let length = parts[0].length;
 
-    if(length>10)
+    if (length > 10)
         return frontendChecks("Invalid MRP");
 
     // if (json.mrp <= 0)
@@ -199,8 +201,6 @@ function displayProduct(data) {
 }
 
 
-
-
 //Fill dropdown Options
 const getBrandUrl = (brand = "", category = "") => {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
@@ -220,72 +220,73 @@ const fillOptions = () => {
         success: function (response) {
             brandCategoryData = response;
             // console.log(response);
-            for(let i in response){
+            for (let i in response) {
                 brandSet.add(response[i].brand);
                 categorySet.add(response[i].category);
             }
-            populateDropDowns(brandSet,categorySet);
+            populateDropDowns(brandSet, categorySet);
         },
         error: handleAjaxError
     });
 }
 
-function populateDropDowns(brandSet,categorySet) {
+function populateDropDowns(brandSet, categorySet) {
     $('#inputBrand').empty()
     $('#inputCategory').empty()
     $('#inputBrand').append('<option selected="" value="">Select Brand</option>')
     $('#inputCategory').append('<option selected="" value="">Select Category</option>')
-    brandSet.forEach(function(brand){
-        let brandOptionHTML = '<option value="'+ brand +'">'+ brand+'</option>'
+    brandSet.forEach(function (brand) {
+        let brandOptionHTML = '<option value="' + brand + '">' + brand + '</option>'
         $('#inputBrand').append(brandOptionHTML)
     })
-    categorySet.forEach(function(category){
-        let categoryOptionHTML = '<option value="'+ category +'">'+ category+'</option>'
+    categorySet.forEach(function (category) {
+        let categoryOptionHTML = '<option value="' + category + '">' + category + '</option>'
         $('#inputCategory').append(categoryOptionHTML)
     })
 }
 
 
-let flag="";
-function brandChanged(event){
-    if(flag==="" || flag==="brand"){
-        flag="brand";
+let flag = "";
+
+function brandChanged(event) {
+    if (flag === "" || flag === "brand") {
+        flag = "brand";
         let brand = event.target.value;
-        if(brand===""){
-            populateDropDowns(brandSet,categorySet);
-            flag="";
+        if (brand === "") {
+            populateDropDowns(brandSet, categorySet);
+            flag = "";
             return;
         }
         $('#inputCategory').empty();
         $('#inputCategory').append('<option selected="" value="">Select Category</option>');
-        for(let i in brandCategoryData){
-            if(brandCategoryData[i].brand===brand){
-                let categoryOptionHTML = '<option value="'+ brandCategoryData[i].category +'">'+ brandCategoryData[i].category+'</option>';
+        for (let i in brandCategoryData) {
+            if (brandCategoryData[i].brand === brand) {
+                let categoryOptionHTML = '<option value="' + brandCategoryData[i].category + '">' + brandCategoryData[i].category + '</option>';
                 $('#inputCategory').append(categoryOptionHTML);
             }
         }
     }
 }
-function categoryChanged(event){
-    if(flag==="" || flag==="category"){
-        flag= "category";
+
+function categoryChanged(event) {
+    if (flag === "" || flag === "category") {
+        flag = "category";
         let category = event.target.value;
-        if(category===""){
-            populateDropDowns(brandSet,categorySet);
-            flag="";
+        if (category === "") {
+            populateDropDowns(brandSet, categorySet);
+            flag = "";
             return;
         }
         $('#inputBrand').empty();
         $('#inputBrand').append('<option selected="" value="">Select Brand</option>');
-        for(let i in brandCategoryData){
-            if(brandCategoryData[i].category===category){
-                let brandOptionHTML = '<option value="'+ brandCategoryData[i].brand +'">'+ brandCategoryData[i].brand+'</option>';
+        for (let i in brandCategoryData) {
+            if (brandCategoryData[i].category === category) {
+                let brandOptionHTML = '<option value="' + brandCategoryData[i].brand + '">' + brandCategoryData[i].brand + '</option>';
                 $('#inputBrand').append(brandOptionHTML);
             }
         }
     }
 }
-
 
 
 // FILE UPLOAD METHODS
@@ -301,39 +302,35 @@ function processData() {
 function readFileDataCallback(results) {
     fileData = results.data;
     var json = JSON.stringify(fileData);
-    var headers = ["barcode","brand", "category","name","mrp"];
+    var headers = ["barcode", "brand", "category", "name", "mrp"];
     jsonq = JSON.parse(json);
     console.log(jsonq[0]);
-    len=Object.keys(jsonq).length;
+    len = Object.keys(jsonq).length;
     console.log(length);
     console.log(Object.keys(jsonq[0]));
 
-    for(let i=0;i<len;i++)
-    {
-        if(Object.keys(jsonq[i]).length!==headers.length)
-        {
+    for (let i = 0; i < len; i++) {
+        if (Object.keys(jsonq[i]).length !== headers.length) {
             console.log(Object.keys(jsonq[i]).length);
-            frontendChecks("Row is not correct "+ i );
+            frontendChecks("Row is not correct " + i);
             return;
         }
-        let keys=Object.keys(jsonq[i]);
+        let keys = Object.keys(jsonq[i]);
         console.log(keys);
-        for(const key in keys)
-        {
-            if(jsonq[i][key]==="")
-            {
+        for (const key in keys) {
+            if (jsonq[i][key] === "") {
                 frontendChecks("error in this row ", i);
             }
         }
 
     }
 
-    if(Object.keys(jsonq[0]).length !== headers.length){
+    if (Object.keys(jsonq[0]).length !== headers.length) {
         frontendChecks("File column number do not match. Please check the file and try again");
         return;
     }
-    for(var i in headers){
-        if(!jsonq[0].hasOwnProperty(headers[i])){
+    for (let i in headers) {
+        if (!jsonq[0].hasOwnProperty(headers[i])) {
             frontendChecks('File columns do not match. Please check the file and try again');
             return;
         }
@@ -344,6 +341,7 @@ function readFileDataCallback(results) {
 function uploadRows() {
     //Update progress
     updateUploadDialog();
+    let flag=false;
     //If everything processed then return
     // if (processCount == fileData.length) {
     //   return;
@@ -355,7 +353,30 @@ function uploadRows() {
 
     var json = JSON.stringify(fileData);
     var url = getProductUrl() + "-bulk";
+    console.log(fileData);
+    let index = 1;
+    // for(let data in fileData)
+    // {
+    //     for(let prop in fileData[data])
+    //     {
+    //         if(fileData[prop]==="")
+    //             frontendChecks("File data not properly added in row: "+index);
+    //         console.log(prop);
+    //         // console.log(data[prop]);
+    //     }
+    //     index++;
+    // }
 
+    for (let i = 0; i < fileData.length; i++) {
+        if (fileData[i].barcode === "" || fileData[i].brand === "" || fileData[i].category === "" || fileData[i].mrp === "" || fileData[i].name === "") {
+            flag=true;
+            frontendChecks("File data not properly added in row: " + index);
+        }
+        index++;
+    }
+
+    if(flag)
+        return;
     //Make ajax call
     $.ajax({
         url: url,
@@ -391,20 +412,19 @@ function uploadRows() {
                 var resp = JSON.parse(response.responseText);
                 var jsonObj = JSON.parse(resp.message);
                 console.log(jsonObj);
-                // errorData = jsonObj;
+                errorData = jsonObj;
 
-                const arr=[];
-                for(let obj in jsonObj)
-                {
-                    // console.log(obj)
-                    // console.log(jsonObj[obj]);
-                    const temp={};
-                    temp['barcode']=jsonObj[obj].barcode;
-                    temp['brand']=jsonObj[obj].brand;
-                    temp['category']=jsonObj[obj].category;
-                    temp['name']=jsonObj[obj].name;
-                    temp['mrp']=jsonObj[obj].mrp;
-                    temp['message']=jsonObj[obj].message;
+                const arr = [];
+                for (let obj in jsonObj) {
+                    console.log(obj)
+                    console.log(jsonObj[obj]);
+                    const temp = {};
+                    temp['barcode'] = jsonObj[obj].barcode;
+                    temp['brand'] = jsonObj[obj].brand;
+                    temp['category'] = jsonObj[obj].category;
+                    temp['name'] = jsonObj[obj].name;
+                    temp['mrp'] = jsonObj[obj].mrp;
+                    temp['message'] = jsonObj[obj].message;
 
                     arr.push(temp);
                 }

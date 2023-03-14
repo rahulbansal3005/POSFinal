@@ -2,7 +2,9 @@ package com.increff.pos.controller;
 
 import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -61,6 +63,19 @@ public class AppRestControllerAdvice {
 		data.setMessage("An unknown error has occurred - " + e.getMessage());
 		return data;
 	}
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public MessageData handleNumberFormatException(MethodArgumentNotValidException e) {
+		MessageData data = new MessageData();
+		data.setMessage("Wrong format received" + e.getMessage());
+		return data;
+	}
 
+//	@ExceptionHandler(NumberFormatException.class)
+//	public ResponseEntity<String> handleNumberFormatException(NumberFormatException ex) {
+//		String message = "Expected Integer for field intValue, received " + ex.getMessage();
+//		return ResponseEntity
+//				.status(HttpStatus.BAD_REQUEST)
+//				.body(message);
+//	}
 
 }

@@ -44,10 +44,4 @@ public class OrderApiController {
         return orderDto.getAll();
     }
 
-    @ApiOperation(value = "Adds order items in bulk")
-    @RequestMapping(path = "/order-bulk", method = RequestMethod.POST)
-    public void addBulk(@RequestBody List<OrderItem> orderForm) throws ApiException {
-        orderDto.addBulk(orderForm);
-    }
-
 }

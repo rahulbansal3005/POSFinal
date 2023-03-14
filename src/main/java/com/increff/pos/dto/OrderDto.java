@@ -127,35 +127,35 @@ public class OrderDto {
         return list2;
     }
 
-    public void addBulk(List<OrderItem> orderForm) throws ApiException {
-        JSONArray array = new JSONArray();
-        Validate.ValidateOrderFormForBulkAdd(orderForm, array);
-        checkInventoryForBulk(orderForm, array);
-        checkDuplicateOrderItem(orderForm,array);
+//    public void addBulk(List<OrderItem> orderForm) throws ApiException {
+//        JSONArray array = new JSONArray();
+//        Validate.ValidateOrderFormForBulkAdd(orderForm, array);
+//        checkInventoryForBulk(orderForm, array);
+//        checkDuplicateOrderItem(orderForm,array);
+//
+//
+//        if (array.length() != 0) {
+//            throw new ApiException(array.toString());
+//        }
+//        createOrder(orderForm);
+//    }
 
-
-        if (array.length() != 0) {
-            throw new ApiException(array.toString());
-        }
-        createOrder(orderForm);
-    }
-
-    private void checkInventoryForBulk(List<OrderItem> orderItems, JSONArray array){
-        for(OrderItem orderItem:orderItems)
-        {
-            ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
-            if(productPojo==null)
-            {
-                createOrderErrorobject(orderItem,array);
-            }
-
-            InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
-            if(inventoryPojo==null || inventoryPojo.getQuantity()<orderItem.getQuantity())
-            {
-                createOrderErrorobject(orderItem,array);
-            }
-        }
-    }
+//    private void checkInventoryForBulk(List<OrderItem> orderItems, JSONArray array){
+//        for(OrderItem orderItem:orderItems)
+//        {
+//            ProductPojo productPojo=productService.getCheck(orderItem.getBarCode());
+//            if(productPojo==null)
+//            {
+//                createOrderErrorobject(orderItem,array);
+//            }
+//
+//            InventoryPojo inventoryPojo=inventoryService.selectOnProdId(productPojo.getId());
+//            if(inventoryPojo==null || inventoryPojo.getQuantity()<orderItem.getQuantity())
+//            {
+//                createOrderErrorobject(orderItem,array);
+//            }
+//        }
+//    }
 
 
 }

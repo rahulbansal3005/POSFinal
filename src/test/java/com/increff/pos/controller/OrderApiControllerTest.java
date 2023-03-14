@@ -61,11 +61,11 @@ public class OrderApiControllerTest extends AbstractUnitTest {
 
     }
 
-    @Test
-    public void testAdd2() throws ApiException {
-        List<OrderItem> orderItemList=addItems();
-        orderApiController.addBulk(orderItemList);
-    }
+//    @Test
+//    public void testAdd2() throws ApiException {
+//        List<OrderItem> orderItemList=addItems();
+//        orderApiController.addBulk(orderItemList);
+//    }
 
     @Test
     public void testAdd3() throws ApiException {

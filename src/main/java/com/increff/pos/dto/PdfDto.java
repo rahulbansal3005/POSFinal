@@ -42,44 +42,59 @@ public class PdfDto {
     @Autowired
     private ProductService productService;
     public void get(int id) throws IOException, ApiException {
-        List<OrderItemPojo> orderItemPojoList = orderItemService.getAllByOrderId(id);
-        if(orderItemPojoList.size()==0)
-            throw new ApiException("no order items present in order to place");
-
-        PdfData pdfData = new PdfData();
         LocalDateTime now = LocalDateTime.now();
-        orderService.update(id,now);
-        List<PdfListData> pdfListData = new ArrayList<>();
-        Integer c = 0;
-        Double total = 0.0;
-        for (OrderItemPojo orderItemPojo : orderItemPojoList) {
-            c++;
-            ProductPojo productPojo = productService.get(orderItemPojo.getProductId());
-            total +=Helper.convertOrderItemPojoToPdfData(orderItemPojo,pdfListData,pdfData,c,productPojo);
-        }
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = LocalDateTime.now().format(date);
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String formattedTime = LocalDateTime.now().format(time);
-        pdfData.setInvoiceTime(formattedTime);
-        pdfData.setInvoiceDate(formattedDate);
-        pdfData.setOrderId(id);
-        pdfData.setTotal(total);
-        pdfData.setItemList(pdfListData);
+        try{
+           List<OrderItemPojo> orderItemPojoList = orderItemService.getAllByOrderId(id);
+           if(orderItemPojoList.size()==0)
+               throw new ApiException("no order items present in order to place");
 
-        invoiceClient.sendRequestToInvoice(pdfData,id);
+           PdfData pdfData = new PdfData();
+           orderService.update(id,now,true);
+           List<PdfListData> pdfListData = new ArrayList<>();
+           Integer c = 0;
+           Double total = 0.0;
+           for (OrderItemPojo orderItemPojo : orderItemPojoList) {
+               c++;
+               ProductPojo productPojo = productService.get(orderItemPojo.getProductId());
+               total +=Helper.convertOrderItemPojoToPdfData(orderItemPojo,pdfListData,pdfData,c,productPojo);
+           }
+           DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+           String formattedDate = LocalDateTime.now().format(date);
+           DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+           String formattedTime = LocalDateTime.now().format(time);
+           pdfData.setInvoiceTime(formattedTime);
+           pdfData.setInvoiceDate(formattedDate);
+           pdfData.setOrderId(id);
+           pdfData.setTotal(total);
+           pdfData.setItemList(pdfListData);
+
+           invoiceClient.sendRequestToInvoice(pdfData,id);
+       }
+       catch (Exception e)
+       {
+           orderService.update(id,now,false);
+           throw new ApiException("Unable to generate PDF Invoice");
+       }
+
 
     }
 
     public ResponseEntity<byte[]> download(int id) throws ApiException, IOException {
-        Path pdf = Paths.get("../invoices/order_" + id + ".pdf");
-        byte[] contents = Files.readAllBytes(pdf);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        String filename = "order_" + id + ".pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-        return response;
+        try{
+            Path pdf = Paths.get("../invoices/order_" + id + ".pdf");
+            byte[] contents = Files.readAllBytes(pdf);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            String filename = "order_" + id + ".pdf";
+            headers.setContentDispositionFormData(filename, filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+            return response;
+        }
+        catch (Exception e)
+        {
+            throw new ApiException("Unable to Download PDF Invoice "+ e.getMessage());
+
+        }
     }
 }

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -53,7 +55,7 @@ public class SessionDto {
         SecurityUtil.createContext(session);
         // Attach Authentication object to the Security Context
         SecurityUtil.setAuthentication(authentication);
-
+        infoData.setRole(userPojo.getRole());
         return new ModelAndView("redirect:/ui/home");
     }
 
@@ -72,16 +74,16 @@ public class SessionDto {
 
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(signupForm.getEmail());
-        if(matcher.matches()==false){
+        if(!matcher.matches()){
             throw new ApiException("Enter valid email");
         }
         Properties prop = new Properties();
-//        try {
-//            prop.load(new FileInputStream("emails.properties"));
-//        } catch (IOException e) {
-//            System.out.println("Failed to load properties file.");
-//            e.printStackTrace();
-//        }
+        try {
+            prop.load(Files.newInputStream(Paths.get("emails.properties")));
+        } catch (IOException e) {
+            System.out.println("Failed to load properties file.");
+            e.printStackTrace();
+        }
         String pass=signupForm.getPassword();
 
 

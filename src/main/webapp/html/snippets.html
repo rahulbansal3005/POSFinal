@@ -33,9 +33,9 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-<!--            <li class="nav-item">-->
-<!--                <a class="btn btn-primary" th:href="@{/site/login}">Login</a>-->
-<!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a class="btn btn-primary" th:href="@{/site/login}">Login</a>-->
+            <!--            </li>-->
             <li class="nav-item">
                 <a class="btn btn-primary" th:href="@{/site/signup}">Sign Up</a>
             </li>
@@ -82,10 +82,10 @@
                 <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
                    id="reports-link" th:href="@{/ui/report}">Reports</a>
                 <div aria-labelledby="reports-link" class="dropdown-menu shadow">
-                    <a class="dropdown-item"  th:href="@{/ui/report/inventoryReport}">Inventory Report</a>
-                    <a class="dropdown-item"  th:href="@{/ui/report/brandReport}">Brand Category Report</a>
-                    <a class="dropdown-item"  th:href="@{/ui/report/salesReport}">Sales Report</a>
-                    <a class="dropdown-item"  th:href="@{/ui/report/dailySalesReport}">Daily Sales Report</a>
+                    <a class="dropdown-item" th:href="@{/ui/report/inventoryReport}">Inventory Report</a>
+                    <a class="dropdown-item" th:href="@{/ui/report/brandReport}">Brand Category Report</a>
+                    <a class="dropdown-item" th:href="@{/ui/report/salesReport}">Sales Report</a>
+                    <a class="dropdown-item" th:href="@{/ui/report/dailySalesReport}">Daily Sales Report</a>
                 </div>
             </li>
             <li class="nav-item supervisor-only">
@@ -96,10 +96,14 @@
         <ul class="navbar-nav ml-auto">
             <li class="navbar-text">
                 [[${info.getEmail()}]]
-                &nbsp;&gt;&nbsp;
+<!--                &nbsp;&gt;&nbsp;-->
+                (
+                [[${info.getRole()}]]
+                )
+                &nbsp;
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/session/logout}">Logout</a>
+                <a class="btn btn-primary" th:href="@{/session/logout}">Logout</a>
             </li>
         </ul>
 
@@ -122,10 +126,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script th:src="@{/static/app.js}"/>
-    </script>
-    <script th:src="@{/static/papaparse.min.js}"/>
-    </script>
+    <script th:src="@{/static/app.js}"></script>
+    <script th:src="@{/static/papaparse.min.js}"></script>
 
 </footer>
 

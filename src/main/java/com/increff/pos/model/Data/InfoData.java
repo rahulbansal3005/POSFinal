@@ -15,6 +15,16 @@ public class InfoData implements Serializable {
 	private String message;
 	private String email;
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	private String role;
+
 	public InfoData() {
 		message = "";
 		email = "";

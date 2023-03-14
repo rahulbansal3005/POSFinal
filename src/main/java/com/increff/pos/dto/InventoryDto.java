@@ -35,9 +35,7 @@ public class InventoryDto {
 
         Validate.validateInventoryFormonAdd(inventoryForm);
         normalizeInventoryForm(inventoryForm);
-//        if (inventoryForm.getQuantity().matches("\\d+\\.\\d+")) {
-//
-//        }
+
         int prodId = productService.extractProductId(inventoryForm.getBarcode());
         InventoryPojo inventoryPojo = inventoryService.selectOnProdId(prodId);
         if (inventoryPojo != null) {
@@ -49,13 +47,8 @@ public class InventoryDto {
         }
     }
 
-//    public void delete(Integer id) {
-//        inventoryService.delete(id);
-//    }
-
     public InventoryData get(Integer id) throws ApiException {
         InventoryPojo inventoryPojo = inventoryService.get(id);
-//        return convertInventoryPojoToInventoryData(inventoryPojo);
         InventoryData inventoryData = convertInventoryPojoToInventoryData(inventoryPojo);
         inventoryData.setBarcode(productService.extractBarCode(inventoryPojo.getProductId()));
         return inventoryData;
